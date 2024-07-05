@@ -9,11 +9,29 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="Images\icons8-arrow-up-64.png" />
+    <None Remove="Images\icons8-arrow-up_White-64.png" />
+    <None Remove="Images\icons8-file_White-512.png" />
+    <None Remove="Images\icons8-lock-64.png" />
+    <None Remove="Images\icons8-lock_White-64.png" />
+    <None Remove="Images\icons8-reload-64.png" />
+    <None Remove="Images\icons8-reload_White-64.png" />
+    <None Remove="Images\icons8-Unlock-64.png" />
+    <None Remove="Images\icons8-Unlock_White-64.png" />
     <None Remove="Images\icons_document-512.png" />
     <None Remove="Images\icons_folder-512.png" />
   </ItemGroup>
 
   <ItemGroup>
+    <Resource Include="Images\icons8-arrow-up-64.png" />
+    <Resource Include="Images\icons8-arrow-up_White-64.png" />
+    <Resource Include="Images\icons8-file_White-512.png" />
+    <Resource Include="Images\icons8-lock-64.png" />
+    <Resource Include="Images\icons8-lock_White-64.png" />
+    <Resource Include="Images\icons8-reload-64.png" />
+    <Resource Include="Images\icons8-reload_White-64.png" />
+    <Resource Include="Images\icons8-Unlock-64.png" />
+    <Resource Include="Images\icons8-Unlock_White-64.png" />
     <Resource Include="Images\icons_document-512.png" />
     <Resource Include="Images\icons_folder-512.png" />
   </ItemGroup>
