@@ -22,7 +22,10 @@ namespace PhotoGallery.ViewModels
         public void OpenFolder(string path)
         {
             _Images.Clear();
-            _Directory.Push(path);
+            if(!_Directory.Contains(path))
+            {
+                _Directory.Push(path);
+            }
             foreach (string file in Directory.EnumerateDirectories(path))
             {
                 _Images.Add(new ImageItem(file));
@@ -32,6 +35,15 @@ namespace PhotoGallery.ViewModels
             {
                 _Images.Add(new ImageItem(file));
             }
+        }
+
+        public bool MoveUpAFolder()
+        {
+            if(_Directory.Count <= 1) { return false; }
+
+            _Directory.Pop();
+            OpenFolder(GetCurrentPath());
+            return true;
         }
 
         public void OpenFile(string Source)
@@ -44,6 +56,11 @@ namespace PhotoGallery.ViewModels
                 Verb = "OPEN"
             };
             Process.Start(Process_Info);
+        }
+
+        public void Reload()
+        {
+            OpenFolder(GetCurrentPath());
         }
 
         // Getters
