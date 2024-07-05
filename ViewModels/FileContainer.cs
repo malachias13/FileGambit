@@ -19,10 +19,10 @@ namespace PhotoGallery.ViewModels
         private Stack<string> _Directory;
         private List<ImageItem> _Images;
 
-        public void OpenFolder(string path)
+        public void  OpenFolder(string path)
         {
             _Images.Clear();
-            if(!_Directory.Contains(path))
+            if (!_Directory.Contains(path))
             {
                 _Directory.Push(path);
             }

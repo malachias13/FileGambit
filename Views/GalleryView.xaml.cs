@@ -35,7 +35,7 @@ namespace PhotoGallery.Views
 
         private FileContainer _FileContainer;
 
-        private void ImageButton_Click(object sender, RoutedEventArgs e)
+        private async void ImageButton_Click(object sender, RoutedEventArgs e)
         {
             Button button = sender as Button;
             ImageItem item = button.DataContext as ImageItem;
@@ -48,13 +48,20 @@ namespace PhotoGallery.Views
                 }
                 else
                 {
-                    _FileContainer.OpenFolder(item.Source);
+                    await Task.Run(() => _FileContainer.OpenFolder(item.Source));
                     UpdateGallery(_FileContainer.GetItems());
                 }
 
             }
         }
 
+        private void DoStuff(int count)
+        {
+            for(int i = 0; i < count; i++)
+            {
+                Thread.Sleep(100);
+            }
+        }
         public void UpdateGallery(List<ImageItem> data)
         {
             ImageBox.ItemsSource = null;
