@@ -15,6 +15,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using PhotoGallery.Models;
+using PhotoGallery.ViewModels;
 
 namespace PhotoGallery.Views
 {
@@ -32,6 +33,8 @@ namespace PhotoGallery.Views
             Instance = this;
         }
 
+        private FileContainer _FileContainer;
+
         private void ImageButton_Click(object sender, RoutedEventArgs e)
         {
             Button button = sender as Button;
@@ -41,49 +44,26 @@ namespace PhotoGallery.Views
             {
                 if(item.GetIsFile() == true)
                 {
-                    OpenFile(item.Source);
+                    _FileContainer.OpenFile(item.Source);
                 }
                 else
                 {
-                    OpenFolder(item.Source);
+                    _FileContainer.OpenFolder(item.Source);
+                    UpdateGallery(_FileContainer.GetItems());
                 }
 
             }
-
         }
 
         public void UpdateGallery(List<ImageItem> data)
         {
+            ImageBox.ItemsSource = null;
             ImageBox.ItemsSource = data;
         }
 
-        private void OpenFile(string Source)
+        public void SetFileContainer(FileContainer container)
         {
-            ProcessStartInfo Process_Info = new ProcessStartInfo(Source, @"%SystemRoot%\System32\rundll32.exe % ProgramFiles %\Windows Photo Viewer\PhotoViewer.dll, ImageView_Fullscreen %1")
-            {
-                UseShellExecute = true,
-                WorkingDirectory = System.IO.Path.GetDirectoryName(Source),
-                FileName = Source,
-                Verb = "OPEN"
-            };
-            Process.Start(Process_Info);
+            _FileContainer = container;
         }
-
-        private void OpenFolder(string path)
-        {
-            List<ImageItem> imageItems = new List<ImageItem>();
-
-            foreach (string file in Directory.EnumerateDirectories(path))
-            {
-                imageItems.Add(new ImageItem(file));
-            }
-
-            foreach (string file in Directory.EnumerateFiles(path))
-            {
-                imageItems.Add(new ImageItem(file));
-            }
-            UpdateGallery(imageItems);
-        }
-
     }
 }

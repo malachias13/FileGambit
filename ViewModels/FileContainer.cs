@@ -1,0 +1,54 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Diagnostics;
+using System.IO;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using PhotoGallery.Models;
+
+namespace PhotoGallery.ViewModels
+{
+    public class FileContainer
+    {
+        public FileContainer() 
+        {
+            _Directory = new Stack<string>();
+            _Images = new List<ImageItem>();
+        }
+        private Stack<string> _Directory;
+        private List<ImageItem> _Images;
+
+        public void OpenFolder(string path)
+        {
+            _Images.Clear();
+            _Directory.Push(path);
+            foreach (string file in Directory.EnumerateDirectories(path))
+            {
+                _Images.Add(new ImageItem(file));
+            }
+
+            foreach (string file in Directory.EnumerateFiles(path))
+            {
+                _Images.Add(new ImageItem(file));
+            }
+        }
+
+        public void OpenFile(string Source)
+        {
+            ProcessStartInfo Process_Info = new ProcessStartInfo(Source, @"%SystemRoot%\System32\rundll32.exe % ProgramFiles %\Windows Photo Viewer\PhotoViewer.dll, ImageView_Fullscreen %1")
+            {
+                UseShellExecute = true,
+                WorkingDirectory = System.IO.Path.GetDirectoryName(Source),
+                FileName = Source,
+                Verb = "OPEN"
+            };
+            Process.Start(Process_Info);
+        }
+
+        // Getters
+        public string GetCurrentPath() { return _Directory.Peek(); }
+        public List<ImageItem> GetItems() { return _Images; }
+
+    }
+}

@@ -10,6 +10,7 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using PhotoGallery.Views;
 using PhotoGallery.Models;
+using PhotoGallery.ViewModels;
 using System.IO;
 
 namespace PhotoGallery
@@ -23,27 +24,22 @@ namespace PhotoGallery
         {
             InitializeComponent();
 
+            GalleryView.Instance.SetFileContainer(fileContainer);
             LoadData();
         }
-
+        FileContainer fileContainer = new FileContainer();
         void LoadData()
         {
             List<ImageItem> imageItems = new List<ImageItem>();
             string path = "C:/Users/malac/Desktop/CS_Files/";
-            foreach(string file in Directory.EnumerateDirectories(path))
-            {
-                imageItems.Add(new ImageItem(file));
-            }
 
-            foreach (string file in Directory.EnumerateFiles(path))
-            {
-                imageItems.Add(new ImageItem(file));
-            }
-
-
-
-            GalleryView.Instance.UpdateGallery(imageItems);
+            fileContainer.OpenFolder(path);
+            GalleryView.Instance.UpdateGallery(fileContainer.GetItems());
         }
 
+        private void backBtn_Click(object sender, RoutedEventArgs e)
+        {
+            
+        }
     }
 }
