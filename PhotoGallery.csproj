@@ -36,4 +36,12 @@
     <Resource Include="Images\icons_folder-512.png" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="ViewModels\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="VirtualizingWrapPanel" Version="2.0.6" />
+  </ItemGroup>
+
 </Project>

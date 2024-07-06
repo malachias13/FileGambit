@@ -2,8 +2,41 @@
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:local="clr-namespace:PhotoGallery"
+             xmlns:vwp="clr-namespace:WpfToolkit.Controls;assembly=VirtualizingWrapPanel"
              StartupUri="MainWindow.xaml">
     <Application.Resources>
-         
+        <!--Virtualised ItemsControl-->
+        <Style x:Key="ItemsControlVirtualizedStyle" TargetType="ItemsControl">
+            <Setter Property="VirtualizingStackPanel.IsVirtualizing" Value="True"/>
+            <Setter Property="ScrollViewer.CanContentScroll" Value="True"/>
+            <Setter Property="ItemsPanel">
+                <Setter.Value>
+                    <ItemsPanelTemplate>
+                        <!--<VirtualizingStackPanel Orientation="Horizontal"
+                                                VerticalAlignment="Top"
+                                                HorizontalAlignment="Left"/>-->
+                        <vwp:VirtualizingWrapPanel SpacingMode="Uniform" StretchItems="false"/>
+                    </ItemsPanelTemplate>
+                </Setter.Value>
+            </Setter>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="ItemsControl">
+                        <Border
+              BorderThickness="{TemplateBinding Border.BorderThickness}"
+              Padding="{TemplateBinding Control.Padding}"
+              BorderBrush="{TemplateBinding Border.BorderBrush}"
+              Background="{TemplateBinding Panel.Background}"
+              SnapsToDevicePixels="True"
+          >
+                            <ScrollViewer Padding="{TemplateBinding Control.Padding}" Focusable="False" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch">
+                                <ItemsPresenter SnapsToDevicePixels="{TemplateBinding UIElement.SnapsToDevicePixels}" />
+                            </ScrollViewer>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
     </Application.Resources>
+    
 </Application>

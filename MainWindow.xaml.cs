@@ -10,7 +10,6 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using PhotoGallery.Views;
 using PhotoGallery.Models;
-using PhotoGallery.ViewModels;
 using System.IO;
 
 namespace PhotoGallery

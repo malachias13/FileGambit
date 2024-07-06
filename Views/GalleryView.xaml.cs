@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
@@ -15,7 +16,6 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using PhotoGallery.Models;
-using PhotoGallery.ViewModels;
 using static System.Net.Mime.MediaTypeNames;
 
 namespace PhotoGallery.Views
@@ -26,6 +26,7 @@ namespace PhotoGallery.Views
     public partial class GalleryView : UserControl
     {
         public static GalleryView Instance { get; private set; }
+
         public GalleryView()
         {
             InitializeComponent();
@@ -55,7 +56,6 @@ namespace PhotoGallery.Views
         }
         public void UpdateGallery(List<ImageItem> data)
         {
-
             ImageBox.ItemsSource = null;
             ImageBox.ItemsSource = data;
         }

@@ -11,14 +11,18 @@
         <Grid.RowDefinitions>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
-        <ScrollViewer Grid.Row="0" VerticalScrollBarVisibility="Auto">
+        
+        <!--<ScrollViewer Grid.Row="0"
+                      VerticalScrollBarVisibility="Auto"
+                      ScrollViewer.CanContentScroll="True">-->
             <ItemsControl x:Name="ImageBox"
+                          Style="{StaticResource ItemsControlVirtualizedStyle}"
                       Grid.Row="0">
-                <ItemsControl.ItemsPanel>
+                <!--<ItemsControl.ItemsPanel>
                     <ItemsPanelTemplate>
                         <WrapPanel/>
                     </ItemsPanelTemplate>
-                </ItemsControl.ItemsPanel>
+                </ItemsControl.ItemsPanel>-->
                 <ItemsControl.ItemTemplate>
                     <DataTemplate x:Name="ImageTemplate">
                         <Button x:Name="ImageButton"
@@ -57,6 +61,7 @@
                 </ItemsControl.ItemTemplate>
                 
             </ItemsControl>
-        </ScrollViewer>
+
+        <!--</ScrollViewer>-->
     </Grid>
 </UserControl>

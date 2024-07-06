@@ -1,13 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using PhotoGallery.Models;
 
-namespace PhotoGallery.ViewModels
+namespace PhotoGallery.Models
 {
     public class FileContainer
     {
@@ -16,6 +16,7 @@ namespace PhotoGallery.ViewModels
             _Directory = new Stack<string>();
             _Images = new List<ImageItem>();
         }
+      
         private Stack<string> _Directory;
         private List<ImageItem> _Images;
 
