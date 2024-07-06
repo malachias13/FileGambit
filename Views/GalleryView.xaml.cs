@@ -16,6 +16,7 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using PhotoGallery.Models;
 using PhotoGallery.ViewModels;
+using static System.Net.Mime.MediaTypeNames;
 
 namespace PhotoGallery.Views
 {
@@ -25,11 +26,9 @@ namespace PhotoGallery.Views
     public partial class GalleryView : UserControl
     {
         public static GalleryView Instance { get; private set; }
-
         public GalleryView()
         {
             InitializeComponent();
-
             Instance = this;
         }
 
@@ -54,16 +53,9 @@ namespace PhotoGallery.Views
 
             }
         }
-
-        private void DoStuff(int count)
-        {
-            for(int i = 0; i < count; i++)
-            {
-                Thread.Sleep(100);
-            }
-        }
         public void UpdateGallery(List<ImageItem> data)
         {
+
             ImageBox.ItemsSource = null;
             ImageBox.ItemsSource = data;
         }
