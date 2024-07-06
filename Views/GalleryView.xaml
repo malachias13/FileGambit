@@ -4,6 +4,7 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:PhotoGallery.Views"
+             xmlns:vwp="clr-namespace:WpfToolkit.Controls;assembly=VirtualizingWrapPanel"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800" Background="Black">
     <Grid x:Name="GalleryGrid"
@@ -15,14 +16,21 @@
         <!--<ScrollViewer Grid.Row="0"
                       VerticalScrollBarVisibility="Auto"
                       ScrollViewer.CanContentScroll="True">-->
-            <ItemsControl x:Name="ImageBox"
-                          Style="{StaticResource ItemsControlVirtualizedStyle}"
+        <!--Style="{StaticResource ItemsControlVirtualizedStyle}"-->
+        <vwp:VirtualizingItemsControl x:Name="ImageBox"
+                                      
+                                  VirtualizingPanel.CacheLengthUnit="Item"   
+                                  VirtualizingPanel.ScrollUnit="Pixel"   
+                                  VirtualizingPanel.VirtualizationMode="Recycling"  
+                                  VirtualizingPanel.IsVirtualizingWhenGrouping="True"  
                       Grid.Row="0">
-                <!--<ItemsControl.ItemsPanel>
-                    <ItemsPanelTemplate>
-                        <WrapPanel/>
-                    </ItemsPanelTemplate>
-                </ItemsControl.ItemsPanel>-->
+                <ItemsControl.ItemsPanel>
+                <ItemsPanelTemplate>
+                    <vwp:VirtualizingWrapPanel SpacingMode="Uniform"
+                                                   StretchItems="false"
+                                                   Orientation="Horizontal"/>
+                </ItemsPanelTemplate>
+                </ItemsControl.ItemsPanel>
                 <ItemsControl.ItemTemplate>
                     <DataTemplate x:Name="ImageTemplate">
                         <Button x:Name="ImageButton"
@@ -60,7 +68,7 @@
                     </DataTemplate>
                 </ItemsControl.ItemTemplate>
                 
-            </ItemsControl>
+            </vwp:VirtualizingItemsControl>
 
         <!--</ScrollViewer>-->
     </Grid>

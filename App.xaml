@@ -6,7 +6,7 @@
              StartupUri="MainWindow.xaml">
     <Application.Resources>
         <!--Virtualised ItemsControl-->
-        <Style x:Key="ItemsControlVirtualizedStyle" TargetType="ItemsControl">
+        <Style x:Key="ItemsControlVirtualizedStyle" TargetType="vwp:VirtualizingItemsControl">
             <Setter Property="VirtualizingStackPanel.IsVirtualizing" Value="True"/>
             <Setter Property="ScrollViewer.CanContentScroll" Value="True"/>
             <Setter Property="ItemsPanel">
@@ -15,7 +15,11 @@
                         <!--<VirtualizingStackPanel Orientation="Horizontal"
                                                 VerticalAlignment="Top"
                                                 HorizontalAlignment="Left"/>-->
-                        <vwp:VirtualizingWrapPanel SpacingMode="Uniform" StretchItems="false"/>
+                        <vwp:VirtualizingWrapPanel SpacingMode="Uniform"
+                                                   StretchItems="false"
+                                                   HorizontalAlignment="Left"
+                                                   VerticalAlignment="Top"
+                                                   Orientation="Horizontal"/>
                     </ItemsPanelTemplate>
                 </Setter.Value>
             </Setter>
