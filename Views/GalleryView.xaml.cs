@@ -37,36 +37,5 @@ namespace PhotoGallery.Views
             DataContext = vm;
 
         }
-
-
-        private async void ImageButton_Click(object sender, RoutedEventArgs e)
-        {
-            Button button = sender as Button;
-            ImageItem item = button.DataContext as ImageItem;
-
-            if (item != null)
-            {
-                if(item.GetIsFile() == true)
-                {
-                    FileContainer.Instance.OpenFile(item.Source);
-                }
-                else
-                {
-                    await Task.Run(() => FileContainer.Instance.OpenFolder(item.Source));
-                    //UpdateGallery(FileContainer.Instance.GetItems());
-                }
-
-            }
-        }
-        public void UpdateGallery(List<ImageItem> data)
-        {
-            //ImageBox.ItemsSource = null;
-            //ImageBox.ItemsSource = data;
-        }
-
-        public void SetFileContainer(FileContainer container)
-        {
-            //_FileContainer = container;
-        }
     }
 }
