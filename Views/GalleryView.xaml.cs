@@ -26,12 +26,9 @@ namespace PhotoGallery.Views
     /// </summary>
     public partial class GalleryView : UserControl
     {
-        public static GalleryView Instance { get; private set; }
-
         public GalleryView()
         {
             InitializeComponent();
-            Instance = this;
 
             GalleryViewModel vm = new GalleryViewModel();
             DataContext = vm;

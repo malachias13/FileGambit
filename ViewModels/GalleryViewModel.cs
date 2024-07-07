@@ -12,7 +12,7 @@ namespace PhotoGallery.ViewModels
 {
     internal class GalleryViewModel : ViewModelBase
     {
-        public ObservableCollection<ImageItem> Files { get; set; }
+        public static ObservableCollection<ImageItem> Files { get; set; }
 
         public GalleryViewModel()
         {
@@ -24,7 +24,7 @@ namespace PhotoGallery.ViewModels
             SetFiles(FileContainer.Instance.GetItems());
         }
 
-        private void SetFiles(List<ImageItem> items)
+        public static void SetFiles(List<ImageItem> items)
         {
             Files.Clear();
             foreach(ImageItem item in items)
@@ -35,7 +35,7 @@ namespace PhotoGallery.ViewModels
         }
 
         // Commands
-        private async void OpenItem(object sender)
+        private static async void OpenItem(object sender)
         {
             ImageItem item = sender as ImageItem;
 
