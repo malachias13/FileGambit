@@ -13,8 +13,7 @@
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
 
-        <vwp:VirtualizingItemsControl x:Name="ImageBox"
-                                      
+        <vwp:VirtualizingItemsControl x:Name="ImageBox" ItemsSource="{Binding Files}"
                                   VirtualizingPanel.CacheLengthUnit="Item"   
                                   VirtualizingPanel.ScrollUnit="Pixel"   
                                   VirtualizingPanel.VirtualizationMode="Recycling"  

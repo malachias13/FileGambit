@@ -16,6 +16,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using PhotoGallery.Models;
+using PhotoGallery.ViewModels;
 using static System.Net.Mime.MediaTypeNames;
 
 namespace PhotoGallery.Views
@@ -31,9 +32,12 @@ namespace PhotoGallery.Views
         {
             InitializeComponent();
             Instance = this;
+
+            GalleryViewModel vm = new GalleryViewModel();
+            DataContext = vm;
+
         }
 
-        private FileContainer _FileContainer;
 
         private async void ImageButton_Click(object sender, RoutedEventArgs e)
         {
@@ -44,25 +48,25 @@ namespace PhotoGallery.Views
             {
                 if(item.GetIsFile() == true)
                 {
-                    _FileContainer.OpenFile(item.Source);
+                    FileContainer.Instance.OpenFile(item.Source);
                 }
                 else
                 {
-                    await Task.Run(() => _FileContainer.OpenFolder(item.Source));
-                    UpdateGallery(_FileContainer.GetItems());
+                    await Task.Run(() => FileContainer.Instance.OpenFolder(item.Source));
+                    //UpdateGallery(FileContainer.Instance.GetItems());
                 }
 
             }
         }
         public void UpdateGallery(List<ImageItem> data)
         {
-            ImageBox.ItemsSource = null;
-            ImageBox.ItemsSource = data;
+            //ImageBox.ItemsSource = null;
+            //ImageBox.ItemsSource = data;
         }
 
         public void SetFileContainer(FileContainer container)
         {
-            _FileContainer = container;
+            //_FileContainer = container;
         }
     }
 }

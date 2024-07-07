@@ -11,16 +11,16 @@ namespace PhotoGallery.Models
 {
     public class FileContainer
     {
+        public static FileContainer Instance { get; private set; }
         public FileContainer() 
         {
-            _Directory = new Stack<string>();
-            _Images = new List<ImageItem>();
+            Instance = this;
         }
       
-        private Stack<string> _Directory;
-        private List<ImageItem> _Images;
+        private Stack<string> _Directory = new Stack<string>();
+        private List<ImageItem> _Images = new List<ImageItem>();
 
-        public void  OpenFolder(string path)
+        public void OpenFolder(string path)
         {
             _Images.Clear();
             if (!_Directory.Contains(path))
