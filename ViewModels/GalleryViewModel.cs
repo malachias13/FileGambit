@@ -5,6 +5,8 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Controls;
+using System.Windows.Input;
 
 namespace PhotoGallery.ViewModels
 {
@@ -12,12 +14,12 @@ namespace PhotoGallery.ViewModels
     {
         public ObservableCollection<ImageItem> Files { get; set; }
 
-
         public GalleryViewModel()
         {
             string path = "C:/Users/malac/Desktop/CS_Files/";
 
             Files = new ObservableCollection<ImageItem>();
+
             FileContainer.Instance.OpenFolder(path);
             SetFiles(FileContainer.Instance.GetItems());
         }
@@ -25,9 +27,30 @@ namespace PhotoGallery.ViewModels
         private void SetFiles(List<ImageItem> items)
         {
             Files.Clear();
-            for(int i = 0; i < items.Count; i++)
+            foreach(ImageItem item in items)
             {
-                Files.Add(items[i]);
+                item.OpenItemCommand = new RelayCommand(execute => OpenItem(item), canExecute => { return true; });
+                Files.Add(item);
+            }
+        }
+
+        // Commands
+        private async void OpenItem(object sender)
+        {
+            ImageItem item = sender as ImageItem;
+
+            if (item != null)
+            {
+                if (item.GetIsFile() == true)
+                {
+                    FileContainer.Instance.OpenFile(item.Source);
+                }
+                else
+                {
+                    await Task.Run(() => FileContainer.Instance.OpenFolder(item.Source));
+                    SetFiles(FileContainer.Instance.GetItems());
+                }
+
             }
         }
 

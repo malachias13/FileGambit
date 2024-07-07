@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Controls;
+using System.Windows.Input;
 
 namespace PhotoGallery.Models
 {
@@ -22,6 +23,9 @@ namespace PhotoGallery.Models
         public string Source { get; }
         public string ImageSource { get; set; }
         public int Id { get; set; }
+
+        // Commands
+        public ICommand OpenItemCommand { get; set; }
 
         private bool _IsFile = true;
 

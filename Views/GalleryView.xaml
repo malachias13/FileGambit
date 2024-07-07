@@ -37,7 +37,7 @@
                                 Height="142"
                                 MaxWidth="150"
                                 MaxHeight="150"
-                                Click="ImageButton_Click">
+                                Command="{Binding OpenItemCommand}">
                         <Border BorderBrush="Transparent"
                                         BorderThickness="2"
                                         Margin="2"
