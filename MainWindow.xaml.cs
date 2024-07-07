@@ -10,6 +10,7 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using PhotoGallery.Views;
 using PhotoGallery.Models;
+using PhotoGallery.ViewModels;
 using System.IO;
 
 namespace PhotoGallery
@@ -23,10 +24,15 @@ namespace PhotoGallery
         {
             InitializeComponent();
 
+            MainWindowViewModel vm = new MainWindowViewModel();
+            DataContext = vm;
+
             GalleryView.Instance.SetFileContainer(_fileContainer);
             LoadData();
         }
         private FileContainer _fileContainer = new FileContainer();
+
+        public string NumberOfItems { get; set; }
         void LoadData()
         {
             List<ImageItem> imageItems = new List<ImageItem>();
@@ -34,6 +40,7 @@ namespace PhotoGallery
 
             _fileContainer.OpenFolder(path);
             GalleryView.Instance.UpdateGallery(_fileContainer.GetItems());
+            NumberOfItems = _fileContainer.GetItems().Count + " Items";
         }
 
         private void backBtn_Click(object sender, RoutedEventArgs e)
