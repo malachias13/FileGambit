@@ -26,33 +26,8 @@ namespace PhotoGallery
 
             MainWindowViewModel vm = new MainWindowViewModel();
             DataContext = vm;
-
-            //GalleryView.Instance.SetFileContainer(_fileContainer);
-            //LoadData();
-        }
-        private FileContainer _fileContainer = new FileContainer();
-
-        public string NumberOfItems { get; set; }
-        void LoadData()
-        {
-            List<ImageItem> imageItems = new List<ImageItem>();
-            string path = "C:/Users/malac/Desktop/CS_Files/";
-
-            _fileContainer.OpenFolder(path);
-            //GalleryView.Instance.UpdateGallery(_fileContainer.GetItems());
-            NumberOfItems = _fileContainer.GetItems().Count + " Items";
         }
 
-        private void backBtn_Click(object sender, RoutedEventArgs e)
-        {
-            //_fileContainer.MoveUpAFolder();
-            //GalleryView.Instance.UpdateGallery(_fileContainer.GetItems());
-        }
-
-        private void ReloadBtn_Click(object sender, RoutedEventArgs e)
-        {
-            //_fileContainer.Reload();
-            //GalleryView.Instance.UpdateGallery(_fileContainer.GetItems());
-        }
+        
     }
 }

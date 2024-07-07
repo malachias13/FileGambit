@@ -20,7 +20,7 @@ namespace PhotoGallery.ViewModels
 
         }
 
-        // Command
+        // Commands
         private void Back()
         {
             if(FileContainer.Instance.MoveUpAFolder())
