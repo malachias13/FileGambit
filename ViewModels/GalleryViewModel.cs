@@ -16,7 +16,7 @@ namespace PhotoGallery.ViewModels
 
         public GalleryViewModel()
         {
-            string path = "C:/Users/malac/Desktop/CS_Files/";
+            string path = @"C:\Users\malac\Desktop\CS_Files";
 
             Files = new ObservableCollection<ImageItem>();
 
