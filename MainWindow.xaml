@@ -51,11 +51,12 @@
                 <Image Source="/Images/icons8-Unlock-64.png"></Image>
             </Button>
         </Grid>
-        
+
         <ContentControl
+            x:Name="GalleryViewControl"
+            Content="{Binding GalleryWindow}"
             Grid.Row="2"
             Margin="10,10,10,0">
-            <views:GalleryView/>
         </ContentControl>
 
         <TextBlock Text="{Binding WindowInfo.WindowsDisplayData}"

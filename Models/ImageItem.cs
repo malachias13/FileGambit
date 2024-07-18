@@ -11,11 +11,11 @@ namespace PhotoGallery.Models
 {
     public class ImageItem
     {
-        private readonly Uri _source;
+        //private readonly Uri _source;
         public ImageItem(string path)
         {
             Source = path;
-            _source = new Uri(path);
+           // _source = new Uri(path);
             Name = Path.GetFileName(path);
             SetImageSource(path);
         }

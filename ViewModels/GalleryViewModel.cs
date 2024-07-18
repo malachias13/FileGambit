@@ -12,30 +12,50 @@ namespace PhotoGallery.ViewModels
 {
     internal class GalleryViewModel : ViewModelBase
     {
-        public static ObservableCollection<ImageItem> Files { get; set; }
+        public static GalleryViewModel Instance;
 
-        public GalleryViewModel()
-        {
-            string path = @"C:\Users\malac\Desktop\CS_Files";
-
-            Files = new ObservableCollection<ImageItem>();
-
-            FileContainer.Instance.OpenFolder(path);
-            SetFiles(FileContainer.Instance.GetItems());
-        }
-
-        public static void SetFiles(List<ImageItem> items)
-        {
-            Files.Clear();
-            foreach(ImageItem item in items)
+        private ObservableCollection<ImageItem> _files;
+        public ObservableCollection<ImageItem> Files {
+            get
             {
-                item.OpenItemCommand = new RelayCommand(execute => OpenItem(item), canExecute => { return true; });
-                Files.Add(item);
+                return _files;
+            }
+            set
+            {
+                OnPropertyChanged();
             }
         }
 
+        public GalleryViewModel()
+        {
+
+            Instance = this;
+            string path = @"C:\Users\malac\Desktop\CS_Files";
+
+            _files = new ObservableCollection<ImageItem>();
+
+            //FileContainer.Instance.OpenFolder(path);
+            //SetFiles(FileContainer.Instance.GetItems());
+        }
+
+        public void SetFiles(List<ImageItem> items)
+        {
+            _files.Clear();
+            foreach(ImageItem item in items)
+            {
+                 item.OpenItemCommand = new RelayCommand(execute => OpenItem(item), canExecute => { return true; });
+                _files.Add(item);
+            }
+        }
+
+        public void ClearAllFiles()
+        {
+            _files.Clear();
+            FileContainer.Instance.GetItems().Clear();
+        }
+
         // Commands
-        private static async void OpenItem(object sender)
+        private async void OpenItem(object sender)
         {
             ImageItem item = sender as ImageItem;
 
