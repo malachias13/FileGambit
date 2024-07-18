@@ -45,7 +45,7 @@
                             <StackPanel Orientation="Vertical"
                                             VerticalAlignment="Stretch">
                                 <Image VerticalAlignment="Top"
-                                       Source="{Binding BitmapImage}"
+                                       Source="{Binding ImageSource}"
                                            MaxWidth="90"
                                            MaxHeight="90"/>
                                 <TextBlock Text="{Binding Name}"

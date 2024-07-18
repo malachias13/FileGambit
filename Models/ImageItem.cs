@@ -16,29 +16,8 @@ namespace PhotoGallery.Models
         public ImageItem(string path)
         {
             Source = path;
-           // _source = new Uri(path);
             Name = Path.GetFileName(path);
-
-            // Create source.
-            BitmapImage = new BitmapImage();
-
-
             SetImageSource(path);
-
-            if(_IsFile)
-            {
-                // BitmapImage.UriSource must be in a BeginInit/EndInit block.
-                BitmapImage.BeginInit();
-                BitmapImage.UriSource = new Uri(path, UriKind.RelativeOrAbsolute);
-                BitmapImage.EndInit();
-            }
-            else
-            {
-                BitmapImage.BeginInit();
-                BitmapImage.UriSource = new Uri(ImageSource, UriKind.RelativeOrAbsolute);
-                BitmapImage.EndInit();
-            }
-
         }
 
         ~ImageItem()
@@ -49,7 +28,6 @@ namespace PhotoGallery.Models
         public string Name { get; set; }
         public string Source { get; set; }
         public string ImageSource { get; set; }
-        public BitmapImage BitmapImage { get; set; }
         public int Id { get; set; }
 
         // Commands
@@ -80,7 +58,6 @@ namespace PhotoGallery.Models
             {
                 // Default Image.
                 ImageSource = @"..\..\..\Images\icons_document-512.png";
-                _IsFile = false;
             }
         }
 
