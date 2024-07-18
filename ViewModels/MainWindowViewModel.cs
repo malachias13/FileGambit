@@ -27,8 +27,6 @@ namespace PhotoGallery.ViewModels
         public ICommand EncryptAllCommand { get; set; }
         public ICommand DecryptAllCommand {  get; set; }
 
-        private GalleryView _galleryView;
-
         private const string dllPath = @"\..\..\..\x64\Debug\CryptographyDLL.dll";
         
 
@@ -106,23 +104,23 @@ namespace PhotoGallery.ViewModels
         private void EncryptAllFiles()
         {
 
-            //if (_rsa is null)
-            //{
-            //    MessageBox.Show("Key not set.");
-            //}
-            //else
-            //{
-            //    string fName = @"C:\Users\malac\Desktop\CS_Files\1034735.png";
-.            //    if (fName != null)
-            //    {
-            //        // Pass the file name without the path.
-            //        Task.Delay(2000).ContinueWith(t => EncryptFile(new FileInfo(fName)));
-            //    }
-            //}
+            if (_rsa is null)
+            {
+                MessageBox.Show("Key not set.");
+            }
+            else
+            {
+                string fName = @"C:\Users\malac\Desktop\CS_Files\1034735.png";
+                if (fName != null)
+                {
+                    // Pass the file name without the path.
+                    Task.Delay(2000).ContinueWith(t => EncryptFile(new FileInfo(fName)));
+                }
+            }
 
 
-            // Reload();
-            
+            Reload();
+
         }
 
         private void DecryptAllFiles()
