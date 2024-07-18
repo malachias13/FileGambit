@@ -103,6 +103,7 @@ namespace PhotoGallery.ViewModels
 
         private void EncryptAllFiles()
         {
+            GalleryViewModel.Instance.ClearAllFiles();
 
             if (_rsa is null)
             {
@@ -117,9 +118,6 @@ namespace PhotoGallery.ViewModels
                     Task.Delay(2000).ContinueWith(t => EncryptFile(new FileInfo(fName)));
                 }
             }
-
-
-            Reload();
 
         }
 
@@ -148,6 +146,10 @@ namespace PhotoGallery.ViewModels
 
         private void EncryptFile(FileInfo file)
         {
+            GC.Collect();
+            GC.WaitForPendingFinalizers();
+
+
             // Create instance of Aes for
             // symmetric encryption of the data.
             Aes aes = Aes.Create();

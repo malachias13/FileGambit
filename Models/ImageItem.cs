@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Controls;
 using System.Windows.Input;
+using System.Windows.Media.Imaging;
 
 namespace PhotoGallery.Models
 {
@@ -17,11 +18,38 @@ namespace PhotoGallery.Models
             Source = path;
            // _source = new Uri(path);
             Name = Path.GetFileName(path);
+
+            // Create source.
+            BitmapImage = new BitmapImage();
+
+
             SetImageSource(path);
+
+            if(_IsFile)
+            {
+                // BitmapImage.UriSource must be in a BeginInit/EndInit block.
+                BitmapImage.BeginInit();
+                BitmapImage.UriSource = new Uri(path, UriKind.RelativeOrAbsolute);
+                BitmapImage.EndInit();
+            }
+            else
+            {
+                BitmapImage.BeginInit();
+                BitmapImage.UriSource = new Uri(ImageSource, UriKind.RelativeOrAbsolute);
+                BitmapImage.EndInit();
+            }
+
         }
+
+        ~ImageItem()
+        {
+            Clear();
+        }
+        
         public string Name { get; set; }
-        public string Source { get; }
+        public string Source { get; set; }
         public string ImageSource { get; set; }
+        public BitmapImage BitmapImage { get; set; }
         public int Id { get; set; }
 
         // Commands
@@ -52,7 +80,15 @@ namespace PhotoGallery.Models
             {
                 // Default Image.
                 ImageSource = @"..\..\..\Images\icons_document-512.png";
+                _IsFile = false;
             }
+        }
+
+        public void Clear()
+        {
+            Source = string.Empty;
+            Name = string.Empty;
+            ImageSource = string.Empty;
         }
 
         public bool GetIsFile() { return _IsFile; }
