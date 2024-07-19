@@ -13,6 +13,7 @@
     <None Remove="Images\icons8-arrow-up_White-64.png" />
     <None Remove="Images\icons8-file_White-512.png" />
     <None Remove="Images\icons8-lock-64.png" />
+    <None Remove="Images\icons8-lock-file-64.png" />
     <None Remove="Images\icons8-lock_White-64.png" />
     <None Remove="Images\icons8-reload-64.png" />
     <None Remove="Images\icons8-reload_White-64.png" />
@@ -27,6 +28,7 @@
     <Resource Include="Images\icons8-arrow-up_White-64.png" />
     <Resource Include="Images\icons8-file_White-512.png" />
     <Resource Include="Images\icons8-lock-64.png" />
+    <Resource Include="Images\icons8-lock-file-64.png" />
     <Resource Include="Images\icons8-lock_White-64.png" />
     <Resource Include="Images\icons8-reload-64.png" />
     <Resource Include="Images\icons8-reload_White-64.png" />

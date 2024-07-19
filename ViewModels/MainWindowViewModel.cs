@@ -8,6 +8,7 @@ using System.Security.Cryptography;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
+using System.Xml.Linq;
 
 
 namespace PhotoGallery.ViewModels
@@ -103,6 +104,15 @@ namespace PhotoGallery.ViewModels
 
         private void EncryptAllFiles()
         {
+            List<string> fileNames = new List<string>();
+           foreach (ImageItem item in FileContainer.Instance.GetItems())
+            {
+                if(item.GetIsFile() && !item.GetIsIniFile() && !item.GetIsEncrypted())
+                {
+                    fileNames.Add(item.Source);
+                }
+                
+            }
             GalleryViewModel.Instance.ClearAllFiles();
 
             if (_rsa is null)
@@ -111,14 +121,25 @@ namespace PhotoGallery.ViewModels
             }
             else
             {
-                string fName = @"C:\Users\malac\Desktop\CS_Files\1034735.png";
-                if (fName != null)
-                {
-                    // Pass the file name without the path.
-                    Task.Delay(2000).ContinueWith(t => EncryptFile(new FileInfo(fName)));
-                }
+                //string fName = @"C:\Users\malac\Desktop\CS_Files\1034735.png";
+                //if (fName != null)
+                //{
+                //    // Pass the file name without the path.
+                //    Task.Delay(2000).ContinueWith(t => EncryptFile(new FileInfo(fName)));
+                //}
+
+                Task.Delay(2000).ContinueWith(t => EncryptAllRapper(fileNames));
+
             }
 
+        }
+
+        private void EncryptAllRapper(List<string> files)
+        {
+            for (int i = 0; i < files.Count; i++)
+            {
+                EncryptFile(new FileInfo(files[i]));
+            }
         }
 
         private void DecryptAllFiles()

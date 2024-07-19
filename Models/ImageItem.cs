@@ -34,12 +34,14 @@ namespace PhotoGallery.Models
         public ICommand OpenItemCommand { get; set; }
 
         private bool _IsFile = true;
+        private bool _IsInIFile = false;
+        private bool _IsEncrypted = false;
 
         private string[] _fileExtensions = {".jpg", ".png", ".gif", ".webp" };
 
        private void SetImageSource(string path)
        {
-            string extension = Path.GetExtension(path);
+            string extension = Path.GetExtension(path).ToLower();
 
             
             if(extension == "")
@@ -47,6 +49,16 @@ namespace PhotoGallery.Models
                 _IsFile = false;
                 // Folder Image.
                 ImageSource = @"..\..\..\Images\icons_folder-512.png";
+                return;
+            }
+            else if(extension == ".ini")
+            {
+                _IsInIFile = true;
+            }
+            else if(extension == ".aes")
+            {
+                _IsEncrypted = true;
+                ImageSource = @"..\..\..\Images\icons8-lock-file-64.png";
                 return;
             }
 
@@ -59,6 +71,8 @@ namespace PhotoGallery.Models
                 // Default Image.
                 ImageSource = @"..\..\..\Images\icons_document-512.png";
             }
+
+
         }
 
         public void Clear()
@@ -69,6 +83,10 @@ namespace PhotoGallery.Models
         }
 
         public bool GetIsFile() { return _IsFile; }
+        public bool GetIsIniFile() { return _IsInIFile; }
+        public bool GetIsEncrypted() { return _IsEncrypted; }
+
+
 
     }
 }
