@@ -21,10 +21,23 @@ namespace PhotoGallery.ViewModels
         public ICommand BackCommand { get; set; }
         public ICommand EncryptAllCommand { get; set; }
         public ICommand DecryptAllCommand {  get; set; }
+        public float CurrentProgress
+        {
+            get { return _currentProgress; }
+            private set
+            {
+                if (_currentProgress != value)
+                {
+                    _currentProgress = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
 
         private bool _isEncrypting = false;
         private bool _isDecrypting = false;
-        
+        private float _currentProgress;
+
 
 
         // Declare CspParameters and RsaCryptoServiceProvider
@@ -77,7 +90,7 @@ namespace PhotoGallery.ViewModels
 
         private void Back()
         {
-            if(FileContainer.Instance.MoveUpAFolder())
+            if (FileContainer.Instance.MoveUpAFolder())
             {
                 GalleryViewModel.Instance.SetFiles(FileContainer.Instance.GetItems());
             }
@@ -120,6 +133,7 @@ namespace PhotoGallery.ViewModels
                 {
                     Reload();
                     _isEncrypting = false;
+                    CurrentProgress = 0;
                     CommandManager.InvalidateRequerySuggested();
                 });
 
@@ -157,6 +171,7 @@ namespace PhotoGallery.ViewModels
                 {
                     Reload();
                     _isDecrypting = false;
+                    CurrentProgress = 0;
                     CommandManager.InvalidateRequerySuggested();
                 });
             } 
@@ -165,23 +180,40 @@ namespace PhotoGallery.ViewModels
         #endregion
 
         #region Helper functions
+
+        private bool DeleteFile(string filePath)
+        {
+            try
+            {
+                File.Delete(filePath);
+            }
+            catch (IOException e)
+            {
+                MessageBox.Show(e.Message);
+                return false;
+            }
+            return true;
+        }
+
+        private void UpdateProgressBarInArray(int index, int arrayCount)
+        {
+            CurrentProgress = (index * 100) / arrayCount;
+        }
+
         private void DecryptAllRapper(List<string> files)
         {
+
             for (int i = 0; i < files.Count; i++)
             {
                 DecryptFile(new FileInfo(files[i]));
 
                 GC.Collect();
                 GC.WaitForPendingFinalizers();
-                try
+                if (DeleteFile(files[i]))
                 {
-                    File.Delete(files[i]);
+                    Task.Run(() => { UpdateProgressBarInArray(i, files.Count); });
                 }
-                catch (IOException e)
-                {
-                   MessageBox.Show(e.Message);
-                    return;
-                }
+
             }
         }
 
@@ -193,15 +225,11 @@ namespace PhotoGallery.ViewModels
 
                 GC.Collect();
                 GC.WaitForPendingFinalizers();
-                try
+                if (DeleteFile(files[i]))
                 {
-                    File.Delete(files[i]);
+                    Task.Run(() => { UpdateProgressBarInArray(i, files.Count); });
                 }
-                catch (IOException e)
-                {
-                    MessageBox.Show(e.Message);
-                    return;
-                }
+
             }
         }
         #endregion

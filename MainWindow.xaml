@@ -54,6 +54,7 @@
         </Grid>
 
         <ProgressBar Name="LoadBar"
+                     Value="{Binding CurrentProgress, Mode=OneWay}"
                      Grid.Row="2"/>
 
         <ContentControl
