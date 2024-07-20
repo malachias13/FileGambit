@@ -99,6 +99,8 @@ namespace PhotoGallery.ViewModels
                 }
                 
             }
+            if (fileNames.Count <= 0) { return; }
+
             GalleryViewModel.Instance.ClearAllFiles();
 
             if (_rsa is null)
@@ -128,6 +130,8 @@ namespace PhotoGallery.ViewModels
                 }
 
             }
+            if(fileNames.Count <= 0) { return; }
+
             GalleryViewModel.Instance.ClearAllFiles();
 
 
@@ -153,6 +157,15 @@ namespace PhotoGallery.ViewModels
             for (int i = 0; i < files.Count; i++)
             {
                 DecryptFile(new FileInfo(files[i]));
+                try
+                {
+                    File.Delete(files[i]);
+                }
+                catch (IOException e)
+                {
+                   MessageBox.Show(e.Message);
+                    return;
+                }
             }
         }
 
@@ -161,6 +174,15 @@ namespace PhotoGallery.ViewModels
             for (int i = 0; i < files.Count; i++)
             {
                 EncryptFile(new FileInfo(files[i]));
+                try
+                {
+                    File.Delete(files[i]);
+                }
+                catch (IOException e)
+                {
+                    MessageBox.Show(e.Message);
+                    return;
+                }
             }
         }
         #endregion
