@@ -13,12 +13,6 @@ using System.Xml.Linq;
 
 namespace PhotoGallery.ViewModels
 {
-    [StructLayout(LayoutKind.Sequential)]
-    class Data
-    {
-        public int number;
-    }
-
     internal class MainWindowViewModel : ViewModelBase
     {
         public UserControl GalleryWindow { get; set; }
@@ -27,8 +21,6 @@ namespace PhotoGallery.ViewModels
         public ICommand BackCommand { get; set; }
         public ICommand EncryptAllCommand { get; set; }
         public ICommand DecryptAllCommand {  get; set; }
-
-        private const string dllPath = @"\..\..\..\x64\Debug\CryptographyDLL.dll";
         
 
 
@@ -78,13 +70,6 @@ namespace PhotoGallery.ViewModels
 
         }
 
-
-        [DllImport(dllPath)]
-        private static extern int cppFunction(Data data);
-
-        // bool encryptFile(const char* filename, bool bEncrypt, unsigned char* key, unsigned char* iv)
-        [DllImport(dllPath)]
-        private static extern int encryptFile(string filename, bool bEncrypt, string key, string iv);
 
         #region Buttons Commands
 
