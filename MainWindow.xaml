@@ -11,6 +11,7 @@
         <Grid.RowDefinitions>
             <RowDefinition Height="15"/>
             <RowDefinition Height="24"/>
+            <RowDefinition Height="12"/>
             <RowDefinition Height="*"/>
             <RowDefinition Height="15"/>
         </Grid.RowDefinitions>
@@ -52,10 +53,13 @@
             </Button>
         </Grid>
 
+        <ProgressBar Name="LoadBar"
+                     Grid.Row="2"/>
+
         <ContentControl
             x:Name="GalleryViewControl"
             Content="{Binding GalleryWindow}"
-            Grid.Row="2"
+            Grid.Row="3"
             Margin="10,10,10,0">
         </ContentControl>
 
@@ -63,7 +67,7 @@
                    FontSize="11"
                    Margin="10,0,0,0"
                    VerticalAlignment="Center"
-                   Grid.Row="3"/>
+                   Grid.Row="4"/>
 
     </Grid>
 </Window>

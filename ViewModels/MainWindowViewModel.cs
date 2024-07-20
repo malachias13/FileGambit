@@ -21,6 +21,9 @@ namespace PhotoGallery.ViewModels
         public ICommand BackCommand { get; set; }
         public ICommand EncryptAllCommand { get; set; }
         public ICommand DecryptAllCommand {  get; set; }
+
+        private bool _isEncrypting = false;
+        private bool _isDecrypting = false;
         
 
 
@@ -31,8 +34,7 @@ namespace PhotoGallery.ViewModels
 
         // Path variables for source, encryption, and
         // decryption folders. Must end with a backslash.
-        const string EncrFolder = @"C:\Users\malac\Desktop\CS_Files";
-        const string DecrFolder = @"C:\Users\malac\Desktop\CS_Files";
+        string EncrAndDecrFolder = @"C:\Users\malac\Desktop\CS_Files";
         const string SrcFolder = @"c:\docs\";
 
         // Public key file
@@ -57,8 +59,8 @@ namespace PhotoGallery.ViewModels
 
             BackCommand = new RelayCommand(execute => Back(), canExecute => { return true; });
             ReloadCommand = new RelayCommand(execute => Reload(), canExecute => { return true; });
-            EncryptAllCommand = new RelayCommand(execute => EncryptAllFiles(), canExecute => { return true; });
-            DecryptAllCommand = new RelayCommand(execute => DecryptAllFiles(), canExecute => { return true; });
+            EncryptAllCommand = new RelayCommand(execute => EncryptAllFiles(), canExecute => { return !_isEncrypting; });
+            DecryptAllCommand = new RelayCommand(execute => DecryptAllFiles(), canExecute => { return !_isDecrypting; });
 
 
             // Stores a key pair in the key container.
@@ -90,6 +92,9 @@ namespace PhotoGallery.ViewModels
 
         private void EncryptAllFiles()
         {
+
+            EncrAndDecrFolder = FileContainer.Instance.GetCurrentPath();
+
             List<string> fileNames = new List<string>();
            foreach (ImageItem item in FileContainer.Instance.GetItems())
             {
@@ -109,10 +114,13 @@ namespace PhotoGallery.ViewModels
             }
             else
             {
+                _isEncrypting = true;
                 Task task = Task.Delay(2000).ContinueWith(t => EncryptAllRapper(fileNames));
                 task.GetAwaiter().OnCompleted(() =>
                 {
                     Reload();
+                    _isEncrypting = false;
+                    CommandManager.InvalidateRequerySuggested();
                 });
 
             }
@@ -121,6 +129,8 @@ namespace PhotoGallery.ViewModels
 
         private void DecryptAllFiles()
         {
+            EncrAndDecrFolder = FileContainer.Instance.GetCurrentPath();
+
             List<string> fileNames = new List<string>();
             foreach (ImageItem item in FileContainer.Instance.GetItems())
             {
@@ -141,10 +151,13 @@ namespace PhotoGallery.ViewModels
             }
             else
             {
+                _isDecrypting = true;
                 Task task = Task.Delay(2000).ContinueWith(t => DecryptAllRapper(fileNames));
                 task.GetAwaiter().OnCompleted(() =>
                 {
                     Reload();
+                    _isDecrypting = false;
+                    CommandManager.InvalidateRequerySuggested();
                 });
             } 
         }
@@ -157,6 +170,9 @@ namespace PhotoGallery.ViewModels
             for (int i = 0; i < files.Count; i++)
             {
                 DecryptFile(new FileInfo(files[i]));
+
+                GC.Collect();
+                GC.WaitForPendingFinalizers();
                 try
                 {
                     File.Delete(files[i]);
@@ -174,6 +190,9 @@ namespace PhotoGallery.ViewModels
             for (int i = 0; i < files.Count; i++)
             {
                 EncryptFile(new FileInfo(files[i]));
+
+                GC.Collect();
+                GC.WaitForPendingFinalizers();
                 try
                 {
                     File.Delete(files[i]);
@@ -222,7 +241,7 @@ namespace PhotoGallery.ViewModels
 
             // Change the file's extension to ".enc"
             string outFile =
-                Path.Combine(EncrFolder, Path.ChangeExtension(file.Name, file.Extension + ".aes"));
+                Path.Combine(EncrAndDecrFolder, Path.ChangeExtension(file.Name, file.Extension + ".aes"));
 
             using (var outFs = new FileStream(outFile, FileMode.Create))
             {
@@ -313,7 +332,7 @@ namespace PhotoGallery.ViewModels
                 inFs.Seek(8 + lenK, SeekOrigin.Begin);
                 inFs.Read(IV, 0, lenIV);
 
-                Directory.CreateDirectory(DecrFolder);
+                Directory.CreateDirectory(EncrAndDecrFolder);
                 // Use RSACryptoServiceProvider
                 // to decrypt the AES key.
                 byte[] KeyDecrypted = _rsa.Decrypt(KeyEncrypted, false);
