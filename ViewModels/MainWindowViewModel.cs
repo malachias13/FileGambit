@@ -86,7 +86,8 @@ namespace PhotoGallery.ViewModels
         [DllImport(dllPath)]
         private static extern int encryptFile(string filename, bool bEncrypt, string key, string iv);
 
-        // Commands
+        #region Buttons Commands
+
         private void Back()
         {
             if(FileContainer.Instance.MoveUpAFolder())
@@ -121,17 +122,53 @@ namespace PhotoGallery.ViewModels
             }
             else
             {
-                //string fName = @"C:\Users\malac\Desktop\CS_Files\1034735.png";
-                //if (fName != null)
-                //{
-                //    // Pass the file name without the path.
-                //    Task.Delay(2000).ContinueWith(t => EncryptFile(new FileInfo(fName)));
-                //}
-
-                Task.Delay(2000).ContinueWith(t => EncryptAllRapper(fileNames));
+                Task task = Task.Delay(2000).ContinueWith(t => EncryptAllRapper(fileNames));
+                task.GetAwaiter().OnCompleted(() =>
+                {
+                    Reload();
+                });
 
             }
 
+        }
+
+        private void DecryptAllFiles()
+        {
+            List<string> fileNames = new List<string>();
+            foreach (ImageItem item in FileContainer.Instance.GetItems())
+            {
+                if (item.GetIsFile() && !item.GetIsIniFile() && item.GetIsEncrypted())
+                {
+                    fileNames.Add(item.Source);
+                }
+
+            }
+            GalleryViewModel.Instance.ClearAllFiles();
+
+
+            if (_rsa is null)
+            {
+                MessageBox.Show("Key not set.");
+            }
+            else
+            {
+                Task task = Task.Delay(2000).ContinueWith(t => DecryptAllRapper(fileNames));
+                task.GetAwaiter().OnCompleted(() =>
+                {
+                    Reload();
+                });
+            } 
+        }
+
+        #endregion
+
+        #region Helper functions
+        private void DecryptAllRapper(List<string> files)
+        {
+            for (int i = 0; i < files.Count; i++)
+            {
+                DecryptFile(new FileInfo(files[i]));
+            }
         }
 
         private void EncryptAllRapper(List<string> files)
@@ -141,28 +178,7 @@ namespace PhotoGallery.ViewModels
                 EncryptFile(new FileInfo(files[i]));
             }
         }
-
-        private void DecryptAllFiles()
-        {
-            // int d = encryptFile(FileContainer.Instance.GetItems()[2].ImageSource, false, "Password", "1234");
-
-
-            if (_rsa is null)
-            {
-                MessageBox.Show("Key not set.");
-            }
-            else
-            {
-                string fName = @"C:\Users\malac\Desktop\CS_Files\1034735.aes";
-                if (fName != null)
-                {
-                    DecryptFile(new FileInfo(fName));
-                }
-            }
-
-          //  Reload();
-        }
-
+        #endregion
 
 
         private void EncryptFile(FileInfo file)
@@ -199,7 +215,7 @@ namespace PhotoGallery.ViewModels
 
             // Change the file's extension to ".enc"
             string outFile =
-                Path.Combine(EncrFolder, Path.ChangeExtension(file.Name, ".aes"));
+                Path.Combine(EncrFolder, Path.ChangeExtension(file.Name, file.Extension + ".aes"));
 
             using (var outFs = new FileStream(outFile, FileMode.Create))
             {
@@ -255,7 +271,7 @@ namespace PhotoGallery.ViewModels
 
             // Construct the file name for the decrypted file.
             string outFile =
-                Path.ChangeExtension(file.FullName.Replace("Encrypt", "Decrypt"), ".txt");
+                Path.ChangeExtension(file.FullName.Replace("Encrypt", "Decrypt"), "");
 
             // Use FileStream objects to read the encrypted
             // file (inFs) and save the decrypted file (outFs).

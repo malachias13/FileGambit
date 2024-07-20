@@ -40,7 +40,9 @@ namespace PhotoGallery.ViewModels
 
         public void SetFiles(List<ImageItem> items)
         {
-            _files.Clear();
+            if (_files.Count > 0)
+                _files.Clear();
+
             foreach(ImageItem item in items)
             {
                  item.OpenItemCommand = new RelayCommand(execute => OpenItem(item), canExecute => { return true; });
