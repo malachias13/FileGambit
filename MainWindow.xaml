@@ -4,10 +4,12 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:PhotoGallery"
-        xmlns:views="clr-namespace:PhotoGallery.Views"
+        xmlns:views="clr-namespace:PhotoGallery.Views" 
+        xmlns:modalcontrol="clr-namespace:ModalControl;assembly=ModalControl"
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
     <Grid x:Name="MainGrid">
+
         <Grid.RowDefinitions>
             <RowDefinition Height="15"/>
             <RowDefinition Height="24"/>
@@ -15,6 +17,7 @@
             <RowDefinition Height="*"/>
             <RowDefinition Height="15"/>
         </Grid.RowDefinitions>
+        
         <TextBlock Text="Files"
                    HorizontalAlignment="Center"
                    VerticalAlignment="Center"
@@ -56,6 +59,24 @@
         <ProgressBar Name="LoadBar"
                      Value="{Binding CurrentProgress, Mode=OneWay}"
                      Grid.Row="2"/>
+
+        <Grid x:Name="Overlay" 
+              Panel.ZIndex="100" 
+              Visibility="Collapsed"
+              Grid.Row="3">
+            <Grid.Background>
+                <SolidColorBrush Color="Black" Opacity=".5"/>
+            </Grid.Background>
+
+            <!-- Add controls as needed -->
+
+        </Grid>
+        <modalcontrol:Modal
+            Panel.ZIndex="100"
+            IsOpen="True"
+            Grid.RowSpan="4">
+            <views:PascodePromptView/>
+        </modalcontrol:Modal>
 
         <ContentControl
             x:Name="GalleryViewControl"
