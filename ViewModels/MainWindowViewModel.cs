@@ -207,11 +207,9 @@ namespace PhotoGallery.ViewModels
             {
                 DecryptFile(new FileInfo(files[i]));
 
-                GC.Collect();
-                GC.WaitForPendingFinalizers();
                 if (DeleteFile(files[i]))
                 {
-                    Task.Run(() => { UpdateProgressBarInArray(i, files.Count); });
+                    UpdateProgressBarInArray(i, files.Count);
                 }
 
             }
@@ -223,11 +221,9 @@ namespace PhotoGallery.ViewModels
             {
                 EncryptFile(new FileInfo(files[i]));
 
-                GC.Collect();
-                GC.WaitForPendingFinalizers();
                 if (DeleteFile(files[i]))
                 {
-                    Task.Run(() => { UpdateProgressBarInArray(i, files.Count); });
+                    UpdateProgressBarInArray(i, files.Count);
                 }
 
             }
