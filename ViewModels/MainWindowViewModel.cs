@@ -48,6 +48,8 @@ namespace PhotoGallery.ViewModels
         private float _currentProgress;
         private bool _IsPascodePromptWindowOpen = false;
 
+        private PascodePromptViewModel _pascodePromptVM;
+
         // Path variables for source, encryption, and
         // decryption folders. Must end with a backslash.
         string EncrAndDecrFolder = @"C:\Users\malac\Desktop\CS_Files";
@@ -61,6 +63,9 @@ namespace PhotoGallery.ViewModels
 
             GalleryWindow = new GalleryView();
             PascodePromptWindow = new PascodePromptView();
+            _pascodePromptVM = new PascodePromptViewModel();
+
+            PascodePromptWindow.DataContext = _pascodePromptVM;
 
             FileContainer.Instance.OpenFolder(path);
             GalleryViewModel.Instance.SetFiles(FileContainer.Instance.GetItems());
@@ -70,8 +75,12 @@ namespace PhotoGallery.ViewModels
 
             BackCommand = new RelayCommand(execute => Back(), canExecute => { return true; });
             ReloadCommand = new RelayCommand(execute => Reload(), canExecute => { return true; });
-            EncryptAllCommand = new RelayCommand(execute => EncryptAllFiles(), canExecute => { return !_isEncrypting; });
+            EncryptAllCommand = new RelayCommand(execute => OpenPascodePrompt(), canExecute => { return !_isEncrypting; });
             DecryptAllCommand = new RelayCommand(execute => DecryptAllFiles(), canExecute => { return !_isDecrypting; });
+
+            // Prompt Commands.
+            _pascodePromptVM.ContinueCommand = 
+                new RelayCommand(execute => EncryptAllFiles(), canExecute => { return _pascodePromptVM.IsVaildKey(); });
         }
 
 
@@ -92,10 +101,15 @@ namespace PhotoGallery.ViewModels
             GalleryViewModel.Instance.SetFiles(FileContainer.Instance.GetItems());
         }
 
+        private void OpenPascodePrompt()
+        {
+            IsPascodePromptWindowOpen = true;
+        }
+
+
         private void EncryptAllFiles()
         {
-            //IsPascodePromptWindowOpen = true;
-
+            IsPascodePromptWindowOpen = false;
 
             EncrAndDecrFolder = FileContainer.Instance.GetCurrentPath();
 

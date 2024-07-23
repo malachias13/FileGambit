@@ -28,7 +28,7 @@
         <StackPanel Grid.Row="1" Margin="0 20 0 0">
             <StackPanel>
                 <TextBlock Text="Key" />
-                <TextBox Text="" />
+                <TextBox Text="{Binding keycode, UpdateSourceTrigger=PropertyChanged}"/>
             </StackPanel>
         </StackPanel>
 
@@ -37,7 +37,8 @@
             Margin="0 20 0 0"
             Padding="5 2"
             HorizontalAlignment="Left"
-            Content="Continue" />
+            Content="Continue"
+            Command="{Binding ContinueCommand}"/>
             
     </Grid>
 </UserControl>
