@@ -3,8 +3,10 @@ using PhotoGallery.Models;
 using PhotoGallery.Views;
 using System.IO;
 using System.Reflection;
+using System.Reflection.Emit;
 using System.Runtime.InteropServices;
 using System.Security.Cryptography;
+using System.Text;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
@@ -17,10 +19,17 @@ namespace PhotoGallery.ViewModels
     {
         public UserControl GalleryWindow { get; set; }
         public MainWindowInfo WindowInfo { get; set; }
+        public PascodePromptView PascodePromptWindow { get; set; }
         public ICommand ReloadCommand { get; set; }
         public ICommand BackCommand { get; set; }
         public ICommand EncryptAllCommand { get; set; }
         public ICommand DecryptAllCommand {  get; set; }
+        public bool IsPascodePromptWindowOpen 
+        {
+            get { return _IsPascodePromptWindowOpen; } 
+            set { _IsPascodePromptWindowOpen = value;  OnPropertyChanged(); } 
+        }
+
         public float CurrentProgress
         {
             get { return _currentProgress; }
@@ -37,6 +46,7 @@ namespace PhotoGallery.ViewModels
         private bool _isEncrypting = false;
         private bool _isDecrypting = false;
         private float _currentProgress;
+        private bool _IsPascodePromptWindowOpen = false;
 
 
 
@@ -51,18 +61,22 @@ namespace PhotoGallery.ViewModels
         const string SrcFolder = @"c:\docs\";
 
         // Public key file
-        const string PubKeyFile = @"c:\encrypt\rsaPublicKey.txt";
+        const string PubKeyFile = @"C:\Users\malac\Desktop\CS_Output\rsaPublicKey.txt";
+
+        const string PriKeyFile = @"C:\Users\malac\Desktop\CS_Output\privatekey2048.txt";
 
         const string path = @"C:\Users\malac\Desktop\CS_Files";
 
         // Key container name for
         // private/public key value pair.
-        const string KeyName = "Key01";
+        const string KeyName = "key01";
+        const string password = "Password";
 
         public MainWindowViewModel()
         {
 
             GalleryWindow = new GalleryView();
+            PascodePromptWindow = new PascodePromptView();
 
             FileContainer.Instance.OpenFolder(path);
             GalleryViewModel.Instance.SetFiles(FileContainer.Instance.GetItems());
@@ -76,13 +90,7 @@ namespace PhotoGallery.ViewModels
             DecryptAllCommand = new RelayCommand(execute => DecryptAllFiles(), canExecute => { return !_isDecrypting; });
 
 
-            // Stores a key pair in the key container.
-            _cspp.KeyContainerName = KeyName;
-            _rsa = new RSACryptoServiceProvider(_cspp)
-            {
-                PersistKeyInCsp = true
-            };
-
+            GetPrivateKey();
         }
 
 
@@ -105,6 +113,8 @@ namespace PhotoGallery.ViewModels
 
         private void EncryptAllFiles()
         {
+            //IsPascodePromptWindowOpen = true;
+
 
             EncrAndDecrFolder = FileContainer.Instance.GetCurrentPath();
 
@@ -205,7 +215,20 @@ namespace PhotoGallery.ViewModels
 
             for (int i = 0; i < files.Count; i++)
             {
-                DecryptFile(new FileInfo(files[i]));
+                // DecryptFile(new FileInfo(files[i]));
+
+                try
+                {
+                    ManagedEncryption.Decryptfile(new FileInfo(files[i]), EncrAndDecrFolder, password);
+                }
+                catch {
+                    MessageBox.Show("Wrong password");
+                    UpdateProgressBarInArray(i, files.Count);
+                    string Tempfile = Path.ChangeExtension(files[i].Replace("Encrypt", "Decrypt"), "");
+                    DeleteFile(Tempfile);
+                    continue;
+                }
+
 
                 if (DeleteFile(files[i]))
                 {
@@ -219,7 +242,9 @@ namespace PhotoGallery.ViewModels
         {
             for (int i = 0; i < files.Count; i++)
             {
-                EncryptFile(new FileInfo(files[i]));
+                // EncryptFile(new FileInfo(files[i]));
+
+                ManagedEncryption.EncryptFile(new FileInfo(files[i]), EncrAndDecrFolder, password);
 
                 if (DeleteFile(files[i]))
                 {
@@ -231,6 +256,41 @@ namespace PhotoGallery.ViewModels
         #endregion
 
 
+
+        private void ImportPublicKey()
+        {
+            using (var sr = new StreamReader(PubKeyFile))
+            {
+                _cspp.KeyContainerName = KeyName;
+                _rsa = new RSACryptoServiceProvider(_cspp);
+
+                string keytxt = sr.ReadToEnd();
+                _rsa.FromXmlString(keytxt);
+                _rsa.PersistKeyInCsp = true;
+            }
+        }
+
+        private void GetPrivateKey()
+        {
+            _cspp.KeyContainerName = KeyName;
+            _rsa = new RSACryptoServiceProvider(_cspp)
+            {
+                PersistKeyInCsp = true
+            };
+
+
+        }
+
+        private void SetupAes(Aes aes)
+        {
+            UnicodeEncoding UE = new UnicodeEncoding();
+            byte[] passwordBytes = UE.GetBytes(password);
+            byte[] aesKey = SHA256.Create().ComputeHash(passwordBytes);
+            byte[] aesIV = MD5.Create().ComputeHash(passwordBytes);
+            aes.Key = aesKey;
+            aes.IV = aesIV;
+        }
+
         private void EncryptFile(FileInfo file)
         {
             GC.Collect();
@@ -241,6 +301,8 @@ namespace PhotoGallery.ViewModels
             // symmetric encryption of the data.
             Aes aes = Aes.Create();
             ICryptoTransform transform = aes.CreateEncryptor();
+
+            SetupAes(aes);
 
             // Use RSACryptoServiceProvider to
             // encrypt the AES key.
@@ -312,12 +374,14 @@ namespace PhotoGallery.ViewModels
             // symmetric decryption of the data.
             Aes aes = Aes.Create();
 
+            SetupAes(aes);
+
             // Create byte arrays to get the length of
             // the encrypted key and IV.
             // These values were stored as 4 bytes each
             // at the beginning of the encrypted package.
-            byte[] LenK = new byte[4];
-            byte[] LenIV = new byte[4];
+            byte[] LenK = new byte[16];
+            byte[] LenIV = new byte[16];
 
             // Construct the file name for the decrypted file.
             string outFile =

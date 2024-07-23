@@ -59,23 +59,14 @@
         <ProgressBar Name="LoadBar"
                      Value="{Binding CurrentProgress, Mode=OneWay}"
                      Grid.Row="2"/>
-
-        <Grid x:Name="Overlay" 
-              Panel.ZIndex="100" 
-              Visibility="Collapsed"
-              Grid.Row="3">
-            <Grid.Background>
-                <SolidColorBrush Color="Black" Opacity=".5"/>
-            </Grid.Background>
-
-            <!-- Add controls as needed -->
-
-        </Grid>
+        
         <modalcontrol:Modal
             Panel.ZIndex="100"
-            IsOpen="True"
+            IsOpen="{Binding IsPascodePromptWindowOpen}"
             Grid.RowSpan="4">
-            <views:PascodePromptView/>
+            <ContentControl x:Name="PascodePromptViewControl"
+                            Content="{Binding PascodePromptWindow}"/>
+            <!--<views:PascodePromptView/>-->
         </modalcontrol:Modal>
 
         <ContentControl
