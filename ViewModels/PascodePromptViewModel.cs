@@ -12,6 +12,7 @@ namespace PhotoGallery.ViewModels
     {
         public string? keycode { get; set; }
         public ICommand ContinueCommand {  get; set; }
+        public ICommand CloseCommand { get; set; }
 
         public PascodePromptViewModel()
         {
@@ -21,6 +22,12 @@ namespace PhotoGallery.ViewModels
         public bool IsVaildKey()
         {
             return !(keycode is null);
+        }
+
+        public void ClearKeyCode()
+        {
+            keycode = null;
+            OnPropertyChanged(nameof(keycode));
         }
     }
 }

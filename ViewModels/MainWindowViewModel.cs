@@ -48,6 +48,8 @@ namespace PhotoGallery.ViewModels
         private float _currentProgress;
         private bool _IsPascodePromptWindowOpen = false;
 
+        private string? _password = null;
+
         private PascodePromptViewModel _pascodePromptVM;
 
         // Path variables for source, encryption, and
@@ -56,7 +58,7 @@ namespace PhotoGallery.ViewModels
 
         const string path = @"C:\Users\malac\Desktop\CS_Files";
 
-        const string password = "Password";
+
 
         public MainWindowViewModel()
         {
@@ -81,6 +83,9 @@ namespace PhotoGallery.ViewModels
             // Prompt Commands.
             _pascodePromptVM.ContinueCommand = 
                 new RelayCommand(execute => EncryptAllFiles(), canExecute => { return _pascodePromptVM.IsVaildKey(); });
+
+            _pascodePromptVM.CloseCommand =
+                new RelayCommand(execute => ClosePascodePrompt(), canExecute => { return true; });
         }
 
 
@@ -101,9 +106,17 @@ namespace PhotoGallery.ViewModels
             GalleryViewModel.Instance.SetFiles(FileContainer.Instance.GetItems());
         }
 
+
         private void OpenPascodePrompt()
         {
             IsPascodePromptWindowOpen = true;
+        }
+        
+        private void ClosePascodePrompt()
+        {
+            IsPascodePromptWindowOpen = false;
+            _password = null;
+            _pascodePromptVM.ClearKeyCode();
         }
 
 
@@ -126,7 +139,7 @@ namespace PhotoGallery.ViewModels
 
             GalleryViewModel.Instance.ClearAllFiles();
 
-            if (password == "")
+            if (_password is null)
             {
                 MessageBox.Show("Key not set.");
             }
@@ -164,7 +177,7 @@ namespace PhotoGallery.ViewModels
             GalleryViewModel.Instance.ClearAllFiles();
 
 
-            if (password == "")
+            if (_password is null)
             {
                 MessageBox.Show("Key not set.");
             }
@@ -213,7 +226,7 @@ namespace PhotoGallery.ViewModels
 
                 try
                 {
-                    ManagedEncryption.Decryptfile(new FileInfo(files[i]), EncrAndDecrFolder, password);
+                    ManagedEncryption.Decryptfile(new FileInfo(files[i]), EncrAndDecrFolder, _password);
                 }
                 catch {
                     MessageBox.Show("Wrong password");
@@ -237,7 +250,7 @@ namespace PhotoGallery.ViewModels
             for (int i = 0; i < files.Count; i++)
             {
 
-                ManagedEncryption.EncryptFile(new FileInfo(files[i]), EncrAndDecrFolder, password);
+                ManagedEncryption.EncryptFile(new FileInfo(files[i]), EncrAndDecrFolder, _password);
 
                 if (DeleteFile(files[i]))
                 {
