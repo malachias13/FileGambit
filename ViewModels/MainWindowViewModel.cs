@@ -10,6 +10,7 @@ using System.Text;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
+using System.Windows.Media;
 using System.Xml.Linq;
 
 
@@ -21,8 +22,14 @@ namespace PhotoGallery.ViewModels
         public string WindowsDisplayData 
         { 
             get { return _windowsDisplayData; }
-            set {  _windowsDisplayData = value;  OnPropertyChanged(); }
+            set {  _windowsDisplayData = value; OnPropertyChanged(); }
         }
+        public Brush WindowsDisplayForeground 
+        {
+            get { return _windowsDisplayForeground; }
+            set { _windowsDisplayForeground = value; OnPropertyChanged(); } 
+        }
+
         public PascodePromptView PascodePromptWindow { get; set; }
         public ICommand ReloadCommand { get; set; }
         public ICommand BackCommand { get; set; }
@@ -55,6 +62,7 @@ namespace PhotoGallery.ViewModels
 
         private string? _password = null;
         private string _windowsDisplayData;
+        private Brush _windowsDisplayForeground;
 
         private PascodePromptViewModel _pascodePromptVM;
 
@@ -141,7 +149,8 @@ namespace PhotoGallery.ViewModels
         private void ContinueCommand()
         {
             _password = _pascodePromptVM.keycode;
-            if(_HasClickedEncryptBtn)
+            _pascodePromptVM.ClearKeyCode();
+            if (_HasClickedEncryptBtn)
             {
                 EncryptAllFiles();
             }
@@ -249,10 +258,12 @@ namespace PhotoGallery.ViewModels
             text += " " + file.Name;
             if(HasError)
             {
+                WindowsDisplayForeground = Brushes.Red;
                 text += " failed";
             }
             else
             {
+                WindowsDisplayForeground = Brushes.DarkGreen;
                 text += " successful";
             }
 
@@ -261,6 +272,7 @@ namespace PhotoGallery.ViewModels
 
         private void DisplayFileCountInfo()
         {
+            WindowsDisplayForeground = Brushes.Black;
             string text = ""+FileContainer.Instance.GetItems().Count + " items";
             WindowsDisplayData = text;
         }

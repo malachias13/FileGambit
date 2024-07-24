@@ -77,6 +77,7 @@
         </ContentControl>
 
         <TextBlock Text="{Binding WindowsDisplayData}"
+                   Foreground="{Binding WindowsDisplayForeground}"
                    FontSize="13"
                    Margin="10,0,0,0"
                    VerticalAlignment="Center"
