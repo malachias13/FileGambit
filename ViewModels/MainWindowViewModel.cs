@@ -45,6 +45,7 @@ namespace PhotoGallery.ViewModels
 
         private bool _isEncrypting = false;
         private bool _isDecrypting = false;
+        private bool _HasClickedEncryptBtn = false;
         private float _currentProgress;
         private bool _IsPascodePromptWindowOpen = false;
 
@@ -77,12 +78,12 @@ namespace PhotoGallery.ViewModels
 
             BackCommand = new RelayCommand(execute => Back(), canExecute => { return true; });
             ReloadCommand = new RelayCommand(execute => Reload(), canExecute => { return true; });
-            EncryptAllCommand = new RelayCommand(execute => OpenPascodePrompt(), canExecute => { return !_isEncrypting; });
-            DecryptAllCommand = new RelayCommand(execute => DecryptAllFiles(), canExecute => { return !_isDecrypting; });
+            EncryptAllCommand = new RelayCommand(execute => OpenPascodePrompt(true), canExecute => { return !_isEncrypting; });
+            DecryptAllCommand = new RelayCommand(execute => OpenPascodePrompt(false), canExecute => { return !_isDecrypting; });
 
             // Prompt Commands.
             _pascodePromptVM.ContinueCommand = 
-                new RelayCommand(execute => EncryptAllFiles(), canExecute => { return _pascodePromptVM.IsVaildKey(); });
+                new RelayCommand(execute => ContinueCommand(), canExecute => { return _pascodePromptVM.IsVaildKey(); });
 
             _pascodePromptVM.CloseCommand =
                 new RelayCommand(execute => ClosePascodePrompt(), canExecute => { return true; });
@@ -107,23 +108,35 @@ namespace PhotoGallery.ViewModels
         }
 
 
-        private void OpenPascodePrompt()
+        private void OpenPascodePrompt(bool IsEncrypting)
         {
             IsPascodePromptWindowOpen = true;
+            _HasClickedEncryptBtn = IsEncrypting;
         }
         
         private void ClosePascodePrompt()
         {
             IsPascodePromptWindowOpen = false;
-            _password = null;
-            _pascodePromptVM.ClearKeyCode();
+            ClearPascodeData();
+        }
+
+        private void ContinueCommand()
+        {
+            _password = _pascodePromptVM.keycode;
+            if(_HasClickedEncryptBtn)
+            {
+                EncryptAllFiles();
+            }
+            else
+            {
+                DecryptAllFiles();
+            }
+            IsPascodePromptWindowOpen = false;
         }
 
 
         private void EncryptAllFiles()
         {
-            IsPascodePromptWindowOpen = false;
-
             EncrAndDecrFolder = FileContainer.Instance.GetCurrentPath();
 
             List<string> fileNames = new List<string>();
@@ -152,6 +165,7 @@ namespace PhotoGallery.ViewModels
                     Reload();
                     _isEncrypting = false;
                     CurrentProgress = 0;
+                    ClearPascodeData();
                     CommandManager.InvalidateRequerySuggested();
                 });
 
@@ -190,6 +204,7 @@ namespace PhotoGallery.ViewModels
                     Reload();
                     _isDecrypting = false;
                     CurrentProgress = 0;
+                    ClearPascodeData();
                     CommandManager.InvalidateRequerySuggested();
                 });
             } 
@@ -198,6 +213,12 @@ namespace PhotoGallery.ViewModels
         #endregion
 
         #region Helper functions
+
+        private void ClearPascodeData()
+        {
+            _password = null;
+            _pascodePromptVM.ClearKeyCode();
+        }
 
         private bool DeleteFile(string filePath)
         {
