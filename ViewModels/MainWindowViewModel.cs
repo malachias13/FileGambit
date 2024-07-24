@@ -18,7 +18,11 @@ namespace PhotoGallery.ViewModels
     internal class MainWindowViewModel : ViewModelBase
     {
         public UserControl GalleryWindow { get; set; }
-        public MainWindowInfo WindowInfo { get; set; }
+        public string WindowsDisplayData 
+        { 
+            get { return _windowsDisplayData; }
+            set {  _windowsDisplayData = value;  OnPropertyChanged(); }
+        }
         public PascodePromptView PascodePromptWindow { get; set; }
         public ICommand ReloadCommand { get; set; }
         public ICommand BackCommand { get; set; }
@@ -50,6 +54,7 @@ namespace PhotoGallery.ViewModels
         private bool _IsPascodePromptWindowOpen = false;
 
         private string? _password = null;
+        private string _windowsDisplayData;
 
         private PascodePromptViewModel _pascodePromptVM;
 
@@ -73,9 +78,12 @@ namespace PhotoGallery.ViewModels
             FileContainer.Instance.OpenFolder(path);
             GalleryViewModel.Instance.SetFiles(FileContainer.Instance.GetItems());
 
-            WindowInfo = new MainWindowInfo();
-            WindowInfo.WindowsDisplayData = "Hello World";
+            DisplayFileCountInfo();
 
+            // GalleryVM Bind Actions
+            GalleryViewModel.Instance.UpdateWindowInfoDisplay = DisplayFileCountInfo;
+
+            // Main window commands.
             BackCommand = new RelayCommand(execute => Back(), canExecute => { return true; });
             ReloadCommand = new RelayCommand(execute => Reload(), canExecute => { return true; });
             EncryptAllCommand = new RelayCommand(execute => OpenPascodePrompt(true), canExecute => { return !_isEncrypting; });
@@ -97,6 +105,7 @@ namespace PhotoGallery.ViewModels
             if (FileContainer.Instance.MoveUpAFolder())
             {
                 GalleryViewModel.Instance.SetFiles(FileContainer.Instance.GetItems());
+                DisplayFileCountInfo();
             }
            
         }
@@ -105,6 +114,7 @@ namespace PhotoGallery.ViewModels
         {
             FileContainer.Instance.Reload();
             GalleryViewModel.Instance.SetFiles(FileContainer.Instance.GetItems());
+            DisplayFileCountInfo();
         }
 
 
@@ -112,6 +122,14 @@ namespace PhotoGallery.ViewModels
         {
             IsPascodePromptWindowOpen = true;
             _HasClickedEncryptBtn = IsEncrypting;
+            if(IsEncrypting)
+            {
+                _pascodePromptVM.TitleTxt = "Encryption";
+            }
+            else
+            {
+                _pascodePromptVM.TitleTxt = "Decryption";
+            }
         }
         
         private void ClosePascodePrompt()
@@ -166,6 +184,7 @@ namespace PhotoGallery.ViewModels
                     _isEncrypting = false;
                     CurrentProgress = 0;
                     ClearPascodeData();
+                    Task.Delay(3000).ContinueWith(tt => { DisplayFileCountInfo(); });
                     CommandManager.InvalidateRequerySuggested();
                 });
 
@@ -205,6 +224,7 @@ namespace PhotoGallery.ViewModels
                     _isDecrypting = false;
                     CurrentProgress = 0;
                     ClearPascodeData();
+                    Task.Delay(3000).ContinueWith(tt => { DisplayFileCountInfo(); });
                     CommandManager.InvalidateRequerySuggested();
                 });
             } 
@@ -213,6 +233,37 @@ namespace PhotoGallery.ViewModels
         #endregion
 
         #region Helper functions
+
+        private void DisplayEncryptInfo(FileInfo file, bool HasError)
+        {
+            string text;
+            if(_HasClickedEncryptBtn)
+            {
+                text = "Encrypted:";
+            }
+            else
+            {
+                text = "Decrypted:";
+            }
+
+            text += " " + file.Name;
+            if(HasError)
+            {
+                text += " failed";
+            }
+            else
+            {
+                text += " successful";
+            }
+
+            WindowsDisplayData = text;
+        }
+
+        private void DisplayFileCountInfo()
+        {
+            string text = ""+FileContainer.Instance.GetItems().Count + " items";
+            WindowsDisplayData = text;
+        }
 
         private void ClearPascodeData()
         {
@@ -244,18 +295,20 @@ namespace PhotoGallery.ViewModels
 
             for (int i = 0; i < files.Count; i++)
             {
-
+                FileInfo fileInfo = new FileInfo(files[i]);
                 try
                 {
-                    ManagedEncryption.Decryptfile(new FileInfo(files[i]), EncrAndDecrFolder, _password);
+                    ManagedEncryption.Decryptfile(fileInfo, EncrAndDecrFolder, _password);
                 }
                 catch {
-                    MessageBox.Show("Wrong password");
+                    //MessageBox.Show("Wrong password");
                     UpdateProgressBarInArray(i, files.Count);
                     string Tempfile = Path.ChangeExtension(files[i].Replace("Encrypt", "Decrypt"), "");
                     DeleteFile(Tempfile);
+                    DisplayEncryptInfo(fileInfo, true);
                     continue;
                 }
+                DisplayEncryptInfo(fileInfo, false);
 
 
                 if (DeleteFile(files[i]))
@@ -270,13 +323,15 @@ namespace PhotoGallery.ViewModels
         {
             for (int i = 0; i < files.Count; i++)
             {
-
-                ManagedEncryption.EncryptFile(new FileInfo(files[i]), EncrAndDecrFolder, _password);
+                FileInfo fileInfo = new FileInfo(files[i]);
+                ManagedEncryption.EncryptFile(fileInfo, EncrAndDecrFolder, _password);
 
                 if (DeleteFile(files[i]))
                 {
                     UpdateProgressBarInArray(i, files.Count);
                 }
+                DisplayEncryptInfo(fileInfo, false);
+
 
             }
         }

@@ -34,7 +34,7 @@
             Grid.Row="1"
             HorizontalAlignment="Center"
             FontSize="28"
-            Text="Encryption/Decryption key" />
+            Text="{Binding TitleTxt}" />
 
         <StackPanel Grid.Row="2" Margin="0 20 0 0">
             <StackPanel>

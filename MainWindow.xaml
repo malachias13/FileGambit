@@ -15,7 +15,7 @@
             <RowDefinition Height="24"/>
             <RowDefinition Height="12"/>
             <RowDefinition Height="*"/>
-            <RowDefinition Height="15"/>
+            <RowDefinition Height="20"/>
         </Grid.RowDefinitions>
         
         <TextBlock Text="Files"
@@ -76,8 +76,8 @@
             Margin="10,10,10,0">
         </ContentControl>
 
-        <TextBlock Text="{Binding WindowInfo.WindowsDisplayData}"
-                   FontSize="11"
+        <TextBlock Text="{Binding WindowsDisplayData}"
+                   FontSize="13"
                    Margin="10,0,0,0"
                    VerticalAlignment="Center"
                    Grid.Row="4"/>

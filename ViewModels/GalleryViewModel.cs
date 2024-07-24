@@ -14,6 +14,8 @@ namespace PhotoGallery.ViewModels
     {
         public static GalleryViewModel Instance;
 
+        public Action UpdateWindowInfoDisplay;
+
         private ObservableCollection<ImageItem> _files;
         public ObservableCollection<ImageItem> Files {
             get
@@ -72,7 +74,7 @@ namespace PhotoGallery.ViewModels
                     await Task.Run(() => FileContainer.Instance.OpenFolder(item.Source));
                     SetFiles(FileContainer.Instance.GetItems());
                 }
-
+                UpdateWindowInfoDisplay.Invoke();
             }
         }
 

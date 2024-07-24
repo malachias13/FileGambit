@@ -11,8 +11,18 @@ namespace PhotoGallery.ViewModels
     internal class PascodePromptViewModel : ViewModelBase
     {
         public string? keycode { get; set; }
+        public string TitleTxt {
+            get { return _titleText; }
+            set
+            {
+                _titleText = value;
+                OnPropertyChanged();
+            }
+        }
         public ICommand ContinueCommand {  get; set; }
         public ICommand CloseCommand { get; set; }
+
+        private string _titleText;
 
         public PascodePromptViewModel()
         {
