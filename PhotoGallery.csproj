@@ -19,6 +19,8 @@
     <None Remove="Images\icons8-reload_White-64.png" />
     <None Remove="Images\icons8-Unlock-64.png" />
     <None Remove="Images\icons8-Unlock_White-64.png" />
+    <None Remove="Images\icons8-video-file-100.png" />
+    <None Remove="Images\icons8-video-file-100_Dark.png" />
     <None Remove="Images\icons_document-512.png" />
     <None Remove="Images\icons_folder-512.png" />
   </ItemGroup>
@@ -34,6 +36,8 @@
     <Resource Include="Images\icons8-reload_White-64.png" />
     <Resource Include="Images\icons8-Unlock-64.png" />
     <Resource Include="Images\icons8-Unlock_White-64.png" />
+    <Resource Include="Images\icons8-video-file-100.png" />
+    <Resource Include="Images\icons8-video-file-100_Dark.png" />
     <Resource Include="Images\icons_document-512.png" />
     <Resource Include="Images\icons_folder-512.png" />
   </ItemGroup>

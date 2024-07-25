@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Controls;
 using System.Windows.Input;
+using System.Windows.Media;
 using System.Windows.Media.Imaging;
 
 namespace PhotoGallery.Models
@@ -37,7 +38,8 @@ namespace PhotoGallery.Models
         private bool _IsInIFile = false;
         private bool _IsEncrypted = false;
 
-        private string[] _fileExtensions = {".jpg", ".png", ".gif", ".webp" };
+        private string[] _fileExtensions = {".jpg", ".png", ".gif", ".webp", ".jpeg" };
+        private string[] _videoExtensions = { ".mp4", ".mov", ".avi", ".wmv", ".avchd", ".webm","flv" };
 
        private void SetImageSource(string path)
        {
@@ -65,6 +67,10 @@ namespace PhotoGallery.Models
             if(_fileExtensions.Contains(extension))
             {
                 ImageSource = path;
+            }
+            else if(_videoExtensions.Contains(extension))
+            {
+                ImageSource = @"..\..\..\Images\icons8-video-file-100.png";
             }
             else
             {
