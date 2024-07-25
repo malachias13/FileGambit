@@ -64,6 +64,10 @@ namespace PhotoGallery.Models
             OpenFolder(GetCurrentPath());
         }
 
+        public void ClearDirectory()
+        {
+            _Directory.Clear();
+        }
         // Getters
         public string GetCurrentPath() { return _Directory.Peek(); }
         public List<ImageItem> GetItems() { return _Images; }

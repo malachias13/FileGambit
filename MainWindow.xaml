@@ -13,20 +13,21 @@
         <Grid.RowDefinitions>
             <RowDefinition Height="15"/>
             <RowDefinition Height="24"/>
-            <RowDefinition Height="12"/>
-            <RowDefinition Height="*"/>
+            <RowDefinition Height="18"/>
+            <RowDefinition Height="13*"/>
+            <RowDefinition Height="106*"/>
             <RowDefinition Height="20"/>
         </Grid.RowDefinitions>
-        
+
         <TextBlock Text="Files"
                    HorizontalAlignment="Center"
-                   VerticalAlignment="Center"
-                   Grid.Row="0"/>
+                   VerticalAlignment="Center"/>
 
         <Grid Grid.Row="1"
               Margin="10,0,0,0">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="40"/>
+                <ColumnDefinition Width="50"/>
                 <ColumnDefinition Width="50"/>
                 <ColumnDefinition Width="50"/>
                 <ColumnDefinition Width="50"/>
@@ -54,16 +55,24 @@
                     Margin="10,0,0,0">
                 <Image Source="/Images/icons8-Unlock-64.png"></Image>
             </Button>
+            <Button x:Name="LoadFolderBtn"
+                    Command="{Binding LoadFolderCommand}"
+                    Grid.Column="4"
+                    Margin="10,0,0,0">
+                <Image Source="/Images/icons_folder-512.png"></Image>
+            </Button>
+
         </Grid>
 
         <ProgressBar Name="LoadBar"
                      Value="{Binding CurrentProgress, Mode=OneWay}"
+                     Margin="0,5,0,0"
                      Grid.Row="2"/>
-        
+
         <modalcontrol:Modal
             Panel.ZIndex="100"
             IsOpen="{Binding IsPascodePromptWindowOpen}"
-            Grid.RowSpan="4">
+            Grid.RowSpan="5">
             <ContentControl x:Name="PascodePromptViewControl"
                             Content="{Binding PascodePromptWindow}"/>
             <!--<views:PascodePromptView/>-->
@@ -73,7 +82,7 @@
             x:Name="GalleryViewControl"
             Content="{Binding GalleryWindow}"
             Grid.Row="3"
-            Margin="10,10,10,0">
+            Margin="10,10,10,0" Grid.RowSpan="2">
         </ContentControl>
 
         <TextBlock Text="{Binding WindowsDisplayData}"
@@ -81,7 +90,7 @@
                    FontSize="13"
                    Margin="10,0,0,0"
                    VerticalAlignment="Center"
-                   Grid.Row="4"/>
+                   Grid.Row="5"/>
 
     </Grid>
 </Window>

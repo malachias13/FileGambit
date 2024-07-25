@@ -1,4 +1,5 @@
-﻿using PhotoGallery.Managers;
+﻿using Microsoft.Win32;
+using PhotoGallery.Managers;
 using PhotoGallery.Models;
 using PhotoGallery.Views;
 using System.IO;
@@ -35,6 +36,7 @@ namespace PhotoGallery.ViewModels
         public ICommand BackCommand { get; set; }
         public ICommand EncryptAllCommand { get; set; }
         public ICommand DecryptAllCommand {  get; set; }
+        public ICommand LoadFolderCommand { get; set; }
         public bool IsPascodePromptWindowOpen 
         {
             get { return _IsPascodePromptWindowOpen; } 
@@ -68,11 +70,7 @@ namespace PhotoGallery.ViewModels
 
         // Path variables for source, encryption, and
         // decryption folders. Must end with a backslash.
-        string EncrAndDecrFolder = @"C:\Users\malac\Desktop\CS_Files";
-
-        const string path = @"C:\Users\malac\Desktop\CS_Files";
-
-
+        string EncrAndDecrFolder;
 
         public MainWindowViewModel()
         {
@@ -82,9 +80,6 @@ namespace PhotoGallery.ViewModels
             _pascodePromptVM = new PascodePromptViewModel();
 
             PascodePromptWindow.DataContext = _pascodePromptVM;
-
-            FileContainer.Instance.OpenFolder(path);
-            GalleryViewModel.Instance.SetFiles(FileContainer.Instance.GetItems());
 
             DisplayFileCountInfo();
 
@@ -96,7 +91,7 @@ namespace PhotoGallery.ViewModels
             ReloadCommand = new RelayCommand(execute => Reload(), canExecute => { return true; });
             EncryptAllCommand = new RelayCommand(execute => OpenPascodePrompt(true), canExecute => { return !_isEncrypting; });
             DecryptAllCommand = new RelayCommand(execute => OpenPascodePrompt(false), canExecute => { return !_isDecrypting; });
-
+            LoadFolderCommand = new RelayCommand(execute => LoadFolder(), canExecute => { return !_isEncrypting || !_isDecrypting; });
             // Prompt Commands.
             _pascodePromptVM.ContinueCommand = 
                 new RelayCommand(execute => ContinueCommand(), canExecute => { return _pascodePromptVM.IsVaildKey(); });
@@ -159,6 +154,21 @@ namespace PhotoGallery.ViewModels
                 DecryptAllFiles();
             }
             IsPascodePromptWindowOpen = false;
+        }
+
+        private void LoadFolder()
+        {
+            var folderDialog = new OpenFolderDialog
+            {
+                // Set options here
+            };
+
+            if (folderDialog.ShowDialog() == true)
+            {
+                FileContainer.Instance.ClearDirectory();
+                FileContainer.Instance.OpenFolder(folderDialog.FolderName);
+                GalleryViewModel.Instance.SetFiles(FileContainer.Instance.GetItems());
+            }
         }
 
 
