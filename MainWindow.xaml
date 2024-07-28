@@ -128,7 +128,7 @@
 
         <ContentControl
             x:Name="GalleryViewControl"
-            Content="{Binding GalleryWindow}"
+            Content="{Binding ConentWindow}"
             Grid.Row="3"
             Margin="10,10,10,0" Grid.RowSpan="2">
         </ContentControl>

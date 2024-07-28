@@ -49,7 +49,7 @@ namespace PhotoGallery.ViewModels
             _files = new ObservableCollection<ImageItem>();
             BackgroundColor = new SolidColorBrush(Color.FromRgb(92, 92, 92));
 
-           // BackgroundImg = @"C:\Users\malac\Pictures\1042725.png";
+            BackgroundImg = @"C:\Users\malac\Pictures\1042725.png";
             BackgroundOpacity = 0.5f;
             BackgroundStretch = Stretch.UniformToFill;
 

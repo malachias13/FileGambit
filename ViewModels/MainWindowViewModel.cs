@@ -19,7 +19,11 @@ namespace PhotoGallery.ViewModels
 {
     internal class MainWindowViewModel : ViewModelBase
     {
-        public UserControl GalleryWindow { get; set; }
+        public UserControl ConentWindow 
+        {
+            get { return _contentWindow; } 
+            set { _contentWindow = value; OnPropertyChanged(); } 
+        }
         public string WindowsDisplayData 
         { 
             get { return _windowsDisplayData; }
@@ -37,9 +41,8 @@ namespace PhotoGallery.ViewModels
         public ICommand EncryptAllCommand { get; set; }
         public ICommand DecryptAllCommand {  get; set; }
         public ICommand LoadFolderCommand { get; set; }
-
         public ICommand SettingsCommand {  get; set; }
-        public bool IsPascodePromptWindowOpen 
+        public bool IsPascodePromptWindowOpen
         {
             get { return _IsPascodePromptWindowOpen; } 
             set { _IsPascodePromptWindowOpen = value;  OnPropertyChanged(); } 
@@ -68,7 +71,12 @@ namespace PhotoGallery.ViewModels
         private string _windowsDisplayData;
         private Brush _windowsDisplayForeground;
 
+        private UserControl _contentWindow;
+        private UserControl _settingsWindow;
+        private UserControl _galleryWindow;
+
         private PascodePromptViewModel _pascodePromptVM;
+        private SettingsViewModel _settingsVM;
 
         // Path variables for source, encryption, and
         // decryption folders. Must end with a backslash.
@@ -77,11 +85,16 @@ namespace PhotoGallery.ViewModels
         public MainWindowViewModel()
         {
 
-            GalleryWindow = new GalleryView();
+            _galleryWindow = new GalleryView();
             PascodePromptWindow = new PascodePromptView();
             _pascodePromptVM = new PascodePromptViewModel();
+            _settingsWindow = new SettingsView();
+            _settingsVM = new SettingsViewModel();
 
             PascodePromptWindow.DataContext = _pascodePromptVM;
+            _settingsWindow.DataContext = _settingsVM;
+
+            ConentWindow = _galleryWindow;
 
             DisplayFileCountInfo();
 
@@ -127,7 +140,7 @@ namespace PhotoGallery.ViewModels
 
         private void Setting()
         {
-
+            ConentWindow = _settingsWindow;
         }
 
         private bool CanRunEncryptAllCommand()
