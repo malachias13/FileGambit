@@ -108,8 +108,8 @@
                                Grid.Column="0"
                                Grid.Row="2"/>
                     <Slider Minimum="0"
-                            Maximum="1"
-                            Value="{Binding BGImgOpacity}"
+                            Maximum="100"
+                            Value="{Binding BGImgOpacity, UpdateSourceTrigger=PropertyChanged}"
                             VerticalAlignment="Center"
                             Grid.Column="1"
                             Grid.Row="2"/>

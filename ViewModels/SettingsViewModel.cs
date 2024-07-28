@@ -17,12 +17,24 @@ namespace PhotoGallery.ViewModels
         public float BGImgOpacity
         {
             get { return _imgOpacity; }
-            set { _imgOpacity = value; OnPropertyChanged(); UpdateImgOpacityText(); }
+            set 
+            {
+                _imgOpacity = value;
+                UpdateOpacityUI();
+            }
         }
         public string BGImgOpacityText
         {
-            get { return _bgImgOpacityText; }
-            set { _bgImgOpacityText = value; OnPropertyChanged(); }
+            get { return _imgOpacity.ToString(); }
+            set 
+            {
+                if(float.TryParse(value, out float n))
+                {
+                    BGImgOpacity = Math.Clamp(n, 0, 100);
+                }
+
+                OnPropertyChanged(); 
+            }
         }
         public string? BGImgPath
         {
@@ -36,7 +48,7 @@ namespace PhotoGallery.ViewModels
             set { _bgStretchSelectValue = value; OnPropertyChanged(); }
         }
 
-        private float _imgOpacity = 1.0f;
+        private float _imgOpacity = 30f;
         private string? _bgImgPath;
         private string _bgStretchSelectValue;
         private string _bgImgOpacityText;
@@ -45,7 +57,7 @@ namespace PhotoGallery.ViewModels
         {
             bgStretchSettings = new ObservableCollection<string>();
 
-            BGImgOpacity = 1.0f;
+            BGImgOpacity = 30f;
 
             bgStretchSettings.Add("None");
             bgStretchSettings.Add("Fill");
@@ -53,12 +65,10 @@ namespace PhotoGallery.ViewModels
             bgStretchSettings.Add("UniformToFill");
         }
 
-        public void UpdateImgOpacityText()
+        private void UpdateOpacityUI()
         {
-            // (new_max - new_min) / (old_max - old_min) * (v - old_min) + new_min
-            
-            string text = "" + (100 - 0) / (1 - 0) * (_imgOpacity - 0);
-            BGImgOpacityText = text; 
+            OnPropertyChanged(nameof(BGImgOpacity));
+            OnPropertyChanged(nameof(BGImgOpacityText));
         }
     }
 }
