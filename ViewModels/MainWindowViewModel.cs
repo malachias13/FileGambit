@@ -37,6 +37,8 @@ namespace PhotoGallery.ViewModels
         public ICommand EncryptAllCommand { get; set; }
         public ICommand DecryptAllCommand {  get; set; }
         public ICommand LoadFolderCommand { get; set; }
+
+        public ICommand SettingsCommand {  get; set; }
         public bool IsPascodePromptWindowOpen 
         {
             get { return _IsPascodePromptWindowOpen; } 
@@ -93,6 +95,7 @@ namespace PhotoGallery.ViewModels
             EncryptAllCommand = new RelayCommand(execute => OpenPascodePrompt(true), canExecute => CanRunEncryptAllCommand());
             DecryptAllCommand = new RelayCommand(execute => OpenPascodePrompt(false), canExecute => CanRunDecryptAllCommand());
             LoadFolderCommand = new RelayCommand(execute => LoadFolder(), canExecute => { return !_isEncrypting || !_isDecrypting; });
+            SettingsCommand = new RelayCommand(execute => Setting(), canExecute => { return true; });
             // Prompt Commands.
             _pascodePromptVM.ContinueCommand = 
                 new RelayCommand(execute => ContinueCommand(), canExecute => { return _pascodePromptVM.IsVaildKey(); });
@@ -120,6 +123,11 @@ namespace PhotoGallery.ViewModels
             FileContainer.Instance.Reload();
             GalleryViewModel.Instance.SetFiles(FileContainer.Instance.GetItems());
             DisplayFileCountInfo();
+        }
+
+        private void Setting()
+        {
+
         }
 
         private bool CanRunEncryptAllCommand()
