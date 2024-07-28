@@ -65,6 +65,7 @@
                 <ColumnDefinition Width="50"/>
                 <ColumnDefinition Width="50"/>
                 <ColumnDefinition Width="50"/>
+                <ColumnDefinition Width="50"/>
             </Grid.ColumnDefinitions>
             <Button x:Name="backBtn"
                     Style="{ StaticResource ControlButton }"
@@ -79,23 +80,31 @@
                     Margin="10,0,0,0">
                 <Image Source="/Images/icons8-reload-64.png"></Image>
             </Button>
+            <Button x:Name="SettingsBtn"
+                    Command="{Binding SettingsCommand}"
+                    Grid.Column="2"
+                    Style="{ StaticResource ControlButton }"
+                    Margin="10,0,0,0">
+                <Image Source="/Images/icons8-settings-64.png"></Image>
+            </Button>
             <Button x:Name="LockBtn"
                     Command="{Binding EncryptAllCommand}"
-                    Grid.Column="2"
+                    Grid.Column="3"
                     Style="{ StaticResource ControlButton }"
                     Margin="10,0,0,0">
                 <Image Source="/Images/icons8-lock-64.png"></Image>
             </Button>
             <Button x:Name="UnlockBtn"
                     Command="{Binding DecryptAllCommand}"
-                    Grid.Column="3"
+                    Grid.Column="4"
                     Style="{ StaticResource ControlButton }"
                     Margin="10,0,0,0">
                 <Image Source="/Images/icons8-Unlock-64.png"></Image>
             </Button>
+            
             <Button x:Name="LoadFolderBtn"
                     Command="{Binding LoadFolderCommand}"
-                    Grid.Column="4"
+                    Grid.Column="5"
                     Style="{ StaticResource ControlButton }"
                     Margin="10,0,0,0">
                 <Image Source="/Images/icons_folder-512.png"></Image>
