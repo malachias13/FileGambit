@@ -189,6 +189,7 @@ namespace PhotoGallery.ViewModels
                 FileContainer.Instance.ClearDirectory();
                 FileContainer.Instance.OpenFolder(folderDialog.FolderName);
                 GalleryViewModel.Instance.SetFiles(FileContainer.Instance.GetItems());
+                UpdateProgressBarInArray(0, 1);
             }
         }
 

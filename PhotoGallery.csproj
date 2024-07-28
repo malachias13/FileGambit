@@ -9,12 +9,14 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="Images\icons8-archive-folder-96.png" />
     <None Remove="Images\icons8-arrow-up-64.png" />
     <None Remove="Images\icons8-arrow-up_White-64.png" />
     <None Remove="Images\icons8-file_White-512.png" />
     <None Remove="Images\icons8-lock-64.png" />
     <None Remove="Images\icons8-lock-file-64.png" />
     <None Remove="Images\icons8-lock_White-64.png" />
+    <None Remove="Images\icons8-rar-100.png" />
     <None Remove="Images\icons8-reload-64.png" />
     <None Remove="Images\icons8-reload_White-64.png" />
     <None Remove="Images\icons8-Unlock-64.png" />
@@ -26,12 +28,14 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Resource Include="Images\icons8-archive-folder-96.png" />
     <Resource Include="Images\icons8-arrow-up-64.png" />
     <Resource Include="Images\icons8-arrow-up_White-64.png" />
     <Resource Include="Images\icons8-file_White-512.png" />
     <Resource Include="Images\icons8-lock-64.png" />
     <Resource Include="Images\icons8-lock-file-64.png" />
     <Resource Include="Images\icons8-lock_White-64.png" />
+    <Resource Include="Images\icons8-rar-100.png" />
     <Resource Include="Images\icons8-reload-64.png" />
     <Resource Include="Images\icons8-reload_White-64.png" />
     <Resource Include="Images\icons8-Unlock-64.png" />

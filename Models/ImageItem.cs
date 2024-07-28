@@ -39,6 +39,7 @@ namespace PhotoGallery.Models
         private bool _IsEncrypted = false;
 
         private string[] _fileExtensions = {".jpg", ".png", ".gif", ".webp", ".jpeg" };
+        private string[] _compressedFileExtensions = { ".rar", ".zip" };
         private string[] _videoExtensions = { ".mp4", ".mov", ".avi", ".wmv", ".avchd", ".webm","flv" };
         private string[] _FoldersExtensions = { "!app" };
 
@@ -46,23 +47,38 @@ namespace PhotoGallery.Models
        {
             string extension = Path.GetExtension(path).ToLower();
             
-            if(extension == "" || _FoldersExtensions.Contains(extension.Substring(extension.Length-4)))
+            if(extension == "" || IsAFolder(extension))
             {
                 _IsFile = false;
                 // Folder Image.
                 ImageSource = @"..\..\..\Images\icons_folder-512.png";
                 return;
             }
-            else if(extension == ".ini")
+
+            // Custom Icons for extension
+            switch (extension)
             {
-                _IsInIFile = true;
+                case ".ini":
+                    _IsInIFile = true;
+                    // Default Image.
+                    ImageSource = @"..\..\..\Images\icons_document-512.png";
+                    return;
+
+                case ".aes":
+                    _IsEncrypted = true;
+                    ImageSource = @"..\..\..\Images\icons8-lock-file-64.png";
+                    return;
+
+                case ".rar":
+                    ImageSource = @"..\..\..\Images\icons8-rar-100.png";
+                    return;
+
+                case ".zip":
+                    ImageSource = @"..\..\..\Images\icons8-archive-folder-96.png";
+                    return;
             }
-            else if(extension == ".aes")
-            {
-                _IsEncrypted = true;
-                ImageSource = @"..\..\..\Images\icons8-lock-file-64.png";
-                return;
-            }
+
+
 
             if(_fileExtensions.Contains(extension))
             {
@@ -78,6 +94,19 @@ namespace PhotoGallery.Models
                 ImageSource = @"..\..\..\Images\icons_document-512.png";
             }
 
+
+        }
+
+        private bool IsAFolder(string extension)
+        {
+            if(extension.Length >= 4 && _FoldersExtensions.Contains(extension.Substring(extension.Length - 4))) 
+            {
+                return true;
+            }
+            else
+            {
+                return _FoldersExtensions.Contains(extension);
+            }
 
         }
 
