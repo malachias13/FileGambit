@@ -46,7 +46,6 @@ namespace PhotoGallery.ViewModels
             string path = @"C:\Users\malac\Desktop\CS_Files";
 
             _files = new ObservableCollection<ImageItem>();
-            // "#5C5C5C"
             BackgroundColor = new SolidColorBrush(Color.FromRgb(92, 92, 92));
 
            // BackgroundImg = @"C:\Users\malac\Pictures\1042725.png";
