@@ -87,10 +87,10 @@ namespace PhotoGallery.ViewModels
             GalleryViewModel.Instance.UpdateWindowInfoDisplay = DisplayFileCountInfo;
 
             // Main window commands.
-            BackCommand = new RelayCommand(execute => Back(), canExecute => { return true; });
-            ReloadCommand = new RelayCommand(execute => Reload(), canExecute => { return true; });
-            EncryptAllCommand = new RelayCommand(execute => OpenPascodePrompt(true), canExecute => { return !_isEncrypting; });
-            DecryptAllCommand = new RelayCommand(execute => OpenPascodePrompt(false), canExecute => { return !_isDecrypting; });
+            BackCommand = new RelayCommand(execute => Back(), canExecute => CanRunBackCommand());
+            ReloadCommand = new RelayCommand(execute => Reload(), canExecute => CanRunReloadCommand());
+            EncryptAllCommand = new RelayCommand(execute => OpenPascodePrompt(true), canExecute => CanRunEncryptAllCommand());
+            DecryptAllCommand = new RelayCommand(execute => OpenPascodePrompt(false), canExecute => CanRunDecryptAllCommand());
             LoadFolderCommand = new RelayCommand(execute => LoadFolder(), canExecute => { return !_isEncrypting || !_isDecrypting; });
             // Prompt Commands.
             _pascodePromptVM.ContinueCommand = 
@@ -120,6 +120,25 @@ namespace PhotoGallery.ViewModels
             DisplayFileCountInfo();
         }
 
+        private bool CanRunEncryptAllCommand()
+        {
+            return !_isEncrypting && FileContainer.Instance.GetItems().Count > 0;
+        }
+
+        private bool CanRunDecryptAllCommand()
+        {
+            return !_isDecrypting && FileContainer.Instance.GetItems().Count > 0;
+        }
+
+        private bool CanRunReloadCommand()
+        {
+            return FileContainer.Instance.GetItems().Count > 0;
+        }
+
+        private bool CanRunBackCommand()
+        {
+            return FileContainer.Instance.GetItems().Count > 0 && FileContainer.Instance.CanMoveUpAFolder();
+        }
 
         private void OpenPascodePrompt(bool IsEncrypting)
         {

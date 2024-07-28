@@ -40,7 +40,7 @@ namespace PhotoGallery.Models
 
         public bool MoveUpAFolder()
         {
-            if(_Directory.Count <= 1) { return false; }
+            if(!CanMoveUpAFolder()) { return false; }
 
             _Directory.Pop();
             OpenFolder(GetCurrentPath());
@@ -71,6 +71,11 @@ namespace PhotoGallery.Models
         // Getters
         public string GetCurrentPath() { return _Directory.Peek(); }
         public List<ImageItem> GetItems() { return _Images; }
+
+        public bool CanMoveUpAFolder()
+        {
+            return _Directory.Count > 1;
+        }
 
     }
 }
