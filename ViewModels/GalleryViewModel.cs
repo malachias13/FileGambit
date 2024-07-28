@@ -25,6 +25,7 @@ namespace PhotoGallery.ViewModels
         }
 
         public Action UpdateWindowInfoDisplay;
+        public Action<int,int> UpdateProgressBar;
 
         private ObservableCollection<ImageItem> _files;
         private Brush _backgroundColor;
@@ -61,10 +62,14 @@ namespace PhotoGallery.ViewModels
             if (_files.Count > 0)
                 _files.Clear();
 
-            foreach(ImageItem item in items)
+            int Progresscount = 1;
+            UpdateProgressBar.Invoke(0, items.Count);
+            foreach (ImageItem item in items)
             {
                  item.OpenItemCommand = new RelayCommand(execute => OpenItem(item), canExecute => { return true; });
                 _files.Add(item);
+                UpdateProgressBar.Invoke(Progresscount, items.Count);
+                Progresscount++;
             }
         }
 

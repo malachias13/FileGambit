@@ -85,6 +85,7 @@ namespace PhotoGallery.ViewModels
 
             // GalleryVM Bind Actions
             GalleryViewModel.Instance.UpdateWindowInfoDisplay = DisplayFileCountInfo;
+            GalleryViewModel.Instance.UpdateProgressBar = UpdateProgressBarInArray;
 
             // Main window commands.
             BackCommand = new RelayCommand(execute => Back(), canExecute => CanRunBackCommand());
@@ -115,6 +116,7 @@ namespace PhotoGallery.ViewModels
 
         private void Reload()
         {
+            WindowsDisplayData = "Reloading...";
             FileContainer.Instance.Reload();
             GalleryViewModel.Instance.SetFiles(FileContainer.Instance.GetItems());
             DisplayFileCountInfo();
