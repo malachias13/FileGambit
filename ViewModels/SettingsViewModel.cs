@@ -51,7 +51,6 @@ namespace PhotoGallery.ViewModels
         private float _imgOpacity = 30f;
         private string? _bgImgPath;
         private string _bgStretchSelectValue;
-        private string _bgImgOpacityText;
 
         public SettingsViewModel() 
         {
