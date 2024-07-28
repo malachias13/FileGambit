@@ -40,13 +40,13 @@ namespace PhotoGallery.Models
 
         private string[] _fileExtensions = {".jpg", ".png", ".gif", ".webp", ".jpeg" };
         private string[] _videoExtensions = { ".mp4", ".mov", ".avi", ".wmv", ".avchd", ".webm","flv" };
+        private string[] _FoldersExtensions = { "!app" };
 
        private void SetImageSource(string path)
        {
             string extension = Path.GetExtension(path).ToLower();
-
             
-            if(extension == "")
+            if(extension == "" || _FoldersExtensions.Contains(extension.Substring(extension.Length-4)))
             {
                 _IsFile = false;
                 // Folder Image.
