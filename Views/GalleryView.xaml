@@ -8,7 +8,9 @@
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
     <UserControl.Background>
-        <ImageBrush ImageSource="{Binding BackgroundImg}"/>
+        <ImageBrush ImageSource="{Binding BackgroundImg}"
+                    Opacity="{Binding BackgroundOpacity}"
+                    Stretch="{Binding BackgroundStretch}"/>
     </UserControl.Background>
     <Grid x:Name="GalleryGrid">
         <Grid.Background>

@@ -7,6 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Controls;
 using System.Windows.Input;
+using System.Windows.Media;
 
 namespace PhotoGallery.ViewModels
 {
@@ -15,6 +16,8 @@ namespace PhotoGallery.ViewModels
         public static GalleryViewModel Instance;
 
         public string BackgroundImg { get; set; }
+        public float BackgroundOpacity { get; set; }
+        public Stretch BackgroundStretch {  get; set; }
 
         public Action UpdateWindowInfoDisplay;
 
@@ -39,6 +42,8 @@ namespace PhotoGallery.ViewModels
             _files = new ObservableCollection<ImageItem>();
 
             BackgroundImg = @"C:\Users\malac\Pictures\1042725.png";
+            BackgroundOpacity = 0.5f;
+            BackgroundStretch = Stretch.UniformToFill;
 
             //FileContainer.Instance.OpenFolder(path);
             //SetFiles(FileContainer.Instance.GetItems());
