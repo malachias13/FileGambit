@@ -55,19 +55,26 @@ namespace PhotoGallery.ViewModels
         public SettingsViewModel() 
         {
             bgStretchSettings = new ObservableCollection<string>();
+            FillStretchSettings();
 
             BGImgOpacity = 30f;
+            bgStretchSelectValue = bgStretchSettings[3];
 
-            bgStretchSettings.Add("None");
-            bgStretchSettings.Add("Fill");
-            bgStretchSettings.Add("Uniform");
-            bgStretchSettings.Add("UniformToFill");
+
         }
 
         private void UpdateOpacityUI()
         {
             OnPropertyChanged(nameof(BGImgOpacity));
             OnPropertyChanged(nameof(BGImgOpacityText));
+        }
+
+        private void FillStretchSettings()
+        {
+            bgStretchSettings.Add("None");
+            bgStretchSettings.Add("Fill");
+            bgStretchSettings.Add("Uniform");
+            bgStretchSettings.Add("UniformToFill");
         }
     }
 }
