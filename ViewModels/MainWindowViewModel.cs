@@ -273,7 +273,7 @@ namespace PhotoGallery.ViewModels
             }
             else
             {
-                WindowsDisplayForeground = Brushes.DarkGreen;
+                WindowsDisplayForeground = Brushes.LimeGreen;
                 text += " successful";
             }
 
@@ -282,7 +282,7 @@ namespace PhotoGallery.ViewModels
 
         private void DisplayFileCountInfo()
         {
-            WindowsDisplayForeground = Brushes.Black;
+            WindowsDisplayForeground = Brushes.White;
             string text = ""+FileContainer.Instance.GetItems().Count + " items";
             WindowsDisplayData = text;
         }

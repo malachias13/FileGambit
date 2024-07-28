@@ -18,10 +18,16 @@ namespace PhotoGallery.ViewModels
         public string BackgroundImg { get; set; }
         public float BackgroundOpacity { get; set; }
         public Stretch BackgroundStretch {  get; set; }
+        public Brush BackgroundColor
+        {
+            get { return _backgroundColor; }
+            set { _backgroundColor = value; OnPropertyChanged(); }
+        }
 
         public Action UpdateWindowInfoDisplay;
 
         private ObservableCollection<ImageItem> _files;
+        private Brush _backgroundColor;
         public ObservableCollection<ImageItem> Files {
             get
             {
@@ -40,8 +46,10 @@ namespace PhotoGallery.ViewModels
             string path = @"C:\Users\malac\Desktop\CS_Files";
 
             _files = new ObservableCollection<ImageItem>();
+            // "#5C5C5C"
+            BackgroundColor = new SolidColorBrush(Color.FromRgb(92, 92, 92));
 
-            BackgroundImg = @"C:\Users\malac\Pictures\1042725.png";
+           // BackgroundImg = @"C:\Users\malac\Pictures\1042725.png";
             BackgroundOpacity = 0.5f;
             BackgroundStretch = Stretch.UniformToFill;
 

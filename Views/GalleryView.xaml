@@ -6,15 +6,12 @@
              xmlns:local="clr-namespace:PhotoGallery.Views"
              xmlns:vwp="clr-namespace:WpfToolkit.Controls;assembly=VirtualizingWrapPanel"
              mc:Ignorable="d" 
-             d:DesignHeight="450" d:DesignWidth="800">
-    <UserControl.Background>
-        <ImageBrush ImageSource="{Binding BackgroundImg}"
-                    Opacity="{Binding BackgroundOpacity}"
-                    Stretch="{Binding BackgroundStretch}"/>
-    </UserControl.Background>
+             d:DesignHeight="450" d:DesignWidth="800" Background="{Binding BackgroundColor}">
     <Grid x:Name="GalleryGrid">
         <Grid.Background>
-            <ImageBrush/>
+            <ImageBrush ImageSource="{Binding BackgroundImg}"
+                    Opacity="{Binding BackgroundOpacity}"
+                    Stretch="{Binding BackgroundStretch}"/>
         </Grid.Background>
         <Grid.RowDefinitions>
             <RowDefinition Height="*"/>

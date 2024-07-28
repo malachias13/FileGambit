@@ -7,7 +7,7 @@
         xmlns:views="clr-namespace:PhotoGallery.Views" 
         xmlns:modalcontrol="clr-namespace:ModalControl;assembly=ModalControl"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
+        Title="MainWindow" Height="450" Width="800" Background="#171717">
     <Grid x:Name="MainGrid">
 
         <Grid.RowDefinitions>
@@ -21,7 +21,8 @@
 
         <TextBlock Text="Files"
                    HorizontalAlignment="Center"
-                   VerticalAlignment="Center"/>
+                   
+                   VerticalAlignment="Center" Foreground="White"/>
 
         <Grid Grid.Row="1"
               Margin="10,0,0,0">
