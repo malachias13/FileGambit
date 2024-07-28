@@ -8,7 +8,40 @@
         xmlns:modalcontrol="clr-namespace:ModalControl;assembly=ModalControl"
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800" Background="#171717">
+    <Window.Resources>
+        <Style x:Key="ControlButton" TargetType="Button">
+            <Setter Property="OverridesDefaultStyle" Value="True" />
+            <Setter Property="Background" Value="#FAF9F6"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type Button}">
+                        <Grid Background="{TemplateBinding Background}">
+                            <ContentPresenter x:Name="MyContentPresenter" 
+                                          Content="{TemplateBinding Content}"
+                                          HorizontalAlignment="Center" 
+                                          VerticalAlignment="Center" />
+                        </Grid>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+            <Style.Triggers>
+                <Trigger Property="IsEnabled" Value="False">
+                    <Setter Property="Opacity" Value="0.2"/>
+                </Trigger>
+                <Trigger Property="IsMouseOver" Value="true">
+                    <Setter Property="Background"  Value="Yellow"/>
+                    <Setter Property="BorderBrush" Value="Gold"/>
+                </Trigger>
+                <Trigger Property="IsPressed" Value="true">
+                    <Setter Property="Background"  Value="LightBlue"/>
+                    <Setter Property="BorderBrush" Value="LightBlue"/>
+                </Trigger>
+            </Style.Triggers>
+            
+        </Style>
+    </Window.Resources>
     <Grid x:Name="MainGrid">
+        
 
         <Grid.RowDefinitions>
             <RowDefinition Height="15"/>
@@ -34,6 +67,7 @@
                 <ColumnDefinition Width="50"/>
             </Grid.ColumnDefinitions>
             <Button x:Name="backBtn"
+                    Style="{ StaticResource ControlButton }"
                     Command="{Binding BackCommand}"
                     Grid.Column="0">
                 <Image Source="/Images/icons8-arrow-up-64.png"></Image>
@@ -41,24 +75,28 @@
             <Button x:Name="ReloadBtn"
                     Command="{Binding ReloadCommand}"
                     Grid.Column="1"
+                    Style="{ StaticResource ControlButton }"
                     Margin="10,0,0,0">
                 <Image Source="/Images/icons8-reload-64.png"></Image>
             </Button>
             <Button x:Name="LockBtn"
                     Command="{Binding EncryptAllCommand}"
                     Grid.Column="2"
+                    Style="{ StaticResource ControlButton }"
                     Margin="10,0,0,0">
                 <Image Source="/Images/icons8-lock-64.png"></Image>
             </Button>
             <Button x:Name="UnlockBtn"
                     Command="{Binding DecryptAllCommand}"
                     Grid.Column="3"
+                    Style="{ StaticResource ControlButton }"
                     Margin="10,0,0,0">
                 <Image Source="/Images/icons8-Unlock-64.png"></Image>
             </Button>
             <Button x:Name="LoadFolderBtn"
                     Command="{Binding LoadFolderCommand}"
                     Grid.Column="4"
+                    Style="{ StaticResource ControlButton }"
                     Margin="10,0,0,0">
                 <Image Source="/Images/icons_folder-512.png"></Image>
             </Button>
