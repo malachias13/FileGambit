@@ -17,12 +17,12 @@ namespace PhotoGallery.ViewModels
         public float BGImgOpacity
         {
             get { return _imgOpacity; }
-            set { _imgOpacity = value; OnPropertyChanged(); }
+            set { _imgOpacity = value; OnPropertyChanged(); UpdateImgOpacityText(); }
         }
         public string BGImgOpacityText
         {
             get { return _bgImgOpacityText; }
-            set { _bgImgOpacityText = value; }
+            set { _bgImgOpacityText = value; OnPropertyChanged(); }
         }
         public string? BGImgPath
         {
@@ -40,14 +40,25 @@ namespace PhotoGallery.ViewModels
         private string? _bgImgPath;
         private string _bgStretchSelectValue;
         private string _bgImgOpacityText;
+
         public SettingsViewModel() 
         {
             bgStretchSettings = new ObservableCollection<string>();
+
+            BGImgOpacity = 1.0f;
 
             bgStretchSettings.Add("None");
             bgStretchSettings.Add("Fill");
             bgStretchSettings.Add("Uniform");
             bgStretchSettings.Add("UniformToFill");
+        }
+
+        public void UpdateImgOpacityText()
+        {
+            // (new_max - new_min) / (old_max - old_min) * (v - old_min) + new_min
+            
+            string text = "" + (100 - 0) / (1 - 0) * (_imgOpacity - 0);
+            BGImgOpacityText = text; 
         }
     }
 }

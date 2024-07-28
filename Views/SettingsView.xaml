@@ -7,10 +7,18 @@
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
     <UserControl.Resources>
+        <!--Text block-->
         <Style x:Key="SettingText" TargetType="TextBlock">
             <Setter Property="Foreground" Value="White"/>
             <Setter Property="FontSize" Value="18"/>
         </Style>
+        <!--Text Box Editable-->
+        <Style x:Key="SettingTextBox" TargetType="TextBox">
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="Background" Value="Transparent"/>
+            <Setter Property="FontSize" Value="18"/>
+        </Style>
+        <!--Text block-->
         <Style x:Key="SettingTitle" TargetType="TextBlock">
             <Setter Property="Foreground" Value="White"/>
             <Setter Property="FontSize" Value="25"/>
@@ -57,17 +65,19 @@
                                Grid.Row="0"
                                Text="Image"/>
                     <Button x:Name="ChangeImgBtn"
-                               Margin=" 0, 2"
-                               HorizontalAlignment="Center"
-                               Grid.Column="1"
-                               Grid.Row="0">
+                            Command="{Binding ChoseImgCommand}"
+                            Margin=" 0, 2"
+                            HorizontalAlignment="Center"
+                            Grid.Column="1"
+                            Grid.Row="0">
                         <Label Content="Choose file"/>
                     </Button>
                     <TextBlock Style="{StaticResource SettingText}"
                                VerticalAlignment="Center"
+                               HorizontalAlignment="Stretch"
                                Grid.Column="2"
                                Grid.Row="0"
-                               Text="c:/user/Random/Folder/1345.png"/>
+                               Text="{Binding BGImgPath}"/>
 
                     <!--Row One END-->
 
@@ -80,6 +90,7 @@
                     <ComboBox Name="ImageSettingCombo"
                               HorizontalAlignment="Stretch"
                               ItemsSource="{Binding bgStretchSettings}"
+                              SelectedValue="{Binding bgStretchSelectValue}"
                               Margin=" 20, 8"
                               SelectedItem="UniformToFill"
                               Padding="45,0" 
@@ -98,16 +109,23 @@
                                Grid.Row="2"/>
                     <Slider Minimum="0"
                             Maximum="1"
-                            Value="1"
+                            Value="{Binding BGImgOpacity}"
                             VerticalAlignment="Center"
                             Grid.Column="1"
                             Grid.Row="2"/>
-                    <TextBlock Text="100%"
-                               HorizontalAlignment="Center"
-                               VerticalAlignment="Center"
-                               Grid.Row="2"
-                               Grid.Column="2"
-                               Style="{StaticResource SettingText}"/>
+
+                    <StackPanel Orientation="Horizontal"
+                                HorizontalAlignment="Center"
+                                VerticalAlignment="Center"
+                                Grid.Column="2"
+                                Grid.Row="2" FlowDirection="LeftToRight">
+                        <TextBox Text="{Binding BGImgOpacityText}"
+                                   HorizontalAlignment="Center"
+                                   Grid.Row="2"
+                                   Grid.Column="2"
+                                   Style="{StaticResource SettingTextBox}"/>
+                    </StackPanel>
+                    
 
                     <!--Row Three END-->
                 </Grid>
