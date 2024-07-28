@@ -44,7 +44,6 @@ namespace PhotoGallery.ViewModels
         {
 
             Instance = this;
-            string path = @"C:\Users\malac\Desktop\CS_Files";
 
             _files = new ObservableCollection<ImageItem>();
             BackgroundColor = new SolidColorBrush(Color.FromRgb(92, 92, 92));
@@ -53,8 +52,6 @@ namespace PhotoGallery.ViewModels
             BackgroundOpacity = 0.5f;
             BackgroundStretch = Stretch.UniformToFill;
 
-            //FileContainer.Instance.OpenFolder(path);
-            //SetFiles(FileContainer.Instance.GetItems());
         }
 
         public void SetFiles(List<ImageItem> items)
