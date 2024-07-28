@@ -14,6 +14,8 @@ namespace PhotoGallery.ViewModels
     {
         public static GalleryViewModel Instance;
 
+        public string BackgroundImg { get; set; }
+
         public Action UpdateWindowInfoDisplay;
 
         private ObservableCollection<ImageItem> _files;
@@ -35,6 +37,8 @@ namespace PhotoGallery.ViewModels
             string path = @"C:\Users\malac\Desktop\CS_Files";
 
             _files = new ObservableCollection<ImageItem>();
+
+            BackgroundImg = @"C:\Users\malac\Pictures\1042725.png";
 
             //FileContainer.Instance.OpenFolder(path);
             //SetFiles(FileContainer.Instance.GetItems());
