@@ -134,12 +134,7 @@ namespace PhotoGallery.ViewModels
             _pascodePromptVM.CloseCommand =
                 new RelayCommand(execute => ClosePascodePrompt(), canExecute => { return true; });
 
-            if (AppConfig.Sections["UISettings"] is null)
-            {
-                AppConfig.Sections.Add("UISettings", new UISettingsModel());
-            }
-            _UISettingSection = AppConfig.GetSection("UISettings") as UISettingsModel;
-            GalleryViewModel.Instance.SetUISettingsModel(_UISettingSection);
+            SetupAppConfig();
             LoadUserSettings();
         }
 
@@ -335,6 +330,16 @@ namespace PhotoGallery.ViewModels
         #endregion
 
         #region Helper functions
+
+        private void SetupAppConfig()
+        {
+            if (AppConfig.Sections["UISettings"] is null)
+            {
+                AppConfig.Sections.Add("UISettings", new UISettingsModel());
+            }
+            _UISettingSection = AppConfig.GetSection("UISettings") as UISettingsModel;
+            GalleryViewModel.Instance.SetUISettingsModel(_UISettingSection);
+        }
 
         private void LoadUserSettings()
         {
