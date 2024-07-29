@@ -119,6 +119,7 @@ namespace PhotoGallery.ViewModels
             _settingsVM.SetBackgroundImage = GalleryViewModel.Instance.SetBackgroundImage;
             _settingsVM.SetBackgroundImageOpacity = GalleryViewModel.Instance.SetBackgroundOpacity;
             _settingsVM.SetBackgroundImmageStretch = GalleryViewModel.Instance.SetBackgroundStretch;
+            _settingsVM.SetImageItemTextColor = GalleryViewModel.Instance.SetImageItemForegroundColor;
 
             // Main window commands.
             BackCommand = new RelayCommand(execute => Back(), canExecute => CanRunBackCommand());

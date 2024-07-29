@@ -31,7 +31,7 @@ namespace PhotoGallery.Models
         public string ImageSource { get; set; }
         public int Id { get; set; }
 
-        public Brush ImageItemColor { get; set; }
+        public SolidColorBrush ImageItemColor { get; set; }
 
         // Commands
         public ICommand OpenItemCommand { get; set; }

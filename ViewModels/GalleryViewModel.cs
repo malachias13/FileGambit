@@ -21,7 +21,7 @@ namespace PhotoGallery.ViewModels
         }
         public float BackgroundOpacity { get; set; }
         public Stretch BackgroundStretch {  get; set; }
-        public Brush BackgroundColor
+        public SolidColorBrush BackgroundColor
         {
             get { return _backgroundColor; }
             set { _backgroundColor = value; OnPropertyChanged(); }
@@ -32,8 +32,8 @@ namespace PhotoGallery.ViewModels
 
         private UISettingsModel _settingsConfig;
         private ObservableCollection<ImageItem> _files;
-        private Brush _backgroundColor;
-        private Brush _ImageItemforegroundColor;
+        private SolidColorBrush _backgroundColor;
+        private SolidColorBrush _ImageItemforegroundColor;
         private string _backgroundImage;
         public ObservableCollection<ImageItem> Files {
             get
@@ -125,7 +125,7 @@ namespace PhotoGallery.ViewModels
             _settingsConfig.BackgroundImageStretch = StretchStr;
         }
 
-        public void SetImageItemForegroundColor(Brush color)
+        public void SetImageItemForegroundColor(SolidColorBrush color)
         {
             _ImageItemforegroundColor = color;
         }

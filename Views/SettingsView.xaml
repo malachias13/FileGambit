@@ -4,6 +4,8 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:local="clr-namespace:PhotoGallery.Views"
+             xmlns:hw="http://schemas.hpod9.com/haley/wpf"
+             xmlns:modalcontrol="clr-namespace:ModalControl;assembly=ModalControl"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
     <UserControl.Resources>
@@ -125,12 +127,36 @@
                                    Grid.Column="2"
                                    Style="{StaticResource SettingTextBox}"/>
                     </StackPanel>
-                    
-
                     <!--Row Three END-->
                 </Grid>
-            </StackPanel>
 
+                <TextBlock Text="Items"
+                           Style="{StaticResource SettingTitle}"/>
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/> 
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="40"/>
+                    </Grid.RowDefinitions>
+
+                    <TextBlock Style="{StaticResource SettingText}"
+                               VerticalAlignment="Center"
+                               Grid.Column="0"
+                               Grid.Row="0"
+                               Text="Text Color"/>
+
+                    <hw:ColorPickerButton Grid.Column="1"
+                                          hw:SelectedBrush="{Binding ImageItemTextColor}"/>
+
+                </Grid>
+                
+
+                
+            </StackPanel>
+    
 
         </ScrollViewer>
 

@@ -18,6 +18,7 @@ namespace PhotoGallery.ViewModels
         public Action<string> SetBackgroundImage;
         public Action<float> SetBackgroundImageOpacity;
         public Action<string> SetBackgroundImmageStretch;
+        public Action<SolidColorBrush> SetImageItemTextColor;
 
         public ObservableCollection<string> bgStretchSettings { get; set; }
         public ICommand ChoseImgCommand { get; set; }
@@ -60,9 +61,21 @@ namespace PhotoGallery.ViewModels
             }
         }
 
+        public SolidColorBrush ImageItemTextColor
+        {
+            get { return _imageItemTextColor; }
+            set 
+            {
+                _imageItemTextColor = value;
+                SetImageItemTextColor?.Invoke(_imageItemTextColor);
+                OnPropertyChanged(); 
+            }
+        }
+
         private float _imgOpacity = 30f;
         private string? _bgImgPath;
         private string _bgStretchSelectValue;
+        private SolidColorBrush _imageItemTextColor;
 
         public SettingsViewModel() 
         {
