@@ -33,6 +33,7 @@ namespace PhotoGallery.ViewModels
         private UISettingsModel _settingsConfig;
         private ObservableCollection<ImageItem> _files;
         private Brush _backgroundColor;
+        private Brush _ImageItemforegroundColor;
         private string _backgroundImage;
         public ObservableCollection<ImageItem> Files {
             get
@@ -52,6 +53,8 @@ namespace PhotoGallery.ViewModels
 
             _files = new ObservableCollection<ImageItem>();
             BackgroundColor = new SolidColorBrush(Color.FromRgb(92, 92, 92));
+            // #FAF9F6
+            _ImageItemforegroundColor = new SolidColorBrush(Color.FromRgb(255, 0, 255));
 
             BackgroundImg = @"C:\Users\malac\Pictures\1042725.png";
             BackgroundOpacity = 0.5f;
@@ -73,7 +76,8 @@ namespace PhotoGallery.ViewModels
             UpdateProgressBar.Invoke(0, items.Count);
             foreach (ImageItem item in items)
             {
-                 item.OpenItemCommand = new RelayCommand(execute => OpenItem(item), canExecute => { return true; });
+                item.OpenItemCommand = new RelayCommand(execute => OpenItem(item), canExecute => { return true; });
+                item.ImageItemColor = _ImageItemforegroundColor;
                 _files.Add(item);
                 UpdateProgressBar.Invoke(Progresscount, items.Count);
                 Progresscount++;
@@ -119,6 +123,11 @@ namespace PhotoGallery.ViewModels
             }
             OnPropertyChanged(nameof(BackgroundStretch));
             _settingsConfig.BackgroundImageStretch = StretchStr;
+        }
+
+        public void SetImageItemForegroundColor(Brush color)
+        {
+            _ImageItemforegroundColor = color;
         }
 
         // Commands
