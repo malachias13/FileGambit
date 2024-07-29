@@ -17,10 +17,10 @@ namespace PhotoGallery.ViewModels
     {
         public Action<string> SetBackgroundImage;
         public Action<float> SetBackgroundImageOpacity;
+        public Action<string> SetBackgroundImmageStretch;
 
         public ObservableCollection<string> bgStretchSettings { get; set; }
         public ICommand ChoseImgCommand { get; set; }
-        public Stretch BackgroundStretch { get; set; }
         public float BGImgOpacity
         {
             get { return _imgOpacity; }
@@ -53,7 +53,11 @@ namespace PhotoGallery.ViewModels
         public string bgStretchSelectValue
         {
             get { return _bgStretchSelectValue; }
-            set { _bgStretchSelectValue = value; OnPropertyChanged(); }
+            set 
+            {   _bgStretchSelectValue = value;
+                SetBackgroundImmageStretch?.Invoke(_bgStretchSelectValue);
+                OnPropertyChanged(); 
+            }
         }
 
         private float _imgOpacity = 30f;

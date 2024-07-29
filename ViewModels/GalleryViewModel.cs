@@ -88,6 +88,26 @@ namespace PhotoGallery.ViewModels
             OnPropertyChanged(nameof(BackgroundOpacity));
         }
 
+        public void SetBackgroundStretch(string StretchStr)
+        {
+            switch (StretchStr)
+            {
+                case "None":
+                    BackgroundStretch = Stretch.None;
+                    break;
+                case "Fill":
+                    BackgroundStretch = Stretch.Fill;
+                    break;
+                case "Uniform":
+                    BackgroundStretch = Stretch.Uniform;
+                    break;
+                case "UniformToFill":
+                    BackgroundStretch = Stretch.UniformToFill;
+                    break;
+            }
+            OnPropertyChanged(nameof(BackgroundStretch));
+        }
+
         // Commands
         private async void OpenItem(object sender)
         {

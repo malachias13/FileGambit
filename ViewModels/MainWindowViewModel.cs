@@ -110,6 +110,7 @@ namespace PhotoGallery.ViewModels
             GalleryViewModel.Instance.UpdateProgressBar = UpdateProgressBarInArray;
             _settingsVM.SetBackgroundImage = GalleryViewModel.Instance.SetBackgroundImage;
             _settingsVM.SetBackgroundImageOpacity = GalleryViewModel.Instance.SetBackgroundOpacity;
+            _settingsVM.SetBackgroundImmageStretch = GalleryViewModel.Instance.SetBackgroundStretch;
 
             // Main window commands.
             BackCommand = new RelayCommand(execute => Back(), canExecute => CanRunBackCommand());
