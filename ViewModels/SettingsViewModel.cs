@@ -99,6 +99,10 @@ namespace PhotoGallery.ViewModels
 
             if (fileDialog.ShowDialog() == true)
             {
+                // Clear all files in folder.
+                FileContainer.Instance.ClearBackgroundsFolder();
+
+                // Create and Copy file to Backgrounds folder.
                 string BackgroundDir = @"..\..\..\Backgrounds";
                 string destFile = Path.Combine(BackgroundDir, Path.GetFileName(fileDialog.FileName));
                 if (!Directory.Exists(Path.GetFullPath(BackgroundDir)))
@@ -111,7 +115,6 @@ namespace PhotoGallery.ViewModels
                 // Set background.
                 SetBackgroundImage.Invoke(Path.GetFullPath(destFile));
                 BGImgPath = Path.GetFileName(destFile);
-
             }
         }
 

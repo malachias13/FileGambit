@@ -6,6 +6,7 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Shapes;
 
 namespace PhotoGallery.Models
 {
@@ -67,6 +68,20 @@ namespace PhotoGallery.Models
         public void ClearDirectory()
         {
             _Directory.Clear();
+        }
+
+        public void ClearBackgroundsFolder()
+        {
+            string path = @"..\..\..\Backgrounds";
+            if(!Directory.Exists(System.IO.Path.GetFullPath(path))) { return; }
+            foreach (string file in Directory.EnumerateFiles(System.IO.Path.GetFullPath(path)))
+            {
+                try
+                {
+                    File.Delete(file);
+                }
+                catch { }
+            }
         }
         // Getters
         public string GetCurrentPath() { return _Directory.Peek(); }
