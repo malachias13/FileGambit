@@ -89,11 +89,11 @@ namespace PhotoGallery.ViewModels
 
         public void SetUISettings(UISettingsModel settings)
         {
-            if(FileContainer.Instance.BackgroundsFolderExist())
+            if(FileContainer.Instance.BackgroundsFolderExist() && Path.Exists(settings.BackgroundImage))
             {
                 BGImgOpacity = settings.BackgroundImageOpacity;
-                BGImgPath = settings.BackgroundImage;
-                SetBackgroundImage.Invoke(BGImgPath);
+                BGImgPath = Path.GetFileName(settings.BackgroundImage);
+                SetBackgroundImage.Invoke(settings.BackgroundImage);
                 bgStretchSelectValue = settings.BackgroundImageStretch;
             }
             if (settings.ImageItemTextColor is null)
