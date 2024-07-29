@@ -76,6 +76,14 @@ namespace PhotoGallery.ViewModels
 
         }
 
+        public void SetUISettings(UISettingsModel settings)
+        {
+            BGImgOpacity = settings.BackgroundImageOpacity;
+            BGImgPath = settings.BackgroundImage;
+            SetBackgroundImage.Invoke(BGImgPath);
+            bgStretchSelectValue = settings.BackgroundImageStretch;
+        }
+
         #region Commands
 
         private void ChoseImageFromFolder()

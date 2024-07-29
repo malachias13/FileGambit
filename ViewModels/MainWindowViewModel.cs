@@ -13,6 +13,8 @@ using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Xml.Linq;
+using System.Configuration;
+using Haley.Abstractions;
 
 
 namespace PhotoGallery.ViewModels
@@ -85,9 +87,13 @@ namespace PhotoGallery.ViewModels
         private PascodePromptViewModel _pascodePromptVM;
         private SettingsViewModel _settingsVM;
 
+        private UISettingsModel _UISettingSection;
+
         // Path variables for source, encryption, and
         // decryption folders. Must end with a backslash.
         string EncrAndDecrFolder;
+
+        private Configuration AppConfig = ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.None);
 
         public MainWindowViewModel()
         {
@@ -108,6 +114,8 @@ namespace PhotoGallery.ViewModels
             // GalleryVM Bind Actions
             GalleryViewModel.Instance.UpdateWindowInfoDisplay = DisplayFileCountInfo;
             GalleryViewModel.Instance.UpdateProgressBar = UpdateProgressBarInArray;
+
+            // SettingsVM Bind Actions
             _settingsVM.SetBackgroundImage = GalleryViewModel.Instance.SetBackgroundImage;
             _settingsVM.SetBackgroundImageOpacity = GalleryViewModel.Instance.SetBackgroundOpacity;
             _settingsVM.SetBackgroundImmageStretch = GalleryViewModel.Instance.SetBackgroundStretch;
@@ -125,6 +133,14 @@ namespace PhotoGallery.ViewModels
 
             _pascodePromptVM.CloseCommand =
                 new RelayCommand(execute => ClosePascodePrompt(), canExecute => { return true; });
+
+            if (AppConfig.Sections["UISettings"] is null)
+            {
+                AppConfig.Sections.Add("UISettings", new UISettingsModel());
+            }
+            _UISettingSection = AppConfig.GetSection("UISettings") as UISettingsModel;
+            GalleryViewModel.Instance.SetUISettingsModel(_UISettingSection);
+            LoadUserSettings();
         }
 
         #region Buttons Commands
@@ -133,6 +149,7 @@ namespace PhotoGallery.ViewModels
         {
             if(_currentView == View.SETTINGS)
             {
+                SaveUserSettings();
                 ConentWindow = _galleryWindow;
                 _currentView = View.GALLERY;
                 return;
@@ -318,6 +335,16 @@ namespace PhotoGallery.ViewModels
         #endregion
 
         #region Helper functions
+
+        private void LoadUserSettings()
+        {
+            _settingsVM.SetUISettings(_UISettingSection);
+        }
+
+        private void SaveUserSettings()
+        {
+            AppConfig.Save();
+        }
 
         private void DisplayEncryptInfo(FileInfo file, bool HasError)
         {

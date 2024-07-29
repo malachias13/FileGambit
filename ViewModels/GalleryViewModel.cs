@@ -15,7 +15,10 @@ namespace PhotoGallery.ViewModels
     {
         public static GalleryViewModel Instance;
 
-        public string BackgroundImg { get; set; }
+        public string BackgroundImg 
+        {   get { return _backgroundImage; }
+            set { _backgroundImage = value; OnPropertyChanged(); }
+        }
         public float BackgroundOpacity { get; set; }
         public Stretch BackgroundStretch {  get; set; }
         public Brush BackgroundColor
@@ -27,8 +30,10 @@ namespace PhotoGallery.ViewModels
         public Action UpdateWindowInfoDisplay;
         public Action<int,int> UpdateProgressBar;
 
+        private UISettingsModel _settingsConfig;
         private ObservableCollection<ImageItem> _files;
         private Brush _backgroundColor;
+        private string _backgroundImage;
         public ObservableCollection<ImageItem> Files {
             get
             {
@@ -52,6 +57,11 @@ namespace PhotoGallery.ViewModels
             BackgroundOpacity = 0.5f;
             BackgroundStretch = Stretch.UniformToFill;
 
+        }
+
+        public void SetUISettingsModel(UISettingsModel uISettingsModel)
+        {
+            _settingsConfig = uISettingsModel;
         }
 
         public void SetFiles(List<ImageItem> items)
@@ -80,13 +90,14 @@ namespace PhotoGallery.ViewModels
         public void SetBackgroundImage(string file)
         {
             BackgroundImg = file;
-            OnPropertyChanged(nameof(BackgroundImg));
+            _settingsConfig.BackgroundImage = BackgroundImg;
         }
 
         public void SetBackgroundOpacity(float opacity)
         {
             BackgroundOpacity = opacity/100;
             OnPropertyChanged(nameof(BackgroundOpacity));
+            _settingsConfig.BackgroundImageOpacity = opacity;
         }
 
         public void SetBackgroundStretch(string StretchStr)
@@ -107,6 +118,7 @@ namespace PhotoGallery.ViewModels
                     break;
             }
             OnPropertyChanged(nameof(BackgroundStretch));
+            _settingsConfig.BackgroundImageStretch = StretchStr;
         }
 
         // Commands
