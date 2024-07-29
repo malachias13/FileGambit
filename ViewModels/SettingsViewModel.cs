@@ -72,16 +72,17 @@ namespace PhotoGallery.ViewModels
 
             BGImgOpacity = 30f;
             bgStretchSelectValue = bgStretchSettings[3];
-
-
         }
 
         public void SetUISettings(UISettingsModel settings)
         {
-            BGImgOpacity = settings.BackgroundImageOpacity;
-            BGImgPath = settings.BackgroundImage;
-            SetBackgroundImage.Invoke(BGImgPath);
-            bgStretchSelectValue = settings.BackgroundImageStretch;
+            if(FileContainer.Instance.BackgroundsFolderExist())
+            {
+                BGImgOpacity = settings.BackgroundImageOpacity;
+                BGImgPath = settings.BackgroundImage;
+                SetBackgroundImage.Invoke(BGImgPath);
+                bgStretchSelectValue = settings.BackgroundImageStretch;
+            }
         }
 
         #region Commands

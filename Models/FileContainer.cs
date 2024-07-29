@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.Win32;
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
@@ -82,6 +83,12 @@ namespace PhotoGallery.Models
                 }
                 catch { }
             }
+        }
+
+        public bool BackgroundsFolderExist()
+        {
+            string BackgroundDir = @"..\..\..\Backgrounds";
+            return Directory.Exists(System.IO.Path.GetFullPath(BackgroundDir));
         }
         // Getters
         public string GetCurrentPath() { return _Directory.Peek(); }
