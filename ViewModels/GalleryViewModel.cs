@@ -76,6 +76,12 @@ namespace PhotoGallery.ViewModels
             FileContainer.Instance.GetItems().Clear();
         }
 
+        public void SetBackgroundImage(string file)
+        {
+            BackgroundImg = file;
+            OnPropertyChanged(nameof(BackgroundImg));
+        }
+
         // Commands
         private async void OpenItem(object sender)
         {

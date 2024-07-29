@@ -17,6 +17,12 @@ using System.Xml.Linq;
 
 namespace PhotoGallery.ViewModels
 {
+    enum View
+    {
+        GALLERY,
+        SETTINGS
+    }
+
     internal class MainWindowViewModel : ViewModelBase
     {
         public UserControl ConentWindow 
@@ -66,6 +72,7 @@ namespace PhotoGallery.ViewModels
         private bool _HasClickedEncryptBtn = false;
         private float _currentProgress;
         private bool _IsPascodePromptWindowOpen = false;
+        private View _currentView = View.GALLERY;
 
         private string? _password = null;
         private string _windowsDisplayData;
@@ -101,6 +108,7 @@ namespace PhotoGallery.ViewModels
             // GalleryVM Bind Actions
             GalleryViewModel.Instance.UpdateWindowInfoDisplay = DisplayFileCountInfo;
             GalleryViewModel.Instance.UpdateProgressBar = UpdateProgressBarInArray;
+            _settingsVM.SetBackgroundImage = GalleryViewModel.Instance.SetBackgroundImage;
 
             // Main window commands.
             BackCommand = new RelayCommand(execute => Back(), canExecute => CanRunBackCommand());
@@ -108,7 +116,7 @@ namespace PhotoGallery.ViewModels
             EncryptAllCommand = new RelayCommand(execute => OpenPascodePrompt(true), canExecute => CanRunEncryptAllCommand());
             DecryptAllCommand = new RelayCommand(execute => OpenPascodePrompt(false), canExecute => CanRunDecryptAllCommand());
             LoadFolderCommand = new RelayCommand(execute => LoadFolder(), canExecute => { return !_isEncrypting || !_isDecrypting; });
-            SettingsCommand = new RelayCommand(execute => Setting(), canExecute => { return true; });
+            SettingsCommand = new RelayCommand(execute => Setting(), canExecute => CanRunSettingCommand());
             // Prompt Commands.
             _pascodePromptVM.ContinueCommand = 
                 new RelayCommand(execute => ContinueCommand(), canExecute => { return _pascodePromptVM.IsVaildKey(); });
@@ -117,15 +125,22 @@ namespace PhotoGallery.ViewModels
                 new RelayCommand(execute => ClosePascodePrompt(), canExecute => { return true; });
         }
 
-
         #region Buttons Commands
 
         private void Back()
         {
-            if (FileContainer.Instance.MoveUpAFolder())
+            if(_currentView == View.SETTINGS)
+            {
+                ConentWindow = _galleryWindow;
+                _currentView = View.GALLERY;
+                return;
+            }
+
+            if (FileContainer.Instance.MoveUpAFolder() && _currentView == View.GALLERY)
             {
                 GalleryViewModel.Instance.SetFiles(FileContainer.Instance.GetItems());
                 DisplayFileCountInfo();
+                return;
             }
            
         }
@@ -141,6 +156,12 @@ namespace PhotoGallery.ViewModels
         private void Setting()
         {
             ConentWindow = _settingsWindow;
+            _currentView = View.SETTINGS;
+        }
+
+        private bool CanRunSettingCommand()
+        {
+            return _currentView != View.SETTINGS;
         }
 
         private bool CanRunEncryptAllCommand()
@@ -160,7 +181,7 @@ namespace PhotoGallery.ViewModels
 
         private bool CanRunBackCommand()
         {
-            return FileContainer.Instance.GetItems().Count > 0 && FileContainer.Instance.CanMoveUpAFolder();
+            return (FileContainer.Instance.GetItems().Count > 0 && FileContainer.Instance.CanMoveUpAFolder()) || _currentView == View.SETTINGS;
         }
 
         private void OpenPascodePrompt(bool IsEncrypting)

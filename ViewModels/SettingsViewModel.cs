@@ -1,6 +1,10 @@
-﻿using System;
+﻿using Microsoft.Win32;
+using PhotoGallery.Models;
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Drawing.Imaging;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -11,6 +15,8 @@ namespace PhotoGallery.ViewModels
 {
     internal class SettingsViewModel : ViewModelBase
     {
+        public Action<string> SetBackgroundImage;
+
         public ObservableCollection<string> bgStretchSettings { get; set; }
         public ICommand ChoseImgCommand { get; set; }
         public Stretch BackgroundStretch { get; set; }
@@ -54,6 +60,7 @@ namespace PhotoGallery.ViewModels
 
         public SettingsViewModel() 
         {
+            ChoseImgCommand = new RelayCommand(execute => ChoseImageFromFolder(), canExecute => { return true; });
             bgStretchSettings = new ObservableCollection<string>();
             FillStretchSettings();
 
@@ -63,6 +70,48 @@ namespace PhotoGallery.ViewModels
 
         }
 
+        #region Commands
+
+        private void ChoseImageFromFolder()
+        {
+            ImageCodecInfo[] codecs = ImageCodecInfo.GetImageEncoders();
+            string sep = string.Empty;
+            string filter = string.Empty;
+
+            Array.Reverse(codecs);
+
+            foreach (var c in codecs)
+            {
+                string codecName = c.CodecName.Substring(8).Replace("Codec", "Files").Trim();
+                filter = String.Format("{0}{1}{2} ({3})|{3}", filter, sep, codecName, c.FilenameExtension);
+                sep = "|";
+            }
+
+            // filter = String.Format("{0}{1}{2} ({3})|{3}", filter, sep, "All Files", "*.*");
+
+            var fileDialog = new OpenFileDialog
+            {
+                // Set options here
+                AddExtension = true,
+                Filter = filter,
+                DefaultExt = ".png"
+            };
+
+            if (fileDialog.ShowDialog() == true)
+            {
+                string BackgroundDir = @"..\..\..\Backgrounds";
+                string destFile = Path.Combine(BackgroundDir, Path.GetFileName(fileDialog.FileName));
+
+                File.Copy(fileDialog.FileName, destFile, true );
+
+                // Set background.
+                SetBackgroundImage.Invoke(Path.GetFullPath(destFile));
+                BGImgPath = Path.GetFileName(destFile);
+
+            }
+        }
+
+        #endregion
         private void UpdateOpacityUI()
         {
             OnPropertyChanged(nameof(BGImgOpacity));
