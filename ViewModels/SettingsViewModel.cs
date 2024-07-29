@@ -16,6 +16,7 @@ namespace PhotoGallery.ViewModels
     internal class SettingsViewModel : ViewModelBase
     {
         public Action<string> SetBackgroundImage;
+        public Action<float> SetBackgroundImageOpacity;
 
         public ObservableCollection<string> bgStretchSettings { get; set; }
         public ICommand ChoseImgCommand { get; set; }
@@ -26,6 +27,7 @@ namespace PhotoGallery.ViewModels
             set 
             {
                 _imgOpacity = value;
+                SetBackgroundImageOpacity?.Invoke(_imgOpacity);
                 UpdateOpacityUI();
             }
         }

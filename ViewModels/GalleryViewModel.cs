@@ -82,6 +82,12 @@ namespace PhotoGallery.ViewModels
             OnPropertyChanged(nameof(BackgroundImg));
         }
 
+        public void SetBackgroundOpacity(float opacity)
+        {
+            BackgroundOpacity = opacity/100;
+            OnPropertyChanged(nameof(BackgroundOpacity));
+        }
+
         // Commands
         private async void OpenItem(object sender)
         {
