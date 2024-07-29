@@ -101,6 +101,10 @@ namespace PhotoGallery.ViewModels
             {
                 string BackgroundDir = @"..\..\..\Backgrounds";
                 string destFile = Path.Combine(BackgroundDir, Path.GetFileName(fileDialog.FileName));
+                if (!Directory.Exists(Path.GetFullPath(BackgroundDir)))
+                {
+                    Directory.CreateDirectory(Path.GetFullPath(BackgroundDir));
+                }
 
                 File.Copy(fileDialog.FileName, destFile, true );
 
