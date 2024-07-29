@@ -68,6 +68,7 @@ namespace PhotoGallery.ViewModels
                 UpdateProgressBar.Invoke(Progresscount, items.Count);
                 Progresscount++;
             }
+            UpdateProgressBar.Invoke(0, 1);
         }
 
         public void ClearAllFiles()
