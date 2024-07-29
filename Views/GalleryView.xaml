@@ -57,7 +57,7 @@
                                                HorizontalAlignment="Center"
                                                TextWrapping="Wrap"
                                                Margin="8"
-                                               Foreground="{Binding ImageItemColor}"
+                                               Foreground="{Binding ImageItemColor, Mode=OneWay}"
                                                TextAlignment="Center"
                                                MaxWidth="120"
                                                MaxHeight="100"/>

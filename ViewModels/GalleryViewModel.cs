@@ -128,6 +128,7 @@ namespace PhotoGallery.ViewModels
         public void SetImageItemForegroundColor(SolidColorBrush color)
         {
             _ImageItemforegroundColor = color;
+            _settingsConfig.ImageItemTextColor = color;
         }
 
         // Commands

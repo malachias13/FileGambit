@@ -4,6 +4,7 @@ using System.Configuration;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Media;
 
 namespace PhotoGallery.Models
 {
@@ -28,6 +29,13 @@ namespace PhotoGallery.Models
         {
             get { return (string)this["BackgroundImageStretch"]; }
             set { this["BackgroundImageStretch"] = value; }
+        }
+
+        [ConfigurationProperty("ImageItemTextColor")]
+        public SolidColorBrush ImageItemTextColor
+        {
+            get { return (SolidColorBrush)this["ImageItemTextColor"]; }
+            set { this["ImageItemTextColor"] = value; }
         }
 
 

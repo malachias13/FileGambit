@@ -96,6 +96,18 @@ namespace PhotoGallery.ViewModels
                 SetBackgroundImage.Invoke(BGImgPath);
                 bgStretchSelectValue = settings.BackgroundImageStretch;
             }
+            if (settings.ImageItemTextColor is null)
+            {
+                ImageItemTextColor = 
+                    new SolidColorBrush(Color.FromRgb(255,255,255));
+
+            }
+            else
+            {
+                ImageItemTextColor = settings.ImageItemTextColor;
+            }
+
+
         }
 
         #region Commands

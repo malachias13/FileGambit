@@ -149,7 +149,7 @@
                                Text="Text Color"/>
 
                     <hw:ColorPickerButton Grid.Column="1"
-                                          hw:SelectedBrush="{Binding ImageItemTextColor}"/>
+                                          hw:SelectedBrush="{Binding ImageItemTextColor, Mode=TwoWay}"/>
 
                 </Grid>
                 

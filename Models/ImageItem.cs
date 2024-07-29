@@ -1,7 +1,10 @@
-﻿using System;
+﻿using PhotoGallery.ViewModels;
+using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.IO;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Controls;
@@ -45,7 +48,7 @@ namespace PhotoGallery.Models
         private string[] _videoExtensions = { ".mp4", ".mov", ".avi", ".wmv", ".avchd", ".webm","flv" };
         private string[] _FoldersExtensions = { "!app" };
 
-       private void SetImageSource(string path)
+        private void SetImageSource(string path)
        {
             string extension = Path.GetExtension(path).ToLower();
             
