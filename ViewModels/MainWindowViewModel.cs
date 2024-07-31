@@ -17,6 +17,7 @@ using System.Configuration;
 using Haley.Abstractions;
 using Squirrel;
 using File_Gambit.Views;
+using File_Gambit.ViewModels;
 
 
 
@@ -105,6 +106,7 @@ namespace PhotoGallery.ViewModels
 
         private PascodePromptViewModel _pascodePromptVM;
         private SettingsViewModel _settingsVM;
+        private UpdatePromptViewModel _updatePromptVM;
 
         private UISettingsModel _UISettingSection;
         private UpdateManager _manager;
@@ -122,6 +124,7 @@ namespace PhotoGallery.ViewModels
             PascodePromptWindow = new PascodePromptView();
             UpdatePromptWindow = new UpdatePromptView();
             _pascodePromptVM = new PascodePromptViewModel();
+            _updatePromptVM = new UpdatePromptViewModel();
             _settingsWindow = new SettingsView();
             _settingsVM = new SettingsViewModel();
 
