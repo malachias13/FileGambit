@@ -125,6 +125,17 @@
             <!--<views:PascodePromptView/>-->
         </modalcontrol:Modal>
 
+        <modalcontrol:Modal
+            Panel.ZIndex="100"
+            IsOpen="true"
+            Grid.RowSpan="5">
+            <ContentControl x:Name="UpdatePrompt"
+                            Content="{Binding UpdatePromptWindow}" 
+                            Width="400"
+                            Height="200"/>
+        </modalcontrol:Modal>
+
+
         <ContentControl
             x:Name="GalleryViewControl"
             Content="{Binding ConentWindow}"

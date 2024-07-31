@@ -31,6 +31,7 @@
     <None Remove="Images\ImageArt - Copy.ico" />
     <None Remove="Images\ImageArt.ico" />
     <None Remove="Images\ImageArt.png" />
+    <None Remove="Views\ImageArt.png" />
   </ItemGroup>
 
   <ItemGroup>
@@ -58,6 +59,7 @@
     <Resource Include="Images\ImageArt.png">
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </Resource>
+    <Resource Include="Views\ImageArt.png" />
   </ItemGroup>
 
   <ItemGroup>

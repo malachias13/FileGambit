@@ -16,6 +16,7 @@ using System.Xml.Linq;
 using System.Configuration;
 using Haley.Abstractions;
 using Squirrel;
+using File_Gambit.Views;
 
 
 
@@ -53,6 +54,7 @@ namespace PhotoGallery.ViewModels
         }
 
         public PascodePromptView PascodePromptWindow { get; set; }
+        public UpdatePromptView UpdatePromptWindow { get; set; }
         public ICommand ReloadCommand { get; set; }
         public ICommand BackCommand { get; set; }
         public ICommand EncryptAllCommand { get; set; }
@@ -63,6 +65,12 @@ namespace PhotoGallery.ViewModels
         {
             get { return _IsPascodePromptWindowOpen; } 
             set { _IsPascodePromptWindowOpen = value;  OnPropertyChanged(); } 
+        }
+
+        public bool IsUpdatePromptWindowOpen
+        {
+            get { return _IsUpdatePromptWindowOpen; }
+            set { _IsUpdatePromptWindowOpen = value; OnPropertyChanged(); }
         }
 
         public float CurrentProgress
@@ -83,6 +91,7 @@ namespace PhotoGallery.ViewModels
         private bool _HasClickedEncryptBtn = false;
         private float _currentProgress;
         private bool _IsPascodePromptWindowOpen = false;
+        private bool _IsUpdatePromptWindowOpen = false;
         private View _currentView = View.GALLERY;
 
         private string? _password = null;
@@ -111,6 +120,7 @@ namespace PhotoGallery.ViewModels
 
             _galleryWindow = new GalleryView();
             PascodePromptWindow = new PascodePromptView();
+            UpdatePromptWindow = new UpdatePromptView();
             _pascodePromptVM = new PascodePromptViewModel();
             _settingsWindow = new SettingsView();
             _settingsVM = new SettingsViewModel();
