@@ -15,6 +15,9 @@ using System.Windows.Media;
 using System.Xml.Linq;
 using System.Configuration;
 using Haley.Abstractions;
+using Squirrel;
+
+
 
 
 namespace PhotoGallery.ViewModels
@@ -88,6 +91,7 @@ namespace PhotoGallery.ViewModels
         private SettingsViewModel _settingsVM;
 
         private UISettingsModel _UISettingSection;
+        private UpdateManager _manager;
 
         // Path variables for source, encryption, and
         // decryption folders.
@@ -331,6 +335,12 @@ namespace PhotoGallery.ViewModels
         #endregion
 
         #region Helper functions
+
+        private async void MainwindowLoaded()
+        {
+            _manager = await UpdateManager
+                .GitHubUpdateManager(@"https://github.com/malachias13/FileGambit");
+        }
 
         private void SetupAppConfig()
         {
