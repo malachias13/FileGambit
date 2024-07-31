@@ -17,7 +17,7 @@ namespace PhotoGallery.Models
 			set { this["BackgroundImage"] = value; }
 		}
 
-        [ConfigurationProperty("BackgroundImageOpacity", DefaultValue = 30f)]
+        [ConfigurationProperty("BackgroundImageOpacity", DefaultValue = 100f)]
 		public float BackgroundImageOpacity
 		{
             get { return (float)this["BackgroundImageOpacity"]; }

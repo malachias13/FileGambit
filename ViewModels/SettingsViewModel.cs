@@ -8,6 +8,7 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 using System.Windows.Input;
 using System.Windows.Media;
 
@@ -72,7 +73,7 @@ namespace PhotoGallery.ViewModels
             }
         }
 
-        private float _imgOpacity = 30f;
+        private float _imgOpacity;
         private string? _bgImgPath;
         private string _bgStretchSelectValue;
         private SolidColorBrush _imageItemTextColor;
@@ -83,13 +84,12 @@ namespace PhotoGallery.ViewModels
             bgStretchSettings = new ObservableCollection<string>();
             FillStretchSettings();
 
-            BGImgOpacity = 30f;
-            bgStretchSelectValue = bgStretchSettings[3];
+            bgStretchSelectValue = bgStretchSettings[0];
         }
 
         public void SetUISettings(UISettingsModel settings)
         {
-            if(FileContainer.Instance.BackgroundsFolderExist() && Path.Exists(settings.BackgroundImage))
+            if(settings.BackgroundImage != "")
             {
                 BGImgOpacity = settings.BackgroundImageOpacity;
                 BGImgPath = Path.GetFileName(settings.BackgroundImage);
@@ -143,17 +143,18 @@ namespace PhotoGallery.ViewModels
                 FileContainer.Instance.ClearBackgroundsFolder();
 
                 // Create and Copy file to Backgrounds folder.
-                string BackgroundDir = @"..\..\..\Backgrounds";
+                string BackgroundDir = AppDomain.CurrentDomain.BaseDirectory + @"\Backgrounds";
+
                 string destFile = Path.Combine(BackgroundDir, Path.GetFileName(fileDialog.FileName));
-                if (!Directory.Exists(Path.GetFullPath(BackgroundDir)))
+                if (!Directory.Exists(BackgroundDir))
                 {
-                    Directory.CreateDirectory(Path.GetFullPath(BackgroundDir));
+                    Directory.CreateDirectory(BackgroundDir);
                 }
 
-                File.Copy(fileDialog.FileName, destFile, true );
+                File.Copy(fileDialog.FileName, destFile, true);
 
                 // Set background.
-                SetBackgroundImage.Invoke(Path.GetFullPath(destFile));
+                SetBackgroundImage.Invoke(destFile);
                 BGImgPath = Path.GetFileName(destFile);
             }
         }
