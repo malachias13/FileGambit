@@ -59,7 +59,8 @@
                     Margin="10,0,0,0"
                     Grid.Row="2">
             <CheckBox x:Name="ShowPopupBox"
-                      VerticalAlignment="Center"/>
+                      VerticalAlignment="Center"
+                      IsChecked="{Binding AutoShowUpdate}"/>
             <TextBlock Text="Show this notification for future updates"
                        VerticalAlignment="Center"
                        Style="{StaticResource Text}"
@@ -73,12 +74,14 @@
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
 
-            <Button x:Name="Updatebtn">
+            <Button x:Name="Updatebtn"
+                    Command="{Binding UpdateCommand}">
                 <TextBlock Text="Update"
                             FontSize="13"/>
             </Button>
             <Button x:Name="Exit"
-                    Grid.Column="1">
+                    Grid.Column="1"
+                    Command="{Binding CloseCommand}">
                 <TextBlock Text="Close"
                             FontSize="13"/>
             </Button>

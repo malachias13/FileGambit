@@ -17,6 +17,7 @@ namespace File_Gambit.ViewModels
 
         public ICommand CloseCommand { get; set; }
         public ICommand UpdateCommand { get; set; }
+
         private bool _autoShowUpdate;
 
         public bool AutoShowUpdate
@@ -29,6 +30,8 @@ namespace File_Gambit.ViewModels
         {
             CloseCommand = new RelayCommand(execute => Close(), canExecute => { return true; });
             UpdateCommand = new RelayCommand(execute => Update(), canExecute => { return true; });
+
+            AutoShowUpdate = true;
         }
 
         private void Close()
