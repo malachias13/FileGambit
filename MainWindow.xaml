@@ -7,6 +7,7 @@
         xmlns:views="clr-namespace:PhotoGallery.Views" 
         xmlns:modalcontrol="clr-namespace:ModalControl;assembly=ModalControl"
         mc:Ignorable="d"
+        Icon="/Images/ImageArt.ico"
         Title="MainWindow" Height="450" Width="800" Background="#171717">
     <Window.Resources>
         <Style x:Key="ControlButton" TargetType="Button">
