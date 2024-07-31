@@ -130,6 +130,7 @@ namespace PhotoGallery.ViewModels
 
             PascodePromptWindow.DataContext = _pascodePromptVM;
             _settingsWindow.DataContext = _settingsVM;
+            UpdatePromptWindow.DataContext = _updatePromptVM;
 
             ConentWindow = _galleryWindow;
 
