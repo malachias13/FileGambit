@@ -46,6 +46,12 @@ namespace PhotoGallery.ViewModels
             set { _windowsDisplayForeground = value; OnPropertyChanged(); } 
         }
 
+        public string WindowDisplayVersion
+        {
+            get { return _windowDisplayVersion; }
+            set { _windowDisplayVersion = value; OnPropertyChanged(); }
+        }
+
         public PascodePromptView PascodePromptWindow { get; set; }
         public ICommand ReloadCommand { get; set; }
         public ICommand BackCommand { get; set; }
@@ -81,6 +87,7 @@ namespace PhotoGallery.ViewModels
 
         private string? _password = null;
         private string _windowsDisplayData;
+        private string _windowDisplayVersion;
         private Brush _windowsDisplayForeground;
 
         private UserControl _contentWindow;
