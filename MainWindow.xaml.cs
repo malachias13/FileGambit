@@ -26,6 +26,8 @@ namespace PhotoGallery
 
             MainWindowViewModel vm = new MainWindowViewModel();
             DataContext = vm;
+
+            Loaded += vm.MainwindowLoaded;
         }
 
         

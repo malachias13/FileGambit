@@ -343,11 +343,24 @@ namespace PhotoGallery.ViewModels
 
         #region Helper functions
 
-        private async void MainwindowLoaded()
+        public async void MainwindowLoaded(object sender, RoutedEventArgs e)
         {
             // File Gambit 1.0 created by Malachias Harris
-            _manager = await UpdateManager
+            try
+            {
+                _manager = await UpdateManager
                 .GitHubUpdateManager(@"https://github.com/malachias13/FileGambit");
+
+                string text = "File Gambit " + _manager.CurrentlyInstalledVersion().ToString() +
+                    " created by Malachias Harris";
+                WindowDisplayVersion = text;
+            }
+            catch
+            {
+                string text = "File Gambit created by Malachias Harris";
+                WindowDisplayVersion = text;
+            }
+
         }
 
         private void SetupAppConfig()
