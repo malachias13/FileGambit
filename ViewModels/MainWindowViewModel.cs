@@ -345,6 +345,7 @@ namespace PhotoGallery.ViewModels
 
         private async void MainwindowLoaded()
         {
+            // File Gambit 1.0 created by Malachias Harris
             _manager = await UpdateManager
                 .GitHubUpdateManager(@"https://github.com/malachias13/FileGambit");
         }

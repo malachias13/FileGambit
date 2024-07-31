@@ -148,7 +148,7 @@
                            HorizontalAlignment="Left"
                            VerticalAlignment="Center"/>
 
-            <TextBlock Text="File Gambit 1.0 created by Malachias Harris"
+            <TextBlock Text="{Binding WindowDisplayVersion}"
                            Foreground="White"
                            HorizontalAlignment="Right"
                            FontSize="13"
