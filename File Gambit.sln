@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.9.34714.143
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PhotoGallery", "PhotoGallery.csproj", "{C1C08324-303B-44F7-9132-8EA83ADDCE92}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "File Gambit", "File Gambit.csproj", "{C1C08324-303B-44F7-9132-8EA83ADDCE92}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
