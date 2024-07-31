@@ -7,8 +7,7 @@
         xmlns:views="clr-namespace:PhotoGallery.Views" 
         xmlns:modalcontrol="clr-namespace:ModalControl;assembly=ModalControl"
         mc:Ignorable="d"
-        Icon="/Images/ImageArt.ico"
-        Title="MainWindow" Height="450" Width="800" Background="#171717">
+        Title="File Gambit" Height="450" Width="800" Background="#171717">
     <Window.Resources>
         <Style x:Key="ControlButton" TargetType="Button">
             <Setter Property="OverridesDefaultStyle" Value="True" />
@@ -53,10 +52,9 @@
             <RowDefinition Height="20"/>
         </Grid.RowDefinitions>
 
-        <TextBlock Text="Files"
+        <!--<TextBlock Text="Files"
                    HorizontalAlignment="Center"
-                   
-                   VerticalAlignment="Center" Foreground="White"/>
+                   VerticalAlignment="Center" Foreground="White"/>-->
 
         <Grid Grid.Row="1"
               Margin="10,0,0,0">
@@ -134,12 +132,33 @@
             Margin="10,10,10,0" Grid.RowSpan="2">
         </ContentControl>
 
-        <TextBlock Text="{Binding WindowsDisplayData}"
-                   Foreground="{Binding WindowsDisplayForeground}"
-                   FontSize="13"
-                   Margin="10,0,0,0"
-                   VerticalAlignment="Center"
-                   Grid.Row="5"/>
+
+            <Grid HorizontalAlignment="Stretch"
+                  Grid.Row="5"
+                  Margin="10,0">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                
+                <TextBlock Text="{Binding WindowsDisplayData}"
+                           Foreground="{Binding WindowsDisplayForeground}"
+                           FontSize="13"
+                           Grid.Column="0"
+                           HorizontalAlignment="Left"
+                           VerticalAlignment="Center"/>
+
+            <TextBlock Text="File Gambit 1.0 created by Malachias Harris"
+                           Foreground="White"
+                           HorizontalAlignment="Right"
+                           FontSize="13"
+                           Grid.Column="1"
+                           VerticalAlignment="Center"/>
+
+            </Grid>
+            
+          
+
 
     </Grid>
 </Window>
