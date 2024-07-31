@@ -53,12 +53,6 @@ namespace PhotoGallery.ViewModels
 
             _files = new ObservableCollection<ImageItem>();
             BackgroundColor = new SolidColorBrush(Color.FromRgb(92, 92, 92));
-            // #FAF9F6
-            _ImageItemforegroundColor = new SolidColorBrush(Color.FromRgb(255, 0, 255));
-
-            BackgroundImg = @"C:\Users\malac\Pictures\1042725.png";
-            BackgroundOpacity = 0.5f;
-            BackgroundStretch = Stretch.UniformToFill;
 
         }
 

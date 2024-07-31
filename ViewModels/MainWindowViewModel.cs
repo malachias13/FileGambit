@@ -90,7 +90,7 @@ namespace PhotoGallery.ViewModels
         private UISettingsModel _UISettingSection;
 
         // Path variables for source, encryption, and
-        // decryption folders. Must end with a backslash.
+        // decryption folders.
         string EncrAndDecrFolder;
 
         private Configuration AppConfig = ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.None);
@@ -422,7 +422,6 @@ namespace PhotoGallery.ViewModels
                     ManagedEncryption.Decryptfile(fileInfo, EncrAndDecrFolder, _password);
                 }
                 catch {
-                    //MessageBox.Show("Wrong password");
                     UpdateProgressBarInArray(i, files.Count);
                     string Tempfile = Path.ChangeExtension(files[i].Replace("Encrypt", "Decrypt"), "");
                     DeleteFile(Tempfile);
