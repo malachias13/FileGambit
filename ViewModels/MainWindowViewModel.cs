@@ -92,7 +92,7 @@ namespace PhotoGallery.ViewModels
         private bool _HasClickedEncryptBtn = false;
         private float _currentProgress;
         private bool _IsPascodePromptWindowOpen = false;
-        private bool _IsUpdatePromptWindowOpen = true;
+        private bool _IsUpdatePromptWindowOpen = false;
         private View _currentView = View.GALLERY;
 
         private string? _password = null;
@@ -388,6 +388,7 @@ namespace PhotoGallery.ViewModels
                 string text = "File Gambit " + _manager.CurrentlyInstalledVersion().ToString() +
                     " created by Malachias Harris";
                 WindowDisplayVersion = text;
+                CheckForUpdates();
             }
             catch
             {
@@ -395,6 +396,16 @@ namespace PhotoGallery.ViewModels
                 WindowDisplayVersion = text;
             }
 
+        }
+
+        private async void CheckForUpdates()
+        {
+            var UpdateInfo = await _manager.CheckForUpdate();
+            if (UpdateInfo.ReleasesToApply.Count > 0)
+            {
+                IsUpdatePromptWindowOpen = true;
+            }
+            MessageBox.Show("Check Update complete.");
         }
 
         private void Update()
