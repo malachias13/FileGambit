@@ -10,10 +10,10 @@ namespace File_Gambit.ViewModels
 {
     internal class UpdatePromptViewModel : ViewModelBase
     {
-        Action CloseAction;
-        Action UpdateAction;
-        Action<bool> SetAutoUpdates;
-        Action SaveData;
+        public Action CloseAction;
+        public Action UpdateAction;
+        public Action<bool> SetAutoUpdates;
+        public Action SaveData;
 
         public ICommand CloseCommand { get; set; }
         public ICommand UpdateCommand { get; set; }
@@ -43,8 +43,9 @@ namespace File_Gambit.ViewModels
 
         private void Update()
         {
+            SetAutoUpdates?.Invoke(_autoShowUpdate);
+            SaveData?.Invoke();
             UpdateAction?.Invoke();
-            Close();
         }
 
 

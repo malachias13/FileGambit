@@ -127,7 +127,7 @@
 
         <modalcontrol:Modal
             Panel.ZIndex="100"
-            IsOpen="true"
+            IsOpen="{Binding IsUpdatePromptWindowOpen}"
             Grid.RowSpan="5">
             <ContentControl x:Name="UpdatePrompt"
                             Content="{Binding UpdatePromptWindow}" 

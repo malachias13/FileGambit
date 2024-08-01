@@ -92,7 +92,7 @@ namespace PhotoGallery.ViewModels
         private bool _HasClickedEncryptBtn = false;
         private float _currentProgress;
         private bool _IsPascodePromptWindowOpen = false;
-        private bool _IsUpdatePromptWindowOpen = false;
+        private bool _IsUpdatePromptWindowOpen = true;
         private View _currentView = View.GALLERY;
 
         private string? _password = null;
@@ -145,6 +145,10 @@ namespace PhotoGallery.ViewModels
             _settingsVM.SetBackgroundImageOpacity = GalleryViewModel.Instance.SetBackgroundOpacity;
             _settingsVM.SetBackgroundImmageStretch = GalleryViewModel.Instance.SetBackgroundStretch;
             _settingsVM.SetImageItemTextColor = GalleryViewModel.Instance.SetImageItemForegroundColor;
+
+            // UpdateVM bind Actions
+            BindAllUpdateVM_Func();
+
 
             // Main window commands.
             BackCommand = new RelayCommand(execute => Back(), canExecute => CanRunBackCommand());
@@ -355,6 +359,22 @@ namespace PhotoGallery.ViewModels
 
         #endregion
 
+
+        #region UpdateVM_Functions
+
+        private void BindAllUpdateVM_Func()
+        {
+            _updatePromptVM.CloseAction = CloseUpdatePromptWindow;
+            _updatePromptVM.UpdateAction = Update;
+        }
+        
+        private void CloseUpdatePromptWindow()
+        {
+            IsUpdatePromptWindowOpen = false;
+        }
+
+        #endregion
+
         #region Helper functions
 
         public async void MainwindowLoaded(object sender, RoutedEventArgs e)
@@ -374,6 +394,16 @@ namespace PhotoGallery.ViewModels
                 string text = "File Gambit created by Malachias Harris";
                 WindowDisplayVersion = text;
             }
+
+        }
+
+        private void Update()
+        {
+            Task.Run(() => _manager.UpdateApp()).GetAwaiter().OnCompleted(() =>
+            {
+                MessageBox.Show("Update complete.");
+                CloseUpdatePromptWindow();
+            });
 
         }
 
