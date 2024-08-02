@@ -38,6 +38,12 @@ namespace PhotoGallery.Models
             set { this["ImageItemTextColor"] = value; }
         }
 
+        [ConfigurationProperty("SetShowAutoUpdatePopup")]
+        public bool SetShowAutoUpdatePopup
+        {
+            get { return (bool)this["SetShowAutoUpdatePopup"]; }
+            set { this["SetShowAutoUpdatePopup"] = value; }
+        }
 
 	}
 }
