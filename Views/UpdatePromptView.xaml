@@ -76,14 +76,12 @@
             </Grid.ColumnDefinitions>
 
             <Button x:Name="Updatebtn"
-                    IsEnabled="{Binding IsButtonEnable}"
                     Command="{Binding UpdateCommand}">
                 <TextBlock Text="Update"
                             FontSize="13"/>
             </Button>
             <Button x:Name="Exit"
                     Grid.Column="1"
-                    IsEnabled="{Binding IsButtonEnable}"
                     Command="{Binding CloseCommand}">
                 <TextBlock Text="Close"
                             FontSize="13"/>

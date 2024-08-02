@@ -37,15 +37,16 @@ namespace File_Gambit.ViewModels
         }
 
         private string _updateText;
-        private bool _isButtonEnable = true;
+        private bool _isButtonEnable;
         private bool _autoShowUpdate;
 
         public UpdatePromptViewModel()
         {
-            CloseCommand = new RelayCommand(execute => Close(), canExecute => { return true; });
-            UpdateCommand = new RelayCommand(execute => Update(), canExecute => { return true; });
+            CloseCommand = new RelayCommand(execute => Close(), canExecute => { return _isButtonEnable; });
+            UpdateCommand = new RelayCommand(execute => Update(), canExecute => { return _isButtonEnable; });
 
             AutoShowUpdate = true;
+            IsButtonEnable = true;
         }
 
         private void Close()
@@ -58,6 +59,7 @@ namespace File_Gambit.ViewModels
         private void Update()
         {
             IsButtonEnable = false;
+
             SetAutoUpdates?.Invoke(_autoShowUpdate);
             SaveData?.Invoke();
             UpdateAction?.Invoke();
