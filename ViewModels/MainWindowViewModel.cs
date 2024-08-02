@@ -385,8 +385,7 @@ namespace PhotoGallery.ViewModels
                 _manager = await UpdateManager
                 .GitHubUpdateManager(@"https://github.com/malachias13/FileGambit");
 
-                string text = "File Gambit " + _manager.CurrentlyInstalledVersion().ToString() +
-                    " created by Malachias Harris";
+                string text = $"File Gambit {_manager.CurrentlyInstalledVersion()} created by Malachias Harris";
                 WindowDisplayVersion = text;
                 CheckForUpdates();
             }
@@ -416,6 +415,8 @@ namespace PhotoGallery.ViewModels
             {
                 CloseUpdatePromptWindow();
                 UpdateProgressBar(0);
+                string text = $"File Gambit {_manager.CurrentlyInstalledVersion()} created by Malachias Harris";
+                WindowDisplayVersion = text;
             });
 
         }
