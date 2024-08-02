@@ -40,6 +40,7 @@
             <hw:ImageButton x:Name="CloseBtn"
                         hw:Icon.DefaultColor="White"
                         Command="{Binding CloseCommand}"
+                        IsEnabled="{Binding IsButtonEnable}"
                         hw:Icon.Default="{StaticResource stop}"
                         Grid.Column="2"
                         Width="20"
@@ -51,7 +52,7 @@
                    VerticalAlignment="Center"
                    HorizontalAlignment="Center"
                    
-                   Text="New version 8.14 of File Gambit is available for download."
+                   Text="{Binding UpdateText}"
                    Style="{StaticResource Text}" TextWrapping="Wrap"/>
         <StackPanel Orientation="Horizontal"
                     VerticalAlignment="Stretch"
@@ -75,12 +76,14 @@
             </Grid.ColumnDefinitions>
 
             <Button x:Name="Updatebtn"
+                    IsEnabled="{Binding IsUpdating}"
                     Command="{Binding UpdateCommand}">
                 <TextBlock Text="Update"
                             FontSize="13"/>
             </Button>
             <Button x:Name="Exit"
                     Grid.Column="1"
+                    IsEnabled="{Binding IsUpdating}"
                     Command="{Binding CloseCommand}">
                 <TextBlock Text="Close"
                             FontSize="13"/>

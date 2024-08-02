@@ -18,13 +18,27 @@ namespace File_Gambit.ViewModels
         public ICommand CloseCommand { get; set; }
         public ICommand UpdateCommand { get; set; }
 
-        private bool _autoShowUpdate;
+        public string UpdateText
+        {
+            get { return _updateText; }
+            set { _updateText = value; OnPropertyChanged(); } 
+        }
+
+        public bool IsButtonEnable
+        {
+            get { return _isButtonEnable; }
+            set { _isButtonEnable = value; OnPropertyChanged(); }
+        }
 
         public bool AutoShowUpdate
         {
             get { return _autoShowUpdate; }
             set { _autoShowUpdate = value; OnPropertyChanged(); }
         }
+
+        private string _updateText;
+        private bool _isButtonEnable = true;
+        private bool _autoShowUpdate;
 
         public UpdatePromptViewModel()
         {
@@ -43,6 +57,7 @@ namespace File_Gambit.ViewModels
 
         private void Update()
         {
+            IsButtonEnable = false;
             SetAutoUpdates?.Invoke(_autoShowUpdate);
             SaveData?.Invoke();
             UpdateAction?.Invoke();

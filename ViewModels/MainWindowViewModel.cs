@@ -400,12 +400,14 @@ namespace PhotoGallery.ViewModels
 
         private async void CheckForUpdates()
         {
-            var UpdateInfo = await _manager.CheckForUpdate();
+            var UpdateInfo = await _manager.CheckForUpdate(false, UpdateProgressBar);
             if (UpdateInfo.ReleasesToApply.Count > 0)
             {
+                // New version 8.14 of File Gambit is available for download.
+                _updatePromptVM.UpdateText = $"New version {UpdateInfo.ReleasesToApply.Last().Version} of File Gambit is available for download.";
                 IsUpdatePromptWindowOpen = true;
             }
-            MessageBox.Show("Check Update complete.");
+            UpdateProgressBar(0);
         }
 
         private void Update()
@@ -490,6 +492,11 @@ namespace PhotoGallery.ViewModels
                 return false;
             }
             return true;
+        }
+
+        private void UpdateProgressBar(int  progress)
+        {
+            CurrentProgress = progress;
         }
 
         private void UpdateProgressBarInArray(int index, int arrayCount)
