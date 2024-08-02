@@ -2,6 +2,8 @@
 
 File Gambit is a desktop Windows application that allows you to encrypt and decrypt files. It boasts a simple-to-use use interface.
 
+![Screenshot 2024-08-02 032300](https://github.com/user-attachments/assets/5ec59776-92b8-46fb-ac36-59689d2a2f2d)
+
 ## How to setup and use
 1. download the latest version of the program setup.exe or any version you might like.
 2. run the setup.exe and follow the installation.
@@ -13,6 +15,7 @@ File Gambit is a desktop Windows application that allows you to encrypt and decr
 ## Customization
 You can change the background image, opacity, and file text color in the settings.
 
+![Screenshot 2024-08-02 032439](https://github.com/user-attachments/assets/e5561c1e-24c7-412e-ac6d-4c4a5db74de9)
 
 ## Desktop updates and releases
 This program may or may not be receiving updates and new releases, it depends on users' requests and new features I might add that will improve the experience. If there is any new release the program will notify you. Thank God for pop-ups! You can choose to ignore them or update. If you do update, please restart your program to take effect.
