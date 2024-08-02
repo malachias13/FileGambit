@@ -407,15 +407,15 @@ namespace PhotoGallery.ViewModels
                 _updatePromptVM.UpdateText = $"New version {UpdateInfo.ReleasesToApply.Last().Version} of File Gambit is available for download.";
                 IsUpdatePromptWindowOpen = true;
             }
-            UpdateProgressBar(0);
+            await Task.Delay(1000).ContinueWith(tt => { UpdateProgressBar(0); });
         }
 
         private void Update()
         {
-            Task.Run(() => _manager.UpdateApp()).GetAwaiter().OnCompleted(() =>
+            Task.Run(() => _manager.UpdateApp(UpdateProgressBar)).GetAwaiter().OnCompleted(() =>
             {
-                MessageBox.Show("Update complete.");
                 CloseUpdatePromptWindow();
+                UpdateProgressBar(0);
             });
 
         }
