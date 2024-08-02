@@ -13,7 +13,7 @@ File Gambit is a desktop Windows application that allows you to encrypt and decr
 > you may need to tell your anti-virus to allow or ignore this program. If so the program .exe should be located in your ```AppData/Local/FileGambit```.
 
 ### Demonstration
-[![File Gambit Demonstration](https://img.youtube.com/vi/bgx4HhHvzI4/0.jpg)](https://www.youtube.com/watch?v=bgx4HhHvzI4){:target="_blank" rel="noopener"}
+[![File Gambit Demonstration](https://img.youtube.com/vi/bgx4HhHvzI4/0.jpg)](https://www.youtube.com/watch?v=bgx4HhHvzI4)
 
 ## Customization
 You can change the background image, opacity, and file text color in the settings.
