@@ -191,7 +191,7 @@
                                Text="Check for updates"/>
 
                     <Button x:Name="CheckForUpdatesBtn"
-                            
+                            Command="{Binding CheckForUpdateCommand}"
                             Margin=" 0, 2"
                             HorizontalAlignment="Center"
                             Grid.Column="1"
