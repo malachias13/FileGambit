@@ -22,6 +22,7 @@ namespace PhotoGallery.ViewModels
         public Action<string> SetBackgroundImmageStretch;
         public Action<SolidColorBrush> SetImageItemTextColor;
         public Action CheckForUpdatesAction;
+        public Action<bool> SetShowAutoUpdatePopup;
 
         public ObservableCollection<string> bgStretchSettings { get; set; }
         public ICommand ChoseImgCommand { get; set; }
@@ -76,11 +77,24 @@ namespace PhotoGallery.ViewModels
             }
         }
 
+        public bool ShowAutoUpdatePopup
+        {
+            get { return _showAutoUpdatePopup; }
+            set 
+            { 
+                _showAutoUpdatePopup = value; 
+                SetShowAutoUpdatePopup?.Invoke(_showAutoUpdatePopup);
+                OnPropertyChanged(); 
+            }
+        }
+
+
         private float _imgOpacity;
         private string? _bgImgPath;
         private string _bgStretchSelectValue;
         private SolidColorBrush _imageItemTextColor;
         private bool _isCheckingForUpdates;
+        private bool _showAutoUpdatePopup;
 
         public SettingsViewModel() 
         {

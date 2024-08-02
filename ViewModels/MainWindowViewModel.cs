@@ -93,6 +93,7 @@ namespace PhotoGallery.ViewModels
         private float _currentProgress;
         private bool _IsPascodePromptWindowOpen = false;
         private bool _IsUpdatePromptWindowOpen = false;
+        private bool _ShowAutoUpdatePopup = true;
         private View _currentView = View.GALLERY;
 
         private string? _password = null;
@@ -146,6 +147,7 @@ namespace PhotoGallery.ViewModels
             _settingsVM.SetBackgroundImmageStretch = GalleryViewModel.Instance.SetBackgroundStretch;
             _settingsVM.SetImageItemTextColor = GalleryViewModel.Instance.SetImageItemForegroundColor;
             _settingsVM.CheckForUpdatesAction = CheckForUpdates;
+            _settingsVM.SetShowAutoUpdatePopup = SetShowAutoUpdatePopup;
 
             // UpdateVM bind Actions
             BindAllUpdateVM_Func();
@@ -365,8 +367,10 @@ namespace PhotoGallery.ViewModels
 
         private void BindAllUpdateVM_Func()
         {
+            _updatePromptVM.SaveData = SaveUserSettings;
             _updatePromptVM.CloseAction = CloseUpdatePromptWindow;
             _updatePromptVM.UpdateAction = Update;
+            _updatePromptVM.SetAutoUpdatePopup = SetShowAutoUpdatePopup;
         }
         
         private void CloseUpdatePromptWindow()
@@ -556,6 +560,11 @@ namespace PhotoGallery.ViewModels
             }
         }
         #endregion
+
+        private void SetShowAutoUpdatePopup(bool showAutoUpdate)
+        {
+            _ShowAutoUpdatePopup = showAutoUpdate;
+        }
 
         private void SetIsCheckingForUpdates(bool isUpdating) 
         { 
