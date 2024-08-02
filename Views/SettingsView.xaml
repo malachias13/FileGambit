@@ -173,11 +173,13 @@
                                VerticalAlignment="Center"
                                Grid.Column="0"
                                Grid.Row="0"
+                               Foreground="Gray"
                                Text="show pop-up on startup"/>
 
                     <CheckBox IsChecked="{Binding ShowAutoUpdatePopup,Mode=TwoWay}"
                               Grid.Column="1"
                               Grid.Row="0"
+                              IsEnabled="False"
                               HorizontalAlignment="Center"
                               VerticalAlignment="Center"/>
                     

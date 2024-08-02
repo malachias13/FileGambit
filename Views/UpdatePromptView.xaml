@@ -61,11 +61,12 @@
                     Grid.Row="2">
             <CheckBox x:Name="ShowPopupBox"
                       VerticalAlignment="Center"
+                      IsEnabled="True"
                       IsChecked="{Binding AutoShowUpdate}"/>
             <TextBlock Text="Show this notification for future updates"
                        VerticalAlignment="Center"
                        Style="{StaticResource Text}"
-                       Foreground="Black"
+                       Foreground="Gray"
                        Margin="10,0,0,0"/>
         </StackPanel>
         <Grid x:Name="ButtonsGrid"

@@ -404,19 +404,28 @@ namespace PhotoGallery.ViewModels
 
         private async void CheckForUpdates()
         {
-            SetIsCheckingForUpdates(true);
-            var UpdateInfo = await _manager.CheckForUpdate(false, UpdateProgressBar);
-            if (UpdateInfo.ReleasesToApply.Count > 0 && _ShowAutoUpdatePopup == true)
+            try
             {
-                // New version 8.14 of File Gambit is available for download.
-                _updatePromptVM.UpdateText = $"New version {UpdateInfo.ReleasesToApply.Last().Version} of File Gambit is available for download.";
-                IsUpdatePromptWindowOpen = true;
+                SetIsCheckingForUpdates(true);
+                var UpdateInfo = await _manager.CheckForUpdate(false, UpdateProgressBar);
+                if (UpdateInfo.ReleasesToApply.Count > 0)
+                {
+                    // New version 8.14 of File Gambit is available for download.
+                    _updatePromptVM.UpdateText = $"New version {UpdateInfo.ReleasesToApply.Last().Version} of File Gambit is available for download.";
+                    IsUpdatePromptWindowOpen = true;
+                }
+                await Task.Delay(1000).ContinueWith(tt =>
+                {
+                    UpdateProgressBar(0);
+                    SetIsCheckingForUpdates(false);
+                });
             }
-            await Task.Delay(1000).ContinueWith(tt => 
+            catch 
             {
-                UpdateProgressBar(0);
-                SetIsCheckingForUpdates(false);
-            });
+                WindowsDisplayForeground = Brushes.Red;
+                WindowsDisplayData = "Failed to update...";
+               await Task.Delay(3000).ContinueWith(tt => SetIsCheckingForUpdates(false));
+            }
         }
 
         private void Update()
