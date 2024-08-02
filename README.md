@@ -4,11 +4,6 @@ File Gambit is a desktop Windows application that allows you to encrypt and decr
 
 ![Screenshot 2024-08-02 032300](https://github.com/user-attachments/assets/5ec59776-92b8-46fb-ac36-59689d2a2f2d)
 
-[![File Gambit Demonstration]![videoframe_0](https://github.com/user-attachments/assets/79bcff27-f81b-4dad-870f-103af6d949b6)
-](https://www.youtube.com/watch?v=bgx4HhHvzI4)
-
-https://www.youtube.com/watch?v=bgx4HhHvzI4
-
 ## How to setup and use
 1. download the latest version of the program setup.exe or any version you might like.
 2. run the setup.exe and follow the installation.
@@ -16,6 +11,9 @@ https://www.youtube.com/watch?v=bgx4HhHvzI4
 
 > [!IMPORTANT]
 > you may need to tell your anti-virus to allow or ignore this program. If so the program .exe should be located in your ```AppData/Local/FileGambit```.
+
+[![File Gambit Demonstration] ![videoframe_0](https://github.com/user-attachments/assets/79bcff27-f81b-4dad-870f-103af6d949b6)
+](https://www.youtube.com/watch?v=bgx4HhHvzI4)
 
 ## Customization
 You can change the background image, opacity, and file text color in the settings.
