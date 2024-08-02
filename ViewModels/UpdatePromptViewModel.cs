@@ -12,7 +12,7 @@ namespace File_Gambit.ViewModels
     {
         public Action CloseAction;
         public Action UpdateAction;
-        public Action<bool> SetAutoUpdates;
+        public Action<bool> SetAutoUpdatePopup;
         public Action SaveData;
 
         public ICommand CloseCommand { get; set; }
@@ -32,13 +32,13 @@ namespace File_Gambit.ViewModels
 
         public bool AutoShowUpdate
         {
-            get { return _autoShowUpdate; }
-            set { _autoShowUpdate = value; OnPropertyChanged(); }
+            get { return _autoShowUpdatePopup; }
+            set { _autoShowUpdatePopup = value; OnPropertyChanged(); }
         }
 
         private string _updateText;
         private bool _isButtonEnable;
-        private bool _autoShowUpdate;
+        private bool _autoShowUpdatePopup;
 
         public UpdatePromptViewModel()
         {
@@ -51,7 +51,7 @@ namespace File_Gambit.ViewModels
 
         private void Close()
         {
-            SetAutoUpdates?.Invoke(_autoShowUpdate);
+            SetAutoUpdatePopup?.Invoke(_autoShowUpdatePopup);
             SaveData?.Invoke();
             CloseAction?.Invoke();
         }
@@ -60,7 +60,7 @@ namespace File_Gambit.ViewModels
         {
             IsButtonEnable = false;
 
-            SetAutoUpdates?.Invoke(_autoShowUpdate);
+            SetAutoUpdatePopup?.Invoke(_autoShowUpdatePopup);
             SaveData?.Invoke();
             UpdateAction?.Invoke();
         }
