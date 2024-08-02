@@ -145,6 +145,7 @@ namespace PhotoGallery.ViewModels
             _settingsVM.SetBackgroundImageOpacity = GalleryViewModel.Instance.SetBackgroundOpacity;
             _settingsVM.SetBackgroundImmageStretch = GalleryViewModel.Instance.SetBackgroundStretch;
             _settingsVM.SetImageItemTextColor = GalleryViewModel.Instance.SetImageItemForegroundColor;
+            _settingsVM.CheckForUpdatesAction = CheckForUpdates;
 
             // UpdateVM bind Actions
             BindAllUpdateVM_Func();
@@ -399,6 +400,7 @@ namespace PhotoGallery.ViewModels
 
         private async void CheckForUpdates()
         {
+            SetIsCheckingForUpdates(true);
             var UpdateInfo = await _manager.CheckForUpdate(false, UpdateProgressBar);
             if (UpdateInfo.ReleasesToApply.Count > 0)
             {
@@ -406,7 +408,11 @@ namespace PhotoGallery.ViewModels
                 _updatePromptVM.UpdateText = $"New version {UpdateInfo.ReleasesToApply.Last().Version} of File Gambit is available for download.";
                 IsUpdatePromptWindowOpen = true;
             }
-            await Task.Delay(1000).ContinueWith(tt => { UpdateProgressBar(0); });
+            await Task.Delay(1000).ContinueWith(tt => 
+            {
+                UpdateProgressBar(0);
+                SetIsCheckingForUpdates(false);
+            });
         }
 
         private void Update()
@@ -550,6 +556,20 @@ namespace PhotoGallery.ViewModels
             }
         }
         #endregion
+
+        private void SetIsCheckingForUpdates(bool isUpdating) 
+        { 
+            if(isUpdating)
+            {
+                WindowsDisplayForeground = WindowsDisplayForeground = Brushes.LimeGreen;
+                WindowsDisplayData = "Checking for updates...";
+            }
+            else
+            {
+                DisplayFileCountInfo();
+            }
+            _settingsVM.SetIsCheckingForUpdates(isUpdating);
+        }
 
 
     }

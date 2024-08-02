@@ -1,6 +1,7 @@
 ﻿using Microsoft.Win32;
 using PhotoGallery.Models;
 using System;
+using System.CodeDom.Compiler;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Drawing.Imaging;
@@ -20,9 +21,11 @@ namespace PhotoGallery.ViewModels
         public Action<float> SetBackgroundImageOpacity;
         public Action<string> SetBackgroundImmageStretch;
         public Action<SolidColorBrush> SetImageItemTextColor;
+        public Action CheckForUpdatesAction;
 
         public ObservableCollection<string> bgStretchSettings { get; set; }
         public ICommand ChoseImgCommand { get; set; }
+        public ICommand CheckForUpdateCommand { get; set; }
         public float BGImgOpacity
         {
             get { return _imgOpacity; }
@@ -77,10 +80,12 @@ namespace PhotoGallery.ViewModels
         private string? _bgImgPath;
         private string _bgStretchSelectValue;
         private SolidColorBrush _imageItemTextColor;
+        private bool _isCheckingForUpdates;
 
         public SettingsViewModel() 
         {
             ChoseImgCommand = new RelayCommand(execute => ChoseImageFromFolder(), canExecute => { return true; });
+            CheckForUpdateCommand = new RelayCommand(execute => CheckForUpdates(), canExecute => { return !_isCheckingForUpdates; });
             bgStretchSettings = new ObservableCollection<string>();
             FillStretchSettings();
 
@@ -108,6 +113,11 @@ namespace PhotoGallery.ViewModels
             }
 
 
+        }
+
+        public void SetIsCheckingForUpdates(bool isCheckingForUpdates)
+        {
+            _isCheckingForUpdates = isCheckingForUpdates;
         }
 
         #region Commands
@@ -157,6 +167,11 @@ namespace PhotoGallery.ViewModels
                 SetBackgroundImage.Invoke(destFile);
                 BGImgPath = Path.GetFileName(destFile);
             }
+        }
+
+        private void CheckForUpdates()
+        {
+            CheckForUpdatesAction?.Invoke();
         }
 
         #endregion
