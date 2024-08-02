@@ -8,7 +8,7 @@ File Gambit is a desktop Windows application that allows you to encrypt and decr
 3. open the program via the desktop shortcut.
 
 > [!IMPORTANT]
-> you may need to tell your anti-virus to allow or ignore this program. If so the program .exe should be located in your AppData/Local/FileGambit. 
+> you may need to tell your anti-virus to allow or ignore this program. If so the program .exe should be located in your ```AppData/Local/FileGambit```. 
 
 
 ## Desktop updates and releases
