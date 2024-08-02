@@ -19,3 +19,5 @@ You can change the background image, opacity, and file text color in the setting
 
 ## Desktop updates and releases
 This program may or may not be receiving updates and new releases, it depends on users' requests and new features I might add that will improve the experience. If there is any new release the program will notify you. Thank God for pop-ups! You can choose to ignore them or update. If you do update, please restart your program to take effect.
+
+![Screenshot 2024-08-02 041145](https://github.com/user-attachments/assets/a2269be4-1b0d-4b2e-b501-0ae8772b7ec9)
