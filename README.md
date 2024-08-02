@@ -1,6 +1,6 @@
 # File Gambit
 
-File Gambit is a desktop Windows application that allows you to encrypt and decrypt files. It boasts a simple-to-use use interface.
+File Gambit is a desktop Windows application that allows you to encrypt and decrypt files. It boasts a simple-to-use use interface. It uses the Advanced Encryption Standard with a passcode to protect your encrypted files.
 
 ![Screenshot 2024-08-02 032300](https://github.com/user-attachments/assets/5ec59776-92b8-46fb-ac36-59689d2a2f2d)
 
