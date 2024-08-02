@@ -174,8 +174,8 @@
                                Grid.Column="0"
                                Grid.Row="0"
                                Text="show pop-up on startup"/>
-                    
-                    <CheckBox IsChecked="True"
+
+                    <CheckBox IsChecked="{Binding ShowAutoUpdatePopup,Mode=TwoWay}"
                               Grid.Column="1"
                               Grid.Row="0"
                               HorizontalAlignment="Center"

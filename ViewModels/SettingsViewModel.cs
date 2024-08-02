@@ -108,6 +108,7 @@ namespace PhotoGallery.ViewModels
 
         public void SetUISettings(UISettingsModel settings)
         {
+           // Background and Item color.
             if(settings.BackgroundImage != "")
             {
                 BGImgOpacity = settings.BackgroundImageOpacity;
@@ -125,6 +126,9 @@ namespace PhotoGallery.ViewModels
             {
                 ImageItemTextColor = settings.ImageItemTextColor;
             }
+
+            // Update settings.
+            ShowAutoUpdatePopup = settings.SetShowAutoUpdatePopup;
 
 
         }

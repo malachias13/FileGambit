@@ -38,7 +38,7 @@ namespace PhotoGallery.Models
             set { this["ImageItemTextColor"] = value; }
         }
 
-        [ConfigurationProperty("SetShowAutoUpdatePopup")]
+        [ConfigurationProperty("SetShowAutoUpdatePopup", DefaultValue =true)]
         public bool SetShowAutoUpdatePopup
         {
             get { return (bool)this["SetShowAutoUpdatePopup"]; }

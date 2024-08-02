@@ -406,7 +406,7 @@ namespace PhotoGallery.ViewModels
         {
             SetIsCheckingForUpdates(true);
             var UpdateInfo = await _manager.CheckForUpdate(false, UpdateProgressBar);
-            if (UpdateInfo.ReleasesToApply.Count > 0)
+            if (UpdateInfo.ReleasesToApply.Count > 0 && _ShowAutoUpdatePopup == true)
             {
                 // New version 8.14 of File Gambit is available for download.
                 _updatePromptVM.UpdateText = $"New version {UpdateInfo.ReleasesToApply.Last().Version} of File Gambit is available for download.";
