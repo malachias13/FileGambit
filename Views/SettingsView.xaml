@@ -22,8 +22,10 @@
         </Style>
         <!--Text block-->
         <Style x:Key="SettingTitle" TargetType="TextBlock">
-            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="Foreground" Value="Gold"/>
             <Setter Property="FontSize" Value="25"/>
+            <Setter Property="FontWeight" Value="Bold"/>
+            <Setter Property="Margin" Value="0,5,0,0"/>
         </Style>
     </UserControl.Resources>
     <Grid>
@@ -132,7 +134,7 @@
 
                 <TextBlock Text="Items"
                            Style="{StaticResource SettingTitle}"/>
-                <Grid>
+                <Grid Margin="10, 0">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="*"/>
                         <ColumnDefinition Width="*"/>
@@ -152,9 +154,56 @@
                                           hw:SelectedBrush="{Binding ImageItemTextColor, Mode=TwoWay}"/>
 
                 </Grid>
-                
+                <TextBlock Text="Update"
+                           Style="{StaticResource SettingTitle}"/>
 
-                
+                <Grid x:Name="UpdateGrid"
+                      Margin="10, 0">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="40"/>
+                        <RowDefinition Height="40"/>
+                    </Grid.RowDefinitions>
+                    <!--Row 1-->
+                    <TextBlock Style="{StaticResource SettingText}"
+                               VerticalAlignment="Center"
+                               Grid.Column="0"
+                               Grid.Row="0"
+                               Text="show pop-up on startup"/>
+                    
+                    <CheckBox IsChecked="True"
+                              Grid.Column="1"
+                              Grid.Row="0"
+                              HorizontalAlignment="Center"
+                              VerticalAlignment="Center"/>
+                    
+                    <!--Row 1 END-->
+
+                    <!--Row 2-->
+                    <TextBlock Style="{StaticResource SettingText}"
+                               VerticalAlignment="Center"
+                               Grid.Column="0"
+                               Grid.Row="1"
+                               Text="Check for updates"/>
+
+                    <Button x:Name="CheckForUpdatesBtn"
+                            
+                            Margin=" 0, 2"
+                            HorizontalAlignment="Center"
+                            Grid.Column="1"
+                            Grid.Row="1">
+                        <Label Content="Check for Updates"/>
+                    </Button>
+
+
+                    <!--Row 2 END-->
+                </Grid>
+
+
             </StackPanel>
     
 
