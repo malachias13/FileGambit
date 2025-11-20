@@ -130,9 +130,13 @@ namespace PhotoGallery.Models
         private BitmapImage CreateImage(string path)
         {
             BitmapImage image = new BitmapImage();
+
             image.BeginInit();
             image.UriSource = new Uri(path);
-            image.EndInit();
+
+			image.DecodePixelWidth = 200;
+            image.CacheOption = BitmapCacheOption.OnLoad;
+			image.EndInit();
 
             return image;
         }
@@ -211,11 +215,6 @@ namespace PhotoGallery.Models
 
                 //bitmap.Save(ImageSource, jpgEncoder, encoderParameters);
             }
-
-
-           
-
-
         }
 
         public void Clear()
