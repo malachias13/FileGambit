@@ -1,4 +1,5 @@
-﻿using PhotoGallery.ViewModels;
+﻿using Haley.Utils;
+using PhotoGallery.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -13,6 +14,7 @@ using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
+using static System.Net.Mime.MediaTypeNames;
 
 namespace PhotoGallery.Models
 {
@@ -28,9 +30,9 @@ namespace PhotoGallery.Models
             //{
             //    SetImageSource(path);
             //});
-            
+
             SetImageSource(path);
-		}
+        }
 
         ~ImageItem()
         {
@@ -39,7 +41,7 @@ namespace PhotoGallery.Models
         
         public string Name { get; set; }
         public string Source { get; set; }
-        public string ImageSource { get; set; }
+        public BitmapImage? ImageSource { get; set; }
         public int Id { get; set; }
 
 
@@ -65,7 +67,7 @@ namespace PhotoGallery.Models
             {
                 _IsFile = false;
                 // Folder Image.
-                ImageSource = @"..\..\..\Images\icons_folder-512.png";
+                ImageSource = CreateImage(new Uri("pack://application:,,,/Images/icons_folder-512.png"));
                 return;
             }
 
@@ -75,20 +77,21 @@ namespace PhotoGallery.Models
                 case ".ini":
                     _IsInIFile = true;
                     // Default Image.
-                    ImageSource = @"..\..\..\Images\icons_document-512.png";
+                    ImageSource =
+                        CreateImage(new Uri("pack://application:,,,/Images/icons_document-512.png"));
                     return;
 
                 case ".aes":
                     _IsEncrypted = true;
-                    ImageSource = @"..\..\..\Images\icons8-lock-file-64.png";
+                    ImageSource = CreateImage(new Uri("pack://application:,,,/Images/icons8-lock-file-64.png"));
                     return;
 
                 case ".rar":
-                    ImageSource = @"..\..\..\Images\icons8-rar-100.png";
+                    ImageSource = CreateImage(new Uri("pack://application:,,,/Images/icons8-rar-100.png"));
                     return;
 
                 case ".zip":
-                    ImageSource = @"..\..\..\Images\icons8-archive-folder-96.png";
+                    ImageSource = CreateImage(new Uri("pack://application:,,,/Images/icons8-archive-folder-96.png"));
                     return;
             }
 
@@ -96,28 +99,20 @@ namespace PhotoGallery.Models
 
             if(_fileExtensions.Contains(extension))
             {
-				ImageSource = path;
-
-                // BitmapImage image = CreateImage(path);
-                //image.DecodePixelHeight = 5;
-                //image.DecodePixelWidth = 5;
-
-                
-
-				//ImageSource = image.UriSource.ToString();
+				// ImageSource = path;
+                ImageSource = CreateImage(path);
 			}
             else if(_videoExtensions.Contains(extension))
             {
-                ImageSource = @"..\..\..\Images\icons8-video-file-100.png";
+                ImageSource = CreateImage(new Uri("pack://application:,,,/Images/icons8-video-file-100.png"));
             }
             else
             {
                 // Default Image.
-                ImageSource = @"..\..\..\Images\icons_document-512.png";
+                ImageSource = CreateImage(new Uri("pack://application:,,,/Images/icons_document-512.png"));
             }
 
-
-        }
+		}
 
         private bool IsAFolder(string extension)
         {
@@ -142,7 +137,17 @@ namespace PhotoGallery.Models
             return image;
         }
 
-        private ImageCodecInfo? GetEncoder(ImageFormat format)
+		private BitmapImage CreateImage(Uri path)
+		{
+			BitmapImage image = new BitmapImage();
+			image.BeginInit();
+			image.UriSource = path;
+			image.EndInit();
+
+			return image;
+		}
+
+		private ImageCodecInfo? GetEncoder(ImageFormat format)
         {
             ImageCodecInfo[] codecs = ImageCodecInfo.GetImageDecoders();
             foreach(ImageCodecInfo codec in codecs)
@@ -204,7 +209,7 @@ namespace PhotoGallery.Models
                 EncoderParameter encoderParameter = new EncoderParameter(encoder, Quality);
                 encoderParameters.Param[0] = encoderParameter;
 
-                bitmap.Save(ImageSource, jpgEncoder, encoderParameters);
+                //bitmap.Save(ImageSource, jpgEncoder, encoderParameters);
             }
 
 
@@ -217,7 +222,7 @@ namespace PhotoGallery.Models
         {
             Source = string.Empty;
             Name = string.Empty;
-            ImageSource = string.Empty;
+            ImageSource = null;
         }
 
         public bool GetIsFile() { return _IsFile; }

@@ -5,6 +5,7 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media;
@@ -138,7 +139,12 @@ namespace PhotoGallery.ViewModels
                 }
                 else
                 {
-                    await Task.Run(() => FileContainer.Instance.OpenFolder(item.Source));
+                  await Application.Current.Dispatcher.InvokeAsync(() =>
+                    {
+                        FileContainer.Instance.OpenFolder(item.Source);
+
+					});
+
                     SetFiles(FileContainer.Instance.GetItems());
                 }
                 UpdateWindowInfoDisplay.Invoke();

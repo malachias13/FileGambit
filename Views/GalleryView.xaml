@@ -48,11 +48,24 @@
                                         Padding="2" Background="Transparent">
                             <StackPanel Orientation="Vertical"
                                             VerticalAlignment="Stretch">
-                                <Image RenderOptions.BitmapScalingMode="NearestNeighbor"
+                                <!--<Image
                                     VerticalAlignment="Top"
-                                       Source="{Binding ImageSource}"
                                            MaxWidth="90"
-                                           MaxHeight="90"/>
+                                           MaxHeight="90">
+                                    <Image.Source>
+                                        <BitmapImage DecodePixelWidth="200"
+                                                     RenderOptions.BitmapScalingMode="NearestNeighbor"
+                                                     BaseUri="{Binding ImageSource}"/>
+                                    </Image.Source>
+                                </Image>-->
+
+                                <Image VerticalAlignment="Top"
+                                       MaxWidth="90"
+                                       MaxHeight="90"
+                                       Source="{Binding ImageSource}"/>
+
+
+
                                 <TextBlock Text="{Binding Name}"
                                                FontSize="10"
                                                HorizontalAlignment="Center"
