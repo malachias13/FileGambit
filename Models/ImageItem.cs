@@ -146,76 +146,13 @@ namespace PhotoGallery.Models
 			BitmapImage image = new BitmapImage();
 			image.BeginInit();
 			image.UriSource = path;
+
+			image.DecodePixelWidth = 200;
+			image.CacheOption = BitmapCacheOption.OnLoad;
 			image.EndInit();
 
 			return image;
 		}
-
-		private ImageCodecInfo? GetEncoder(ImageFormat format)
-        {
-            ImageCodecInfo[] codecs = ImageCodecInfo.GetImageDecoders();
-            foreach(ImageCodecInfo codec in codecs)
-            {
-                if(codec.FormatID == format.Guid)
-                {
-                    return codec;
-                }
-            }
-            return null;
-        }
-
-        private byte[] CompressBitmapImage(BitmapImage image, int quality = 75)
-        {
-            // Dead code ---- Try code out before removing!!!
-            //image.DecodePixelWidth = 200;
-            //image.DecodePixelHeight = 200;
-
-			var encoder = new JpegBitmapEncoder();
-			encoder.QualityLevel = quality;
-			encoder.Frames.Add(BitmapFrame.Create(image));
-
-			using (var stream = new MemoryStream())
-			{
-				encoder.Save(stream);
-				return stream.ToArray();
-			}
-		}
-
-		private string CompressBitmapImageToString(BitmapImage image, int quality = 75)
-		{
-			// Dead code ---- Try code out before removing!!!
-			//image.DecodePixelWidth = 200;
-			//image.DecodePixelHeight = 200;
-
-			var encoder = new JpegBitmapEncoder();
-			encoder.QualityLevel = quality;
-			encoder.Frames.Add(BitmapFrame.Create(image));
-
-			using (var stream = new MemoryStream())
-			{
-				encoder.Save(stream);
-				return Convert.ToBase64String(stream.ToArray());
-			}
-		}
-
-
-		private void CompressImageForView(string InImagePath, int Quality)
-        {
-
-            using (Bitmap bitmap = new Bitmap(InImagePath))
-            {
-                ImageCodecInfo jpgEncoder = GetEncoder(ImageFormat.Jpeg);
-
-                System.Drawing.Imaging.Encoder encoder =
-                    System.Drawing.Imaging.Encoder.Quality;
-
-                EncoderParameters encoderParameters = new EncoderParameters();
-                EncoderParameter encoderParameter = new EncoderParameter(encoder, Quality);
-                encoderParameters.Param[0] = encoderParameter;
-
-                //bitmap.Save(ImageSource, jpgEncoder, encoderParameters);
-            }
-        }
 
         public void Clear()
         {
