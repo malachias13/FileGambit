@@ -48,7 +48,8 @@
                                         Padding="2" Background="Transparent">
                             <StackPanel Orientation="Vertical"
                                             VerticalAlignment="Stretch">
-                                <Image VerticalAlignment="Top"
+                                <Image RenderOptions.BitmapScalingMode="NearestNeighbor"
+                                    VerticalAlignment="Top"
                                        Source="{Binding ImageSource}"
                                            MaxWidth="90"
                                            MaxHeight="90"/>

@@ -2,6 +2,8 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Drawing;
+using System.Drawing.Imaging;
 using System.IO;
 using System.Linq;
 using System.Runtime.CompilerServices;
@@ -21,8 +23,14 @@ namespace PhotoGallery.Models
         {
             Source = path;
             Name = Path.GetFileName(path);
+
+            //Task.Run(() =>
+            //{
+            //    SetImageSource(path);
+            //});
+            
             SetImageSource(path);
-        }
+		}
 
         ~ImageItem()
         {
@@ -33,6 +41,7 @@ namespace PhotoGallery.Models
         public string Source { get; set; }
         public string ImageSource { get; set; }
         public int Id { get; set; }
+
 
         public SolidColorBrush ImageItemColor { get; set; }
 
@@ -87,8 +96,16 @@ namespace PhotoGallery.Models
 
             if(_fileExtensions.Contains(extension))
             {
-                ImageSource = path;
-            }
+				ImageSource = path;
+
+                // BitmapImage image = CreateImage(path);
+                //image.DecodePixelHeight = 5;
+                //image.DecodePixelWidth = 5;
+
+                
+
+				//ImageSource = image.UriSource.ToString();
+			}
             else if(_videoExtensions.Contains(extension))
             {
                 ImageSource = @"..\..\..\Images\icons8-video-file-100.png";
@@ -112,6 +129,87 @@ namespace PhotoGallery.Models
             {
                 return _FoldersExtensions.Contains(extension);
             }
+
+        }
+        
+        private BitmapImage CreateImage(string path)
+        {
+            BitmapImage image = new BitmapImage();
+            image.BeginInit();
+            image.UriSource = new Uri(path);
+            image.EndInit();
+
+            return image;
+        }
+
+        private ImageCodecInfo? GetEncoder(ImageFormat format)
+        {
+            ImageCodecInfo[] codecs = ImageCodecInfo.GetImageDecoders();
+            foreach(ImageCodecInfo codec in codecs)
+            {
+                if(codec.FormatID == format.Guid)
+                {
+                    return codec;
+                }
+            }
+            return null;
+        }
+
+        private byte[] CompressBitmapImage(BitmapImage image, int quality = 75)
+        {
+            // Dead code ---- Try code out before removing!!!
+            //image.DecodePixelWidth = 200;
+            //image.DecodePixelHeight = 200;
+
+			var encoder = new JpegBitmapEncoder();
+			encoder.QualityLevel = quality;
+			encoder.Frames.Add(BitmapFrame.Create(image));
+
+			using (var stream = new MemoryStream())
+			{
+				encoder.Save(stream);
+				return stream.ToArray();
+			}
+		}
+
+		private string CompressBitmapImageToString(BitmapImage image, int quality = 75)
+		{
+			// Dead code ---- Try code out before removing!!!
+			//image.DecodePixelWidth = 200;
+			//image.DecodePixelHeight = 200;
+
+			var encoder = new JpegBitmapEncoder();
+			encoder.QualityLevel = quality;
+			encoder.Frames.Add(BitmapFrame.Create(image));
+
+			using (var stream = new MemoryStream())
+			{
+				encoder.Save(stream);
+				return Convert.ToBase64String(stream.ToArray());
+			}
+		}
+
+
+		private void CompressImageForView(string InImagePath, int Quality)
+        {
+
+            using (Bitmap bitmap = new Bitmap(InImagePath))
+            {
+                ImageCodecInfo jpgEncoder = GetEncoder(ImageFormat.Jpeg);
+
+                System.Drawing.Imaging.Encoder encoder =
+                    System.Drawing.Imaging.Encoder.Quality;
+
+                EncoderParameters encoderParameters = new EncoderParameters();
+                EncoderParameter encoderParameter = new EncoderParameter(encoder, Quality);
+                encoderParameters.Param[0] = encoderParameter;
+
+                bitmap.Save(ImageSource, jpgEncoder, encoderParameters);
+            }
+
+
+           
+
 
         }
 
